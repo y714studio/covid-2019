@@ -19,7 +19,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -27,5 +27,13 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+
+  img {
+    opacity: 1;
+
+    @include media-breakpoint-down(sm) {
+      opacity: 0.8;
+    }
+  }
 }
 </style>
