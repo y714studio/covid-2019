@@ -13,7 +13,9 @@
           </section>
 
           <section class="col-sm-12">
-            <div class="section-inner" style="background: #eee; min-height: 400px;" />
+            <div class="section-inner" style="background: #eee;">
+              <web-map />
+            </div>
           </section>
 
           <section class="col-sm-4">
@@ -34,12 +36,13 @@
 </template>
 
 <script>
-// import WebMap from './components/WebMap.vue'
+import WebMap from './components/WebMap.vue'
 import Sidebar from './components/Sidebar.vue'
 
 export default {
   name: 'app',
   components: {
+    WebMap,
     Sidebar
   }
 }
