@@ -4,29 +4,29 @@
       <sidebar />
       <div class="container-fluid">
         <div class="row">
-          <section class="col-sm-8">
+          <section class="col-md-12 col-lg-8">
             <div class="section-inner" style="background: #eee; min-height: 260px;" />
           </section>
 
-          <section class="col-sm-4">
+          <section class="col-md-12 col-lg-4">
             <div class="section-inner" style="background: #eee; min-height: 260px;" />
           </section>
 
-          <section class="col-sm-12">
+          <section class="col-lg-12">
             <div class="section-inner" style="background: #eee;">
               <web-map />
             </div>
           </section>
 
-          <section class="col-sm-4">
+          <section class="col-md-6 col-lg-4">
             <div class="section-inner" style="background: #eee; min-height: 130px;" />
           </section>
 
-          <section class="col-sm-4">
+          <section class="col-md-6 col-lg-4">
             <div class="section-inner" style="background: #eee; min-height: 200px;" />
           </section>
 
-          <section class="col-sm-4">
+          <section class="col-md-6 col-lg-4">
             <div class="section-inner" style="background: #eee; min-height: 200px;" />
           </section>
         </div>
