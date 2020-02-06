@@ -1,20 +1,46 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-    <web-map />
+  <div id="app" class="page-wars vue-cli plugin-bootstrap plugin-arcgis">
+    <div class="dashboard-container">
+      <sidebar />
+      <div class="container-fluid">
+        <div class="row">
+          <section class="col-sm-8">
+            <div class="section-inner" style="background: #eee; min-height: 260px;" />
+          </section>
+
+          <section class="col-sm-4">
+            <div class="section-inner" style="background: #eee; min-height: 260px;" />
+          </section>
+
+          <section class="col-sm-12">
+            <div class="section-inner" style="background: #eee; min-height: 400px;" />
+          </section>
+
+          <section class="col-sm-4">
+            <div class="section-inner" style="background: #eee; min-height: 130px;" />
+          </section>
+
+          <section class="col-sm-4">
+            <div class="section-inner" style="background: #eee; min-height: 200px;" />
+          </section>
+
+          <section class="col-sm-4">
+            <div class="section-inner" style="background: #eee; min-height: 200px;" />
+          </section>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-import WebMap from './components/WebMap.vue';
+// import WebMap from './components/WebMap.vue'
+import Sidebar from './components/Sidebar.vue'
 
 export default {
   name: 'app',
   components: {
-    HelloWorld,
-    WebMap
+    Sidebar
   }
 }
 </script>
@@ -24,15 +50,12 @@ export default {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
 
-  img {
-    opacity: 1;
+  .dashboard-container {
+    padding-left: 280px;
 
-    @include media-breakpoint-down(sm) {
-      opacity: 0.8;
+    .section-inner {
+      margin-bottom: 15px;
     }
   }
 }

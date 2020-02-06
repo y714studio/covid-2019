@@ -1,8 +1,11 @@
 module.exports = {
   css: {
     loaderOptions: {
-      sass: {
-        prependData: `@import "./node_modules/bootstrap/scss/bootstrap-grid.scss";`
+      scss: {
+        prependData: `
+          @import "@/styles/global.scss";
+          @import "./node_modules/bootstrap/scss/bootstrap-grid.scss";
+        `
       }
     }
   }
