@@ -134,7 +134,37 @@
           <div class="districts">
             <div class="d-flex district">
               <label>元朗</label>
-              <div class="district-bar" style="width: 100%;" />
+              <div class="district-bar">
+                <div class="district-bar-inner" style="width: 100%;" />
+              </div>
+            </div>
+
+            <div class="d-flex district">
+              <label>將軍澳</label>
+              <div class="district-bar">
+                <div class="district-bar-inner" style="width: 80%;" />
+              </div>
+            </div>
+
+            <div class="d-flex district">
+              <label>北區</label>
+              <div class="district-bar">
+                <div class="district-bar-inner" style="width: 74%;" />
+              </div>
+            </div>
+
+            <div class="d-flex district">
+              <label>荃灣</label>
+              <div class="district-bar">
+                <div class="district-bar-inner" style="width: 72%;" />
+              </div>
+            </div>
+
+            <div class="d-flex district">
+              <label>黃大仙</label>
+              <div class="district-bar">
+                <div class="district-bar-inner" style="width: 43%;" />
+              </div>
             </div>
           </div>
         </div>
@@ -183,13 +213,29 @@ export default {
 
       .districts {
         .district {
+          margin: 4px 0;
+
           label {
             width: 80px;
+            float: left;
           }
 
           .district-bar {
-            height: 6px;
-            background-color: #999;
+            height: 8px;
+            width: calc(100% - 80px);
+            float: left;
+            margin-top: 6px;
+
+            .district-bar-inner {
+              background-color: #c2c2c2;
+              height: 100%;
+            }
+          }
+
+          &:after {
+            content: '';
+            clear: both;
+            display: table;
           }
         }
       }
