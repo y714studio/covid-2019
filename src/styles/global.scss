@@ -1,3 +1,39 @@
 body {
   margin: 0;
+  font-size: 14px;
+  color: #262626;
+}
+
+h2 {
+  font-size: 44px;
+}
+
+p,
+span {
+  font-size: 14px;
+
+  &.large {
+    font-size: 18px;
+  }
+
+  &.small {
+    font-size: 12px;
+  }
+}
+
+.text-bold {
+  font-weight: 600;
+}
+
+/* Color */
+.color-purple {
+  color: #898cad;
+}
+
+.color-pink {
+  color: #ee71a9;
+}
+
+.color-grey {
+  color: #777;
 }
