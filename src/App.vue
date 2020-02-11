@@ -4,18 +4,21 @@
       <sidebar />
       <div class="container-fluid">
         <div class="row">
-          <section class="col-md-12 col-lg-8">
-            <div class="section-inner" style="background: #eee; min-height: 260px;" />
-          </section>
-
-          <section class="col-md-12 col-lg-4">
-            <div class="section-inner" style="background: #eee; min-height: 260px;" />
-          </section>
 
           <section class="col-lg-12">
             <div class="section-inner" style="background: #eee;">
               <web-map />
             </div>
+          </section>
+
+          <section class="col-md-12 col-lg-8">
+            <div class="section-inner">
+              <population />
+            </div>
+          </section>
+
+          <section class="col-md-12 col-lg-4">
+            <div class="section-inner" style="background: #eee; min-height: 260px;" />
           </section>
 
           <section class="col-md-6 col-lg-4">
@@ -38,12 +41,14 @@
 <script>
 import WebMap from './components/WebMap.vue'
 import Sidebar from './components/Sidebar.vue'
+import Population from './components/Population.vue'
 
 export default {
   name: 'app',
   components: {
     WebMap,
-    Sidebar
+    Sidebar,
+    Population
   }
 }
 </script>

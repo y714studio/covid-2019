@@ -73,7 +73,7 @@
         <div class="section-main-stat-item">
           <div class="stat-label">
             <p>
-              <span class="text-bold">男女比例</span>
+              <span class="text-bold">確診病人男女比例</span>
             </p>
           </div>
           <div class="ratio-bar-container">
