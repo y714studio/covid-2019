@@ -52,7 +52,14 @@ export default {
           map: map,
           center: [114.1694, 22.3193],
           // center: [-118.805, 34.027],
-          zoom: 12
+          zoom: 12,
+          popup: {
+            dockEnabled: true,
+            dockOptions: {
+              buttonEnabled: false,
+              breakpoint: false
+            }
+          }
         });
 
         const featureLayer = new FeatureLayer({
