@@ -13,8 +13,6 @@ export default {
       [
         "esri/Map",
         "esri/views/MapView",
-        "esri/layers/FeatureLayer",
-        "esri/WebMap",
         "esri/Graphic",
         "esri/layers/GraphicsLayer",
         "esri/request"
@@ -24,8 +22,6 @@ export default {
       ([
         ArcGISMap,
         MapView,
-        FeatureLayer,
-        WebMap,
         Graphic,
         GraphicsLayer,
         esriRequest
@@ -34,17 +30,15 @@ export default {
           basemap: "topo-vector"
         });
 
-        var webmap = new WebMap({
-          portalItem: {
-            // autocasts as new PortalItem()
-            id: "b1097c3b58044795859921c46a933d11"
-          }
-        });
+        // var webmap = new WebMap({
+        //   portalItem: {
+        //     // autocasts as new PortalItem()
+        //     id: "b1097c3b58044795859921c46a933d11"
+        //   }
+        // });
 
         const graphicsLayer = new GraphicsLayer();
         map.add(graphicsLayer);
-
-        console.log(webmap);
 
         this.view = new MapView({
           container: this.$el,
@@ -62,12 +56,10 @@ export default {
           }
         });
 
-        const featureLayer = new FeatureLayer({
-          url:
-            "https://services3.arcgis.com/6j1KwZfY2fZrfNMR/ArcGIS/rest/services/Hong_Kong_18_Districts/FeatureServer/0"
-        });
-
-        console.log(featureLayer);
+        // const featureLayer = new FeatureLayer({
+        //   url:
+        //     "https://services3.arcgis.com/6j1KwZfY2fZrfNMR/ArcGIS/rest/services/Hong_Kong_18_Districts/FeatureServer/0"
+        // });
 
         //map.add(featureLayer);
 
