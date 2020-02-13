@@ -17,6 +17,12 @@
             </div>
           </section>
 
+          <section class="col-md-12">
+            <div class="section-inner">
+              <img src="./assets/some-graph.jpeg">
+            </div>
+          </section>
+
           <section class="col-md-12 col-lg-4">
             <div class="section-inner" style="background: #eee; min-height: 260px;" />
           </section>
