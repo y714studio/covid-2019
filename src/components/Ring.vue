@@ -1,5 +1,9 @@
 <template>
-  <div class="ring" ref="chartdivring" />
+  <div>
+    <h4>合魚花長者正打</h4>
+    <p>等不山景義記是童金西主麼太雖中排會平聲一色現級營養絕於聲確，體角的四天藝去們此西因型學正情樂英為與，不的知爸分一一</p>
+    <div class="ring" ref="chartdivring" />
+  </div>
 </template>
 
 <script>

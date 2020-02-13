@@ -1,5 +1,9 @@
 <template>
-  <div class="population" ref="chartdiv" />
+  <div>
+    <h4>的業部把一感國前口一有</h4>
+    <p>樣背參萬級自動地。校下跟量，了球用世！經顯器做裡全間之？理上我族一的案不她著光來父論使；音這學告。</p>
+    <div class="population" ref="chartdiv" />
+  </div>
 </template>
 
 <script>

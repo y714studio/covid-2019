@@ -4,7 +4,7 @@
       <div class="row">
         <div class="d-flex section-main-stat-item">
           <div class="number">
-            <h2 class="color-purple">114</h2>
+            <h2 class="color-purple">1</h2>
           </div>
           <div class="stat-label">
             <p>
@@ -16,12 +16,12 @@
 
         <div class="d-flex section-main-stat-item">
           <div class="number">
-            <h2 class="color-purple">453</h2>
+            <h2 class="color-purple">50</h2>
           </div>
           <div class="stat-label">
             <p>
               <span class="text-bold">人感染</span><br>
-              <span class="small color-grey">203人情況危殆</span>
+              <span class="small color-grey">13人情況危殆</span>
             </p>
           </div>
         </div>
@@ -54,7 +54,7 @@
               <span class="text-bold">出院</span>
             </p>
             <h3 class="color-purple">
-              445
+              1
             </h3>
           </div>
         </div>
@@ -188,6 +188,13 @@ export default {
     top: 0;
     left: 0;
     padding: 15px 30px 0 40px;
+
+    @include media-breakpoint-down(sm) {
+      position: relative;
+      height: auto;
+      width: 100%;
+      margin-bottom: 40px;
+    }
 
     .section-main-stat-item {
       width: 100%;
