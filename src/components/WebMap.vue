@@ -138,7 +138,8 @@ export default {
           }
         };
 
-        esriRequest(url, options).then(response => console.log(response.data));
+        let y = console
+        esriRequest(url, options).then(response => y.log(response.data));
 
         // this.view.on("click", event => {
         //   var screenPoint = event.screenPoint;
@@ -173,6 +174,6 @@ div {
   padding: 0;
   margin: 0;
   width: 100%;
-  height: 300px;
+  height: 360px;
 }
 </style>

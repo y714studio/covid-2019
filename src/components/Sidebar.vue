@@ -288,7 +288,7 @@ export default {
 
           .male-bar,
           .oversears-bar {
-            background-color: #1e52a4;
+            background-color: rgb(55, 52, 144);
           }
 
           .inland-bar {

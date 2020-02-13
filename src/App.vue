@@ -17,6 +17,12 @@
             </div>
           </section>
 
+          <section class="col-md-12 col-lg-4">
+            <div class="section-inner">
+              <ring />
+            </div>
+          </section>
+
           <section class="col-md-12">
             <div class="section-inner">
               <img src="./assets/some-graph.jpeg">
@@ -48,13 +54,15 @@
 import WebMap from './components/WebMap.vue'
 import Sidebar from './components/Sidebar.vue'
 import Population from './components/Population.vue'
+import Ring from './components/Ring.vue'
 
 export default {
   name: 'app',
   components: {
     WebMap,
     Sidebar,
-    Population
+    Population,
+    Ring
   }
 }
 </script>
