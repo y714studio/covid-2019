@@ -4299,7 +4299,7 @@
         "text-size": 9,
         "text-letter-spacing": 0.05,
         "text-max-width": 8,
-        "text-field": "{_name_global}",
+        "text-field": "{_name_local}",
         "text-padding": 30
       },
       "paint": {
@@ -4341,7 +4341,7 @@
         },
         "text-letter-spacing": 0.01,
         "text-max-width": 5,
-        "text-field": "{_name_global}",
+        "text-field": "{_name_local}",
         "text-padding": 15
       },
       "paint": {
@@ -4382,7 +4382,7 @@
         },
         "text-letter-spacing": 0.01,
         "text-max-width": 5,
-        "text-field": "{_name_global}",
+        "text-field": "{_name_local}",
         "text-padding": 15
       },
       "paint": {
@@ -4423,7 +4423,7 @@
         },
         "text-letter-spacing": 0.15,
         "text-max-width": 5,
-        "text-field": "{_name_global}",
+        "text-field": "{_name_local}",
         "text-padding": 15
       },
       "paint": {
@@ -4464,7 +4464,7 @@
             ]
           ]
         },
-        "text-field": "{_name_global}",
+        "text-field": "{_name_local}",
         "text-padding": 15
       },
       "paint": {
@@ -4505,7 +4505,7 @@
         },
         "text-letter-spacing": 0.01,
         "text-max-width": 5,
-        "text-field": "{_name_global}",
+        "text-field": "{_name_local}",
         "text-padding": 15
       },
       "paint": {
@@ -4546,7 +4546,7 @@
         },
         "text-letter-spacing": 0.05,
         "text-max-width": 5,
-        "text-field": "{_name_global}",
+        "text-field": "{_name_local}",
         "text-padding": 15
       },
       "paint": {
@@ -4574,7 +4574,7 @@
         "text-letter-spacing": 0.07,
         "text-max-width": 8,
         "text-max-angle": 30,
-        "text-field": "{_name_global}",
+        "text-field": "{_name_local}",
         "text-offset": [
           0,
           -0.5
@@ -4601,7 +4601,7 @@
         "text-size": 10,
         "text-letter-spacing": 0.05,
         "text-max-width": 8,
-        "text-field": "{_name_global}"
+        "text-field": "{_name_local}"
       },
       "paint": {
         "text-color": "#373490",
@@ -4631,7 +4631,7 @@
         "text-size": 10,
         "text-letter-spacing": 0.01,
         "text-max-width": 5,
-        "text-field": "{_name_global}"
+        "text-field": "{_name_local}"
       },
       "paint": {
         "text-color": "#373490",
@@ -4661,7 +4661,7 @@
         "text-size": 11.33,
         "text-letter-spacing": 0.01,
         "text-max-width": 5,
-        "text-field": "{_name_global}"
+        "text-field": "{_name_local}"
       },
       "paint": {
         "text-color": "#373490",
@@ -4691,7 +4691,7 @@
         "text-size": 13.33,
         "text-letter-spacing": 0.01,
         "text-max-width": 8,
-        "text-field": "{_name_global}"
+        "text-field": "{_name_local}"
       },
       "paint": {
         "text-color": "#373490",
@@ -4719,7 +4719,7 @@
         "text-size": 11.33,
         "text-letter-spacing": 0.01,
         "text-max-width": 5,
-        "text-field": "{_name_global}"
+        "text-field": "{_name_local}"
       },
       "paint": {
         "text-color": "#373490",
@@ -4747,7 +4747,7 @@
         "text-size": 13.33,
         "text-letter-spacing": 0.01,
         "text-max-width": 8,
-        "text-field": "{_name_global}"
+        "text-field": "{_name_local}"
       },
       "paint": {
         "text-color": "#373490",
@@ -4775,7 +4775,7 @@
         "text-size": 12,
         "text-letter-spacing": 0.15,
         "text-max-width": 8,
-        "text-field": "{_name_global}"
+        "text-field": "{_name_local}"
       },
       "paint": {
         "text-color": "#373490",
@@ -4803,7 +4803,7 @@
         "text-size": 10.67,
         "text-letter-spacing": 0.05,
         "text-max-width": 5,
-        "text-field": "{_name_global}"
+        "text-field": "{_name_local}"
       },
       "paint": {
         "text-color": "#373490",
@@ -4832,7 +4832,7 @@
         "text-size": 13.33,
         "text-letter-spacing": 0.05,
         "text-max-width": 8,
-        "text-field": "{_name_global}"
+        "text-field": "{_name_local}"
       },
       "paint": {
         "text-color": "#373490",
@@ -4963,7 +4963,7 @@
         ],
         "text-size": 10,
         "text-max-width": 8,
-        "text-field": "{_name_global}"
+        "text-field": "{_name_local}"
       },
       "paint": {
         "text-color": "#373490",
@@ -5160,7 +5160,7 @@
         "text-size": 10,
         "text-letter-spacing": 0.1,
         "text-max-width": 8,
-        "text-field": "{_name_global}",
+        "text-field": "{_name_local}",
         "text-offset": [
           0,
           -0.6
@@ -5190,7 +5190,7 @@
         "text-size": 10,
         "text-letter-spacing": 0.1,
         "text-max-width": 8,
-        "text-field": "{_name_global}",
+        "text-field": "{_name_local}",
         "text-padding": 10,
         "text-offset": [
           0,
@@ -5221,7 +5221,7 @@
         "text-size": 9.33,
         "text-letter-spacing": 0.05,
         "text-max-width": 8,
-        "text-field": "{_name_global}"
+        "text-field": "{_name_local}"
       },
       "paint": {
         "text-color": "#373490",
@@ -5260,7 +5260,7 @@
         "text-size": 9.33,
         "text-letter-spacing": 0.05,
         "text-max-width": 8,
-        "text-field": "{_name_global}"
+        "text-field": "{_name_local}"
       },
       "paint": {
         "text-color": "#373490",
@@ -5309,7 +5309,7 @@
         },
         "text-letter-spacing": 0.09,
         "text-max-width": 8,
-        "text-field": "{_name_global}"
+        "text-field": "{_name_local}"
       },
       "paint": {
         "text-color": "#373490",
@@ -5362,7 +5362,7 @@
         },
         "text-letter-spacing": 0.09,
         "text-max-width": 8,
-        "text-field": "{_name_global}"
+        "text-field": "{_name_local}"
       },
       "paint": {
         "text-color": "#373490",
@@ -5460,7 +5460,7 @@
         },
         "text-letter-spacing": 0.09,
         "text-max-width": 8,
-        "text-field": "{_name_global}"
+        "text-field": "{_name_local}"
       },
       "paint": {
         "text-color": "#373490",
@@ -5558,7 +5558,7 @@
         },
         "text-letter-spacing": 0.09,
         "text-max-width": 8,
-        "text-field": "{_name_global}"
+        "text-field": "{_name_local}"
       },
       "paint": {
         "text-color": "#373490",
@@ -5607,7 +5607,7 @@
         },
         "text-letter-spacing": 0.09,
         "text-max-width": 8,
-        "text-field": "{_name_global}"
+        "text-field": "{_name_local}"
       },
       "paint": {
         "text-color": "#373490",
@@ -8631,7 +8631,7 @@
         "text-size": 9.33,
         "text-letter-spacing": 0.05,
         "text-max-width": 8,
-        "text-field": "{_name_global}"
+        "text-field": "{_name_local}"
       },
       "paint": {
         "text-color": "#373490",
@@ -8670,7 +8670,7 @@
         "text-size": 9.33,
         "text-letter-spacing": 0.05,
         "text-max-width": 8,
-        "text-field": "{_name_global}"
+        "text-field": "{_name_local}"
       },
       "paint": {
         "text-color": "#373490",
@@ -8720,7 +8720,7 @@
         },
         "text-letter-spacing": 0.09,
         "text-max-width": 8,
-        "text-field": "{_name_global}",
+        "text-field": "{_name_local}",
         "text-padding": 3
       },
       "paint": {
@@ -8775,7 +8775,7 @@
         },
         "text-letter-spacing": 0.09,
         "text-max-width": 8,
-        "text-field": "{_name_global}"
+        "text-field": "{_name_local}"
       },
       "paint": {
         "text-color": "#373490",
@@ -8875,7 +8875,7 @@
         },
         "text-letter-spacing": 0.09,
         "text-max-width": 8,
-        "text-field": "{_name_global}"
+        "text-field": "{_name_local}"
       },
       "paint": {
         "text-color": "#373490",
@@ -8975,7 +8975,7 @@
         },
         "text-letter-spacing": 0.09,
         "text-max-width": 8,
-        "text-field": "{_name_global}"
+        "text-field": "{_name_local}"
       },
       "paint": {
         "text-color": "#373490",
@@ -9025,7 +9025,7 @@
         },
         "text-letter-spacing": 0.09,
         "text-max-width": 8,
-        "text-field": "{_name_global}"
+        "text-field": "{_name_local}"
       },
       "paint": {
         "text-color": "#373490",
@@ -9049,7 +9049,7 @@
         "text-size": 10,
         "text-letter-spacing": 0.05,
         "text-max-width": 8,
-        "text-field": "{_name_global}"
+        "text-field": "{_name_local}"
       },
       "paint": {
         "text-color": "#373490",
@@ -9073,7 +9073,7 @@
         "text-size": 10,
         "text-letter-spacing": 0.05,
         "text-max-width": 8,
-        "text-field": "{_name_global}"
+        "text-field": "{_name_local}"
       },
       "paint": {
         "text-color": "#373490",
@@ -9097,7 +9097,7 @@
         "text-size": 10,
         "text-letter-spacing": 0.05,
         "text-max-width": 8,
-        "text-field": "{_name_global}"
+        "text-field": "{_name_local}"
       },
       "paint": {
         "text-color": "#373490",
@@ -9121,7 +9121,7 @@
         "text-size": 10,
         "text-letter-spacing": 0.05,
         "text-max-width": 8,
-        "text-field": "{_name_global}"
+        "text-field": "{_name_local}"
       },
       "paint": {
         "text-color": "#373490",
@@ -9145,7 +9145,7 @@
         "text-size": 10,
         "text-letter-spacing": 0.05,
         "text-max-width": 8,
-        "text-field": "{_name_global}"
+        "text-field": "{_name_local}"
       },
       "paint": {
         "text-color": "#373490",
@@ -9169,7 +9169,7 @@
         "text-size": 10,
         "text-letter-spacing": 0.05,
         "text-max-width": 8,
-        "text-field": "{_name_global}"
+        "text-field": "{_name_local}"
       },
       "paint": {
         "text-color": "#373490",
@@ -9193,7 +9193,7 @@
         "text-size": 10,
         "text-letter-spacing": 0.05,
         "text-max-width": 8,
-        "text-field": "{_name_global}"
+        "text-field": "{_name_local}"
       },
       "paint": {
         "text-color": "#373490",
@@ -9217,7 +9217,7 @@
         "text-size": 10,
         "text-letter-spacing": 0.05,
         "text-max-width": 8,
-        "text-field": "{_name_global}"
+        "text-field": "{_name_local}"
       },
       "paint": {
         "text-color": "#373490",
@@ -9241,7 +9241,7 @@
         "text-size": 10,
         "text-letter-spacing": 0.05,
         "text-max-width": 8,
-        "text-field": "{_name_global}"
+        "text-field": "{_name_local}"
       },
       "paint": {
         "text-color": "#373490",
@@ -9265,7 +9265,7 @@
         "text-size": 10,
         "text-letter-spacing": 0.05,
         "text-max-width": 8,
-        "text-field": "{_name_global}",
+        "text-field": "{_name_local}",
         "text-padding": 25
       },
       "paint": {
@@ -9290,7 +9290,7 @@
         "text-size": 10,
         "text-letter-spacing": 0.05,
         "text-max-width": 8,
-        "text-field": "{_name_global}"
+        "text-field": "{_name_local}"
       },
       "paint": {
         "text-color": "#373490",
@@ -9314,7 +9314,7 @@
         "text-size": 9.33,
         "text-letter-spacing": 0.08,
         "text-max-width": 8,
-        "text-field": "{_name_global}"
+        "text-field": "{_name_local}"
       },
       "paint": {
         "text-color": "#373490",
@@ -9338,7 +9338,7 @@
         "text-size": 10,
         "text-letter-spacing": 0.05,
         "text-max-width": 8,
-        "text-field": "{_name_global}"
+        "text-field": "{_name_local}"
       },
       "paint": {
         "text-color": "#373490",
@@ -9362,7 +9362,7 @@
         "text-size": 10,
         "text-letter-spacing": 0.05,
         "text-max-width": 8,
-        "text-field": "{_name_global}"
+        "text-field": "{_name_local}"
       },
       "paint": {
         "text-color": "#373490",
@@ -9386,7 +9386,7 @@
         "text-size": 10,
         "text-letter-spacing": 0.05,
         "text-max-width": 8,
-        "text-field": "{_name_global}"
+        "text-field": "{_name_local}"
       },
       "paint": {
         "text-color": "#373490",
@@ -9410,7 +9410,7 @@
         "text-size": 10,
         "text-letter-spacing": 0.05,
         "text-max-width": 8,
-        "text-field": "{_name_global}"
+        "text-field": "{_name_local}"
       },
       "paint": {
         "text-color": "#373490",
@@ -9434,7 +9434,7 @@
         "text-size": 10,
         "text-letter-spacing": 0.05,
         "text-max-width": 8,
-        "text-field": "{_name_global}"
+        "text-field": "{_name_local}"
       },
       "paint": {
         "text-color": "#373490",
@@ -9458,7 +9458,7 @@
         "text-size": 10,
         "text-letter-spacing": 0.05,
         "text-max-width": 8,
-        "text-field": "{_name_global}",
+        "text-field": "{_name_local}",
         "text-padding": 25
       },
       "paint": {
@@ -9488,7 +9488,7 @@
         "text-size": 10,
         "text-letter-spacing": 0.08,
         "text-max-width": 8,
-        "text-field": "{_name_global}"
+        "text-field": "{_name_local}"
       },
       "paint": {
         "text-color": "#373490",
@@ -9512,7 +9512,7 @@
         "text-size": 10,
         "text-letter-spacing": 0.05,
         "text-max-width": 8,
-        "text-field": "{_name_global}"
+        "text-field": "{_name_local}"
       },
       "paint": {
         "text-color": "#373490",
@@ -9536,7 +9536,7 @@
         "text-size": 10,
         "text-letter-spacing": 0.05,
         "text-max-width": 8,
-        "text-field": "{_name_global}"
+        "text-field": "{_name_local}"
       },
       "paint": {
         "text-color": "#373490",
@@ -9560,7 +9560,7 @@
         "text-size": 10,
         "text-letter-spacing": 0.05,
         "text-max-width": 8,
-        "text-field": "{_name_global}",
+        "text-field": "{_name_local}",
         "text-padding": 25
       },
       "paint": {
@@ -9585,7 +9585,7 @@
         "text-size": 10,
         "text-letter-spacing": 0.05,
         "text-max-width": 8,
-        "text-field": "{_name_global}",
+        "text-field": "{_name_local}",
         "text-padding": 25
       },
       "paint": {
@@ -9610,7 +9610,7 @@
         "text-size": 10.67,
         "text-letter-spacing": 0.05,
         "text-max-width": 8,
-        "text-field": "{_name_global}",
+        "text-field": "{_name_local}",
         "text-padding": 15
       },
       "paint": {
@@ -9635,7 +9635,7 @@
         "text-size": 9.33,
         "text-letter-spacing": 0.05,
         "text-max-width": 8,
-        "text-field": "{_name_global}",
+        "text-field": "{_name_local}",
         "icon-image": "Exit/Default/{_len}",
         "icon-rotation-alignment": "viewport",
         "text-offset": [
@@ -9670,7 +9670,7 @@
         "text-size": 10,
         "text-letter-spacing": 0.08,
         "text-max-width": 8,
-        "text-field": "{_name_global}",
+        "text-field": "{_name_local}",
         "text-padding": 15
       },
       "paint": {
@@ -9695,7 +9695,7 @@
         "text-size": 10,
         "text-letter-spacing": 0.08,
         "text-max-width": 8,
-        "text-field": "{_name_global}",
+        "text-field": "{_name_local}",
         "text-padding": 20
       },
       "paint": {
@@ -9741,7 +9741,7 @@
         "text-anchor": "bottom",
         "text-letter-spacing": 0.04,
         "text-max-width": 8,
-        "text-field": "{_name_global}",
+        "text-field": "{_name_local}",
         "text-offset": [
           0,
           -0.9
@@ -9790,7 +9790,7 @@
         "text-anchor": "bottom",
         "text-letter-spacing": 0.04,
         "text-max-width": 8,
-        "text-field": "{_name_global}",
+        "text-field": "{_name_local}",
         "text-offset": [
           0,
           -0.9
@@ -10388,7 +10388,7 @@
         },
         "text-letter-spacing": 0.08,
         "text-max-width": 8,
-        "text-field": "{_name_global}"
+        "text-field": "{_name_local}"
       },
       "paint": {
         "text-halo-color": "#f4f4f4",
@@ -10434,7 +10434,7 @@
         },
         "text-letter-spacing": 0.08,
         "text-max-width": 8,
-        "text-field": "{_name_global}"
+        "text-field": "{_name_local}"
       },
       "paint": {
         "text-halo-color": "#f4f4f4",
@@ -10480,7 +10480,7 @@
         },
         "text-letter-spacing": 0.09,
         "text-max-width": 8,
-        "text-field": "{_name_global}"
+        "text-field": "{_name_local}"
       },
       "paint": {
         "text-halo-color": "#f4f4f4",
@@ -10522,7 +10522,7 @@
         },
         "text-letter-spacing": 0.1,
         "text-max-width": 8,
-        "text-field": "{_name_global}"
+        "text-field": "{_name_local}"
       },
       "paint": {
         "text-halo-color": "#f4f4f4",
@@ -10564,7 +10564,7 @@
         },
         "text-letter-spacing": 0.1,
         "text-max-width": 8,
-        "text-field": "{_name_global}"
+        "text-field": "{_name_local}"
       },
       "paint": {
         "text-halo-color": "#f4f4f4",
@@ -10606,7 +10606,7 @@
         },
         "text-letter-spacing": 0.1,
         "text-max-width": 8,
-        "text-field": "{_name_global}"
+        "text-field": "{_name_local}"
       },
       "paint": {
         "text-halo-color": "#f4f4f4",
@@ -10648,7 +10648,7 @@
         },
         "text-letter-spacing": 0.1,
         "text-max-width": 8,
-        "text-field": "{_name_global}"
+        "text-field": "{_name_local}"
       },
       "paint": {
         "text-halo-color": "#f4f4f4",
@@ -11409,7 +11409,7 @@
         },
         "text-letter-spacing": 0.05,
         "text-max-width": 8,
-        "text-field": "{_name_global}",
+        "text-field": "{_name_local}",
         "text-transform": "uppercase"
       },
       "paint": {
