@@ -4,6 +4,7 @@
 
 <script>
 import { loadModules } from "esri-loader";
+import * as mapstyle from "../assets/map-style.json"
 
 export default {
   name: "web-map",
@@ -13,21 +14,33 @@ export default {
       [
         "esri/Map",
         "esri/views/MapView",
+        "esri/Basemap",
         "esri/Graphic",
         "esri/layers/GraphicsLayer",
-        "esri/request"
+        "esri/request",
+        "esri/layers/VectorTileLayer"
       ],
       { css: true }
     ).then(
       ([
         ArcGISMap,
         MapView,
+        Basemap,
         Graphic,
         GraphicsLayer,
-        esriRequest
+        esriRequest,
+        VectorTileLayer
       ]) => {
+        const basemap = new Basemap({
+          baseLayers: [
+            new VectorTileLayer({
+              style: mapstyle.default
+            })
+          ]
+        });
+
         const map = new ArcGISMap({
-          basemap: "topo-vector"
+          basemap: basemap
         });
 
         // var webmap = new WebMap({
