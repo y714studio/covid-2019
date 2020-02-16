@@ -8,6 +8,10 @@ h2 {
   font-size: 44px;
 }
 
+h4 {
+  margin-top: 0;
+}
+
 img {
   max-width: 100%;
 }
@@ -22,6 +26,15 @@ span {
 
   &.small {
     font-size: 12px;
+  }
+}
+
+a {
+  text-decoration: none;
+  color: rgb(55, 52, 144);
+
+  &:hover {
+    outline: none;
   }
 }
 
@@ -40,4 +53,8 @@ span {
 
 .color-grey {
   color: #777;
+}
+
+*:focus {
+  outline: none;
 }

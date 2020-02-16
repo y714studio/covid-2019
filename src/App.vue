@@ -40,11 +40,17 @@
           </section>
 
           <section class="col-md-12 col-lg-4">
-            <div class="section-inner" style="background: #eee; min-height: 260px;" />
+            <div class="section-inner">
+              <latest-cases />
+            </div>
           </section>
 
-          <section class="col-md-6 col-lg-4">
-            <div class="section-inner" style="background: #eee; min-height: 130px;" />
+          <section class="col-md-6 col-lg-8">
+            <div class="section-inner">
+              <cases
+                :cases="govInfoCases"
+              />
+            </div>
           </section>
 
           <section class="col-md-6 col-lg-4">
@@ -67,6 +73,8 @@ import WebMap from './components/WebMap.vue'
 import Sidebar from './components/Sidebar.vue'
 import Dailystat from './components/Dailystat.vue'
 import Ring from './components/Ring.vue'
+import Cases from './components/Cases.vue'
+import LatestCases from './components/LatestCases.vue'
 
 export default {
   name: 'app',
@@ -74,7 +82,9 @@ export default {
     WebMap,
     Sidebar,
     Dailystat,
-    Ring
+    Ring,
+    Cases,
+    LatestCases
   },
   data() {
     return {

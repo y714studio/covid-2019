@@ -1,6 +1,7 @@
 <template>
   <aside>
     <section class="section-main-stat">
+      <h1>covid 2019</h1>
       <div class="row">
         <div class="d-flex section-main-stat-item">
           <div class="number">
@@ -216,6 +217,14 @@ export default {
       height: auto;
       width: 100%;
       margin-bottom: 40px;
+    }
+
+    h1 {
+      position: absolute;
+      right: 15px;
+      top: 25px;
+      margin-top: 0;
+      opacity: 0.1;
     }
 
     .section-main-stat-item {
