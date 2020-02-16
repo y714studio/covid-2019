@@ -87,9 +87,9 @@ export default {
       .then((response) => {
         this.govInfoCases = response.data.rows
       })
+
     axios.get('https://api.data.gov.hk/v1/filter?q=%7B%22resource%22%3A%22http%3A%2F%2Fwww.chp.gov.hk%2Ffiles%2Fmisc%2Flatest_situation_of_reported_cases_wuhan_chi.csv%22%2C%22section%22%3A1%2C%22format%22%3A%22json%22%7D')
       .then((response) => {
-        console.log(response)
         this.govInfoDailyStat = response.data.rows
       })
   }
