@@ -48,6 +48,18 @@ export default {
       "value": 11,
       "value2": 44,
       "value3": 90
+    },
+    {
+      "date": new Date(2020, 1, 12),
+      "value": 50,
+      "value2": 1164,
+      "value3": 1436
+    },
+    {
+      "date": new Date(2020, 1, 13),
+      "value": 53,
+      "value2": 1222,
+      "value3": 1436
     }]
 
     chart.data = data
