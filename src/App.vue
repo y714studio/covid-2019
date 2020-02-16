@@ -16,7 +16,7 @@
 
           <section class="col-md-12 col-lg-8">
             <div class="section-inner">
-              <population
+              <dailystat
                 :govInfoDailyStat="govInfoDailyStat"
               />
             </div>
@@ -65,7 +65,7 @@ import axios from "axios"
 
 import WebMap from './components/WebMap.vue'
 import Sidebar from './components/Sidebar.vue'
-import Population from './components/Population.vue'
+import Dailystat from './components/Dailystat.vue'
 import Ring from './components/Ring.vue'
 
 export default {
@@ -73,7 +73,7 @@ export default {
   components: {
     WebMap,
     Sidebar,
-    Population,
+    Dailystat,
     Ring
   },
   data() {
