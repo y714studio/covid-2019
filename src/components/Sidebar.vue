@@ -4,24 +4,23 @@
       <div class="row">
         <div class="d-flex section-main-stat-item">
           <div class="number">
-            <h2 class="color-purple">1</h2>
+            <h2 class="color-purple">{{ govInfoDailyStat[govInfoDailyStat.length - 1][6] }}</h2>
           </div>
           <div class="stat-label">
             <p>
-              <span class="text-bold">人死亡</span><br>
-              <span class="small color-grey">截至2020年2月10日 00:05</span>
+              <span class="text-bold">人死亡</span>
             </p>
           </div>
         </div>
 
         <div class="d-flex section-main-stat-item">
           <div class="number">
-            <h2 class="color-purple">50</h2>
+            <h2 class="color-purple">{{ govInfoDailyStat[govInfoDailyStat.length - 1][2] }}</h2>
           </div>
           <div class="stat-label">
             <p>
               <span class="text-bold">人感染</span><br>
-              <span class="small color-grey">13人情況危殆</span>
+              <span class="small color-grey">3人情況危殆</span>
             </p>
           </div>
         </div>
@@ -32,7 +31,7 @@
               <span class="text-bold">仍住院檢查個案</span>
             </p>
             <h3 class="color-purple">
-              1136
+              {{ govInfoDailyStat[govInfoDailyStat.length - 1][4] }}
             </h3>
           </div>
         </div>
@@ -43,7 +42,7 @@
               <span class="text-bold">排除感染個案</span>
             </p>
             <h3 class="color-purple">
-              713
+              {{ govInfoDailyStat[govInfoDailyStat.length - 1][3] }}
             </h3>
           </div>
         </div>
@@ -54,7 +53,7 @@
               <span class="text-bold">出院</span>
             </p>
             <h3 class="color-purple">
-              1
+              {{ govInfoDailyStat[govInfoDailyStat.length - 1][7] }}
             </h3>
           </div>
         </div>
@@ -65,7 +64,7 @@
               <span class="text-bold">符合呈報準則個案</span>
             </p>
             <h3 class="color-purple">
-              4443
+              {{ govInfoDailyStat[govInfoDailyStat.length - 1][5] }}
             </h3>
           </div>
         </div>
@@ -79,10 +78,10 @@
           <div class="ratio-bar-container">
             <div class="male-female-ratio-label">
               <span class="stat-male color-purple text-bold">
-                66.4%
+                {{ (numberOfMale*100 / govInfoDailyStat[govInfoDailyStat.length - 1][2]).toFixed(2) }}%
               </span>
               <span class="stat-female color-pink text-bold">
-                33.6%
+                {{ 100 - (numberOfMale*100 / govInfoDailyStat[govInfoDailyStat.length - 1][2]).toFixed(2) }}%
               </span>
               <span class="label-male color-grey small">
                 男
@@ -175,7 +174,30 @@
 
 <script>
 export default {
-  name: 'sidebar'
+  name: 'sidebar',
+  props: {
+    govInfoCases: {
+      type: Array,
+      default: () => ({})
+    },
+    govInfoDailyStat: {
+      type: Array,
+      default: () => ({})
+    }
+  },
+  computed: {
+    numberOfMale () {
+      let numberOfMale = 0
+
+      for (let i = 0; i < this.govInfoCases.length; i++) {
+        if (this.govInfoCases[i][3] === '男') {
+          numberOfMale++
+        }
+      }
+
+      return numberOfMale
+    }
+  }
 };
 
 </script>

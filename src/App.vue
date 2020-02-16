@@ -1,7 +1,10 @@
 <template>
   <div id="app" class="page-wars vue-cli plugin-bootstrap plugin-arcgis">
     <div class="dashboard-container">
-      <sidebar />
+      <sidebar
+        :govInfoCases="govInfoCases"
+        :govInfoDailyStat="govInfoDailyStat"
+      />
       <div class="container-fluid">
         <div class="row">
 
@@ -13,7 +16,9 @@
 
           <section class="col-md-12 col-lg-8">
             <div class="section-inner">
-              <population />
+              <population
+                :govInfoDailyStat="govInfoDailyStat"
+              />
             </div>
           </section>
 
@@ -56,6 +61,8 @@
 </template>
 
 <script>
+import axios from "axios"
+
 import WebMap from './components/WebMap.vue'
 import Sidebar from './components/Sidebar.vue'
 import Population from './components/Population.vue'
@@ -68,6 +75,23 @@ export default {
     Sidebar,
     Population,
     Ring
+  },
+  data() {
+    return {
+      govInfoCases: [],
+      govInfoDailyStat: []
+    }
+  },
+  mounted () {
+    axios.get('https://api.data.gov.hk/v1/filter?q=%7B%22resource%22%3A%22http%3A%2F%2Fwww.chp.gov.hk%2Ffiles%2Fmisc%2Fenhanced_sur_pneumonia_wuhan_chi.csv%22%2C%22section%22%3A1%2C%22format%22%3A%22json%22%7D')
+      .then((response) => {
+        this.govInfoCases = response.data.rows
+      })
+    axios.get('https://api.data.gov.hk/v1/filter?q=%7B%22resource%22%3A%22http%3A%2F%2Fwww.chp.gov.hk%2Ffiles%2Fmisc%2Flatest_situation_of_reported_cases_wuhan_chi.csv%22%2C%22section%22%3A1%2C%22format%22%3A%22json%22%7D')
+      .then((response) => {
+        console.log(response)
+        this.govInfoDailyStat = response.data.rows
+      })
   }
 }
 </script>
