@@ -59,7 +59,7 @@ export default {
           map: map,
           center: [114.1694, 22.3193],
           // center: [-118.805, 34.027],
-          zoom: 11,
+          zoom: 10,
           popup: {
             dockEnabled: true,
             dockOptions: {
@@ -151,8 +151,7 @@ export default {
           }
         };
 
-        let y = console
-        esriRequest(url, options).then(response => y.log(response.data));
+        esriRequest(url, options)
 
         // this.view.on("click", event => {
         //   var screenPoint = event.screenPoint;

@@ -2,14 +2,17 @@
   <aside>
     <section class="section-main-stat">
       <h1>covid 2019</h1>
-      <div class="row">
+      <div v-if="govInfoDailyStat.length" class="row">
         <div class="d-flex section-main-stat-item">
           <div class="number">
             <h2 class="color-purple">{{ govInfoDailyStat[govInfoDailyStat.length - 1][6] }}</h2>
           </div>
           <div class="stat-label">
             <p>
-              <span class="text-bold">人死亡</span>
+              <span class="text-bold">人死亡</span><br>
+              <span v-if="govInfoDailyStat[govInfoDailyStat.length - 1][6] - govInfoDailyStat[govInfoDailyStat.length - 2][6] !== 0" class="small">
+                {{ govInfoDailyStat[govInfoDailyStat.length - 1][6] - govInfoDailyStat[govInfoDailyStat.length - 2][6] }}
+              </span>
             </p>
           </div>
         </div>
@@ -21,7 +24,12 @@
           <div class="stat-label">
             <p>
               <span class="text-bold">人感染</span><br>
-              <span class="small color-grey">3人情況危殆</span>
+              <span v-if="govInfoDailyStat[govInfoDailyStat.length - 1][2] - govInfoDailyStat[govInfoDailyStat.length - 2][2] !== 0" class="small color-pink">
+                ▲{{ govInfoDailyStat[govInfoDailyStat.length - 1][2] - govInfoDailyStat[govInfoDailyStat.length - 2][2] }}
+              </span>
+              <span v-else class="small color-grey">
+                --
+              </span>
             </p>
           </div>
         </div>
@@ -33,6 +41,12 @@
             </p>
             <h3 class="color-purple">
               {{ govInfoDailyStat[govInfoDailyStat.length - 1][4] }}
+              <span v-if="govInfoDailyStat[govInfoDailyStat.length - 1][4] - govInfoDailyStat[govInfoDailyStat.length - 2][4] > 0" class="small color-pink">
+                ▲{{ govInfoDailyStat[govInfoDailyStat.length - 1][4] - govInfoDailyStat[govInfoDailyStat.length - 2][4] }}
+              </span>
+              <span v-else-if="govInfoDailyStat[govInfoDailyStat.length - 1][4] - govInfoDailyStat[govInfoDailyStat.length - 2][4] < 0" class="small color-green">
+                ▼{{ govInfoDailyStat[govInfoDailyStat.length - 2][4] - govInfoDailyStat[govInfoDailyStat.length - 1][4] }}
+              </span>
             </h3>
           </div>
         </div>
@@ -44,6 +58,12 @@
             </p>
             <h3 class="color-purple">
               {{ govInfoDailyStat[govInfoDailyStat.length - 1][3] }}
+              <span v-if="govInfoDailyStat[govInfoDailyStat.length - 1][3] - govInfoDailyStat[govInfoDailyStat.length - 2][3] > 0" class="small color-pink">
+                ▲{{ govInfoDailyStat[govInfoDailyStat.length - 1][3] - govInfoDailyStat[govInfoDailyStat.length - 2][3] }}
+              </span>
+              <span v-else-if="govInfoDailyStat[govInfoDailyStat.length - 1][3] - govInfoDailyStat[govInfoDailyStat.length - 2][3] < 0" class="small color-green">
+                ▼{{ govInfoDailyStat[govInfoDailyStat.length - 2][3] - govInfoDailyStat[govInfoDailyStat.length - 1][3] }}
+              </span>
             </h3>
           </div>
         </div>
@@ -55,6 +75,12 @@
             </p>
             <h3 class="color-purple">
               {{ govInfoDailyStat[govInfoDailyStat.length - 1][7] }}
+              <span v-if="govInfoDailyStat[govInfoDailyStat.length - 1][7] - govInfoDailyStat[govInfoDailyStat.length - 2][7] > 0" class="small color-pink">
+                ▲{{ govInfoDailyStat[govInfoDailyStat.length - 1][7] - govInfoDailyStat[govInfoDailyStat.length - 2][7] }}
+              </span>
+              <span v-else-if="govInfoDailyStat[govInfoDailyStat.length - 1][7] - govInfoDailyStat[govInfoDailyStat.length - 2][7] < 0" class="small color-green">
+                ▼{{ govInfoDailyStat[govInfoDailyStat.length - 2][7] - govInfoDailyStat[govInfoDailyStat.length - 1][7] }}
+              </span>
             </h3>
           </div>
         </div>
@@ -66,6 +92,12 @@
             </p>
             <h3 class="color-purple">
               {{ govInfoDailyStat[govInfoDailyStat.length - 1][5] }}
+              <span v-if="govInfoDailyStat[govInfoDailyStat.length - 1][5] - govInfoDailyStat[govInfoDailyStat.length - 2][5] > 0" class="small color-pink">
+                ▲{{ govInfoDailyStat[govInfoDailyStat.length - 1][5] - govInfoDailyStat[govInfoDailyStat.length - 2][5] }}
+              </span>
+              <span v-else-if="govInfoDailyStat[govInfoDailyStat.length - 1][5] - govInfoDailyStat[govInfoDailyStat.length - 2][5] < 0" class="small color-green">
+                ▼{{ govInfoDailyStat[govInfoDailyStat.length - 2][5] - govInfoDailyStat[govInfoDailyStat.length - 1][5] }}
+              </span>
             </h3>
           </div>
         </div>
@@ -92,7 +124,7 @@
               </span>
             </div>
             <div class="male-female-ratio-bar">
-              <div class="ratio-bar male-bar" style="width: 66.4%;" />
+              <div class="ratio-bar male-bar" :style="{width: (numberOfMale*100 / govInfoDailyStat[govInfoDailyStat.length - 1][2]).toFixed(2) + '%'}" />
             </div>
           </div>
         </div>
@@ -112,7 +144,7 @@
                 7.1%
               </span>
               <span class="label-overseas color-grey small">
-                境外
+                境內
               </span>
               <span class="label-unknown color-grey small">
                 不明
@@ -211,12 +243,14 @@ export default {
     top: 0;
     left: 0;
     padding: 15px 30px 0 40px;
+    overflow: scroll;
 
     @include media-breakpoint-down(sm) {
       position: relative;
       height: auto;
       width: 100%;
       margin-bottom: 40px;
+      padding: 15px 30px 0;
     }
 
     h1 {

@@ -53,7 +53,7 @@
             </div>
           </section>
 
-          <section class="col-md-6 col-lg-4">
+          <section class="col-md-6 col-lg-8">
             <div class="section-inner" style="background: #eee; min-height: 200px;" />
           </section>
 
@@ -89,19 +89,30 @@ export default {
   data() {
     return {
       govInfoCases: [],
-      govInfoDailyStat: []
+      govInfoDailyStat: [],
+      govInfoBuildingList: []
     }
   },
   mounted () {
-    axios.get('https://api.data.gov.hk/v1/filter?q=%7B%22resource%22%3A%22http%3A%2F%2Fwww.chp.gov.hk%2Ffiles%2Fmisc%2Fenhanced_sur_pneumonia_wuhan_chi.csv%22%2C%22section%22%3A1%2C%22format%22%3A%22json%22%7D')
+    this.fetchData()
+  },
+  methods: {
+    fetchData() {
+      axios.get('https://api.data.gov.hk/v1/filter?q=%7B%22resource%22%3A%22http%3A%2F%2Fwww.chp.gov.hk%2Ffiles%2Fmisc%2Fenhanced_sur_pneumonia_wuhan_chi.csv%22%2C%22section%22%3A1%2C%22format%22%3A%22json%22%7D')
       .then((response) => {
         this.govInfoCases = response.data.rows
       })
 
-    axios.get('https://api.data.gov.hk/v1/filter?q=%7B%22resource%22%3A%22http%3A%2F%2Fwww.chp.gov.hk%2Ffiles%2Fmisc%2Flatest_situation_of_reported_cases_wuhan_chi.csv%22%2C%22section%22%3A1%2C%22format%22%3A%22json%22%7D')
+      axios.get('https://api.data.gov.hk/v1/filter?q=%7B%22resource%22%3A%22http%3A%2F%2Fwww.chp.gov.hk%2Ffiles%2Fmisc%2Flatest_situation_of_reported_cases_wuhan_chi.csv%22%2C%22section%22%3A1%2C%22format%22%3A%22json%22%7D')
+        .then((response) => {
+          this.govInfoDailyStat = response.data.rows
+        })
+
+      axios.get('https://api.data.gov.hk/v1/filter?q=%7B%22resource%22%3A%22http%3A%2F%2Fwww.chp.gov.hk%2Ffiles%2Fmisc%2Fbuilding_list_chi.csv%22%2C%22section%22%3A1%2C%22format%22%3A%22json%22%7D')
       .then((response) => {
-        this.govInfoDailyStat = response.data.rows
+        this.govInfoBuildingList = response.data.rows
       })
+    }
   }
 }
 </script>
