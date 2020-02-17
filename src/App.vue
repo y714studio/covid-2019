@@ -24,7 +24,9 @@
 
           <section class="col-md-12 col-lg-4">
             <div class="section-inner">
-              <ring />
+              <ring
+                :govInfoCases="govInfoCases"
+              />
             </div>
           </section>
 

@@ -1,7 +1,7 @@
 <template>
   <aside>
     <section class="section-main-stat">
-      <h1>covid 2019</h1>
+      <h1>Covid 2019</h1>
       <div v-if="govInfoDailyStat.length" class="row">
         <div class="d-flex section-main-stat-item">
           <div class="number">

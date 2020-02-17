@@ -23,7 +23,7 @@ export default {
     }
   },
   watch: {
-    govInfoDailyStat: function(newVal) { // watch it
+    govInfoDailyStat: function(newVal) {
       let chart = am4core.create(this.$refs.chartdiv, am4charts.XYChart)
 
       let data = []

@@ -14,10 +14,7 @@
 
 <script>
 export default {
-  name: "latest-cases",
-  mounted() {
-
-  }
+  name: "latest-cases"
 };
 </script>
 
