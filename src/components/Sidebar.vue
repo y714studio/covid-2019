@@ -299,7 +299,7 @@ export default {
             margin-top: 6px;
 
             .district-bar-inner {
-              background-color: #c2c2c2;
+              background-color: #1e52a4;
               height: 100%;
             }
           }
