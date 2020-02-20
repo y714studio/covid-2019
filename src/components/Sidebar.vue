@@ -3,6 +3,8 @@
     <section class="section-main-stat">
       <h1>Covid 2019</h1>
       <div v-if="govInfoDailyStat.length" class="row">
+        <p class="color-grey updated-date">Updated date:<br>
+          {{ govInfoDailyStat[govInfoDailyStat.length - 1][0] }}</p>
         <div class="d-flex section-main-stat-item">
           <div class="number">
             <h2 class="color-purple">{{ govInfoDailyStat[govInfoDailyStat.length - 1][6] }}</h2>
@@ -10,8 +12,8 @@
           <div class="stat-label">
             <p>
               <span class="text-bold">人死亡</span><br>
-              <span v-if="govInfoDailyStat[govInfoDailyStat.length - 1][6] - govInfoDailyStat[govInfoDailyStat.length - 2][6] !== 0" class="small">
-                {{ govInfoDailyStat[govInfoDailyStat.length - 1][6] - govInfoDailyStat[govInfoDailyStat.length - 2][6] }}
+              <span v-if="govInfoDailyStat[govInfoDailyStat.length - 1][6] - govInfoDailyStat[govInfoDailyStat.length - 2][6] !== 0" class="small color-pink">
+                ▲{{ govInfoDailyStat[govInfoDailyStat.length - 1][6] - govInfoDailyStat[govInfoDailyStat.length - 2][6] }}
               </span>
             </p>
           </div>
@@ -54,23 +56,6 @@
         <div class="d-flex section-main-stat-item section-main-stat-item-half">
           <div class="stat-label">
             <p>
-              <span class="text-bold">排除感染個案</span>
-            </p>
-            <h3 class="color-purple">
-              {{ govInfoDailyStat[govInfoDailyStat.length - 1][3] }}
-              <span v-if="govInfoDailyStat[govInfoDailyStat.length - 1][3] - govInfoDailyStat[govInfoDailyStat.length - 2][3] > 0" class="small color-pink">
-                ▲{{ govInfoDailyStat[govInfoDailyStat.length - 1][3] - govInfoDailyStat[govInfoDailyStat.length - 2][3] }}
-              </span>
-              <span v-else-if="govInfoDailyStat[govInfoDailyStat.length - 1][3] - govInfoDailyStat[govInfoDailyStat.length - 2][3] < 0" class="small color-green">
-                ▼{{ govInfoDailyStat[govInfoDailyStat.length - 2][3] - govInfoDailyStat[govInfoDailyStat.length - 1][3] }}
-              </span>
-            </h3>
-          </div>
-        </div>
-
-        <div class="d-flex section-main-stat-item section-main-stat-item-half">
-          <div class="stat-label">
-            <p>
               <span class="text-bold">出院</span>
             </p>
             <h3 class="color-purple">
@@ -80,23 +65,6 @@
               </span>
               <span v-else-if="govInfoDailyStat[govInfoDailyStat.length - 1][7] - govInfoDailyStat[govInfoDailyStat.length - 2][7] < 0" class="small color-green">
                 ▼{{ govInfoDailyStat[govInfoDailyStat.length - 2][7] - govInfoDailyStat[govInfoDailyStat.length - 1][7] }}
-              </span>
-            </h3>
-          </div>
-        </div>
-
-        <div class="d-flex section-main-stat-item section-main-stat-item-half">
-          <div class="stat-label">
-            <p>
-              <span class="text-bold">符合呈報準則個案</span>
-            </p>
-            <h3 class="color-purple">
-              {{ govInfoDailyStat[govInfoDailyStat.length - 1][5] }}
-              <span v-if="govInfoDailyStat[govInfoDailyStat.length - 1][5] - govInfoDailyStat[govInfoDailyStat.length - 2][5] > 0" class="small color-pink">
-                ▲{{ govInfoDailyStat[govInfoDailyStat.length - 1][5] - govInfoDailyStat[govInfoDailyStat.length - 2][5] }}
-              </span>
-              <span v-else-if="govInfoDailyStat[govInfoDailyStat.length - 1][5] - govInfoDailyStat[govInfoDailyStat.length - 2][5] < 0" class="small color-green">
-                ▼{{ govInfoDailyStat[govInfoDailyStat.length - 2][5] - govInfoDailyStat[govInfoDailyStat.length - 1][5] }}
               </span>
             </h3>
           </div>
@@ -138,21 +106,21 @@
           <div class="ratio-bar-container">
             <div class="male-female-ratio-label">
               <span class="stat-overseas color-purple text-bold">
-                77.9%
+                {{(infectionCategories['本地個案']*100 / this.govInfoCases.length).toFixed(2)}}%
               </span>
               <span class="stat-unknow color-pink text-bold">
-                7.1%
+                {{(infectionCategories['未能確定']*100 / this.govInfoCases.length).toFixed(2)}}%
               </span>
-              <span class="label-overseas color-grey small">
+              <span class="label-inland color-grey small">
                 境內
               </span>
               <span class="label-unknown color-grey small">
-                不明
+                未能確定
               </span>
             </div>
             <div class="male-female-ratio-bar">
-              <div class="ratio-bar inland-bar" style="width: 92.9%;" />
-              <div class="ratio-bar oversears-bar" style="width: 77.9%;" />
+              <div class="ratio-bar inland-bar" :style="{width: ((infectionCategories['本地個案'] + infectionCategories['輸入個案'])*100 / this.govInfoCases.length).toFixed(2) + '%'}" />
+              <div class="ratio-bar oversears-bar" :style="{width: (infectionCategories['輸入個案']*100 / this.govInfoCases.length).toFixed(2) + '%'}" />
             </div>
           </div>
         </div>
@@ -216,6 +184,40 @@ export default {
     govInfoDailyStat: {
       type: Array,
       default: () => ({})
+    },
+    govInfoBuildingList: {
+      type: Array,
+      default: () => ({})
+    }
+  },
+  data() {
+    return {
+      infectionCategories: {
+        '本地個案': 0,
+        '輸入個案': 0,
+        '未能確定': 0
+      },
+      infectionDistricts: {}
+    }
+  },
+  watch: {
+    govInfoCases: function() {
+      for (let i = 0; i < this.govInfoCases.length; i++) {
+        if (this.govInfoCases[i][8] === '本地個案' || this.govInfoCases[i][8] === '輸入個案的密切接觸者' || this.govInfoCases[i][8] === '本地個案的密切接觸者' || this.govInfoCases[i][8] === '本地個案(源頭不明)') {
+          this.infectionCategories['本地個案'] += 1
+        } else if (this.govInfoCases[i][8] === '輸入個案') {
+          this.infectionCategories['輸入個案'] += 1
+        } else {
+          this.infectionCategories['未能確定'] += 1
+        }
+      }
+    },
+    govInfoBuildingList: function() {
+      // let theList = {}
+
+      // for (let i = 0; i < this.govInfoBuildingList.length; i++) {
+        
+      // }
     }
   },
   computed: {
@@ -242,7 +244,7 @@ export default {
     width: 280px;
     top: 0;
     left: 0;
-    padding: 15px 30px 0 40px;
+    padding: 12px 30px 0 40px;
     overflow: scroll;
 
     @include media-breakpoint-down(sm) {
@@ -259,6 +261,10 @@ export default {
       top: 25px;
       margin-top: 0;
       opacity: 0.1;
+    }
+
+    .updated-date {
+      font-size: 12px;
     }
 
     .section-main-stat-item {
@@ -329,7 +335,7 @@ export default {
           }
 
           .label-male,
-          .label-overseas {
+          .label-inland {
             position: absolute;
             top: 32px;
             left: 0;

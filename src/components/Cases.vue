@@ -4,9 +4,9 @@
       <div class="case-no">編號 {{ cs[0] }}</div>
       <div class="case-date">{{ cs[2] }}</div>
       <div class="case-gender">{{ cs[3] }}</div>
-      <div class="case-age flex-fill">{{ cs[4] }}歲</div>
-      <div class="case-nationality">{{ cs[7] }}</div>
-      <div class="case-description flex-fill"></div>
+      <div class="case-age">{{ cs[4] }}歲</div>
+      <div class="case-status">{{ cs[6] }}</div>
+      <div class="case-nationality flex-fill">{{ cs[7] }}</div>
       <div class="case-more color-purple" @click="showDetails">更多資料</div>
     </div>
     <div class="case-details">

@@ -22,39 +22,39 @@ export default {
       default: () => ({})
     }
   },
+  data() {
+    return {
+      categories: {
+        '本地個案': 0,
+        '輸入個案': 0,
+        '未能確定': 0
+      }
+    }
+  },
   watch: {
     govInfoCases: function() {
       let chart = am4core.create(this.$refs.chartdivring, am4charts.PieChart)
 
-      chart.data = [ {
-        "country": "Lithuania",
-        "litres": 501.9
-      }, {
-        "country": "Czech Republic",
-        "litres": 301.9
-      }, {
-        "country": "Ireland",
-        "litres": 201.1
-      }, {
-        "country": "Germany",
-        "litres": 165.8
-      }, {
-        "country": "Australia",
-        "litres": 139.9
-      }, {
-        "country": "Austria",
-        "litres": 128.3
-      }, {
-        "country": "UK",
-        "litres": 99
-      }, {
-        "country": "Belgium",
-        "litres": 60
-      }, {
-        "country": "The Netherlands",
-        "litres": 50
-      }];
+      for (let i = 0; i < this.govInfoCases.length; i++) {
+        if (this.govInfoCases[i][8] === '本地個案' || this.govInfoCases[i][8] === '輸入個案的密切接觸者' || this.govInfoCases[i][8] === '本地個案的密切接觸者' || this.govInfoCases[i][8] === '本地個案(源頭不明)') {
+          this.categories['本地個案'] += 1
+        } else if (this.govInfoCases[i][8] === '輸入個案') {
+          this.categories['輸入個案'] += 1
+        } else {
+          this.categories['未能確定'] += 1
+        }
+      }
 
+      chart.data = [ {
+        "country": "本地個案",
+        "litres":  this.categories['本地個案']
+      }, {
+        "country": "輸入個案",
+        "litres":  this.categories['輸入個案']
+      }, {
+        "country": "未能確定",
+        "litres":  this.categories['未能確定']
+      }]
       // Set inner radius
       chart.innerRadius = am4core.percent(50);
 

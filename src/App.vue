@@ -4,6 +4,7 @@
       <sidebar
         :govInfoCases="govInfoCases"
         :govInfoDailyStat="govInfoDailyStat"
+        :govInfoBuildingList="govInfoBuildingList"
       />
       <div class="container-fluid">
         <div class="row">
