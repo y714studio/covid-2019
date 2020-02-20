@@ -141,7 +141,7 @@
             <div v-for="(district, n) in infectionDistricts" :key="n" class="d-flex district">
               <label>{{ district[0] }}</label>
               <div class="district-bar">
-                <div class="district-bar-inner" style="width: 100%;" />
+                <div class="district-bar-inner" :style="{width: (district[1]*100/infectionDistricts[0][1]) + '%'}" />
               </div>
             </div>
           </div>
@@ -210,7 +210,7 @@ export default {
         return b[1] - a[1];
       })
 
-      this.infectionDistricts = sortable
+      this.infectionDistricts = sortable.slice(0, 5)
     }
   },
   computed: {
