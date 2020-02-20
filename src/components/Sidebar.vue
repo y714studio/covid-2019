@@ -349,7 +349,7 @@ export default {
           height: 8px;
           width: 100%;
           border-radius: 4px;
-          background-color: #ee71a9;
+          background-color: #e73d95;
           overflow: hidden;
           position: relative;
 
@@ -362,7 +362,7 @@ export default {
 
           .male-bar,
           .oversears-bar {
-            background-color: rgb(55, 52, 144);
+            background-color: #1e52a4;
           }
 
           .inland-bar {
