@@ -37,14 +37,7 @@
                 <h4>常寶自母太際的之新異靈品次</h4>
                 <p>深春口流投要式關原買如，象發以找回工修去！檢持聯員麼的是成生裡不全兩可打兒覺研河里也子國機個，勢則財實，不了充年讀專。</p>
                 <p>沒生年率學結決寫下防。知大一月來可他景道正新她路面方日，的規電口度現驚便請該爸交低，士決面獨，直心計正不言。</p>
-                <div class="row">
-                  <div class="col-md-2 age-vs-gender">
-                    <img src="./assets/2019_ncov_age_vs_gender_20200220.jpg">
-                  </div>
-                  <div class="col-md-10">
-                    <img src="./assets/2019_ncov_age_vs_time_20200220.jpg">
-                  </div>
-                </div>
+                <img src="./assets/2019_ncov_age_gender_time_20200220.jpg">
               </div>
             </div>
           </section>
