@@ -3,9 +3,9 @@
     <section class="section-main-stat">
       <h1>Covid 2019</h1>
       <div v-if="govInfoDailyStat.length" class="row">
-        <p class="color-grey updated-date">Updated date:<br>
+        <p class="color-grey updated-date">更新日期:<br>
           {{ govInfoDailyStat[govInfoDailyStat.length - 1][0] }}</p>
-        <div class="d-flex section-main-stat-item">
+        <div class="d-flex section-main-stat-item section-main-stat-item-half">
           <div class="number">
             <h2 class="color-purple">{{ govInfoDailyStat[govInfoDailyStat.length - 1][6] }}</h2>
           </div>
@@ -19,7 +19,7 @@
           </div>
         </div>
 
-        <div class="d-flex section-main-stat-item">
+        <div class="d-flex section-main-stat-item section-main-stat-item-half">
           <div class="number">
             <h2 class="color-purple">{{ govInfoDailyStat[govInfoDailyStat.length - 1][2] }}</h2>
           </div>
@@ -79,10 +79,10 @@
           <div class="ratio-bar-container">
             <div class="male-female-ratio-label">
               <span class="stat-male color-purple text-bold">
-                {{ (numberOfMale*100 / govInfoDailyStat[govInfoDailyStat.length - 1][2]).toFixed(2) }}%
+                {{ (numberOfMale*100 / govInfoDailyStat[govInfoDailyStat.length - 1][2]).toFixed(1) }}%
               </span>
               <span class="stat-female color-pink text-bold">
-                {{ 100 - (numberOfMale*100 / govInfoDailyStat[govInfoDailyStat.length - 1][2]).toFixed(2) }}%
+                {{ 100 - (numberOfMale*100 / govInfoDailyStat[govInfoDailyStat.length - 1][2]).toFixed(1) }}%
               </span>
               <span class="label-male color-grey small">
                 男
@@ -92,7 +92,7 @@
               </span>
             </div>
             <div class="male-female-ratio-bar">
-              <div class="ratio-bar male-bar" :style="{width: (numberOfMale*100 / govInfoDailyStat[govInfoDailyStat.length - 1][2]).toFixed(2) + '%'}" />
+              <div class="ratio-bar male-bar" :style="{width: (numberOfMale*100 / govInfoDailyStat[govInfoDailyStat.length - 1][2]).toFixed(1) + '%'}" />
             </div>
           </div>
         </div>
@@ -105,22 +105,28 @@
           </div>
           <div class="ratio-bar-container">
             <div class="male-female-ratio-label">
-              <span class="stat-overseas color-purple text-bold">
-                {{(infectionCategories['本地個案']*100 / this.govInfoCases.length).toFixed(2)}}%
+              <span class="stat-inland color-purple text-bold">
+                {{(infectionCategories['本地個案']*100 / this.govInfoCases.length).toFixed(1)}}%
+              </span>
+              <span class="stat-overseas color-green text-bold" :style="{left: (infectionCategories['本地個案']*100 / this.govInfoCases.length).toFixed(1) + '%'}">
+                {{(infectionCategories['輸入個案']*100 / this.govInfoCases.length).toFixed(1)}}%
               </span>
               <span class="stat-unknow color-pink text-bold">
-                {{(infectionCategories['未能確定']*100 / this.govInfoCases.length).toFixed(2)}}%
+                {{(infectionCategories['未能確定']*100 / this.govInfoCases.length).toFixed(1)}}%
               </span>
               <span class="label-inland color-grey small">
-                境內
+                本地
+              </span>
+              <span class="label-oversea color-grey small" :style="{left: (infectionCategories['本地個案']*100 / this.govInfoCases.length).toFixed(1) + '%'}">
+                輸入
               </span>
               <span class="label-unknown color-grey small">
                 未能確定
               </span>
             </div>
             <div class="male-female-ratio-bar">
-              <div class="ratio-bar inland-bar" :style="{width: ((infectionCategories['本地個案'] + infectionCategories['輸入個案'])*100 / this.govInfoCases.length).toFixed(2) + '%'}" />
-              <div class="ratio-bar oversears-bar" :style="{width: (infectionCategories['輸入個案']*100 / this.govInfoCases.length).toFixed(2) + '%'}" />
+              <div class="ratio-bar inland-bar" :style="{width: ((infectionCategories['本地個案'] + infectionCategories['輸入個案'])*100 / this.govInfoCases.length).toFixed(1) + '%'}" />
+              <div class="ratio-bar oversears-bar" :style="{width: (infectionCategories['本地個案']*100 / this.govInfoCases.length).toFixed(2) + '%'}" />
             </div>
           </div>
         </div>
@@ -132,38 +138,10 @@
             </p>
           </div>
           <div class="districts">
-            <div class="d-flex district">
-              <label>元朗</label>
+            <div v-for="(district, n) in infectionDistricts" :key="n" class="d-flex district">
+              <label>{{ district[0] }}</label>
               <div class="district-bar">
                 <div class="district-bar-inner" style="width: 100%;" />
-              </div>
-            </div>
-
-            <div class="d-flex district">
-              <label>將軍澳</label>
-              <div class="district-bar">
-                <div class="district-bar-inner" style="width: 80%;" />
-              </div>
-            </div>
-
-            <div class="d-flex district">
-              <label>北區</label>
-              <div class="district-bar">
-                <div class="district-bar-inner" style="width: 74%;" />
-              </div>
-            </div>
-
-            <div class="d-flex district">
-              <label>荃灣</label>
-              <div class="district-bar">
-                <div class="district-bar-inner" style="width: 72%;" />
-              </div>
-            </div>
-
-            <div class="d-flex district">
-              <label>黃大仙</label>
-              <div class="district-bar">
-                <div class="district-bar-inner" style="width: 43%;" />
               </div>
             </div>
           </div>
@@ -213,11 +191,26 @@ export default {
       }
     },
     govInfoBuildingList: function() {
-      // let theList = {}
+      let theList = {}
 
-      // for (let i = 0; i < this.govInfoBuildingList.length; i++) {
-        
-      // }
+      for (let i = 0; i < this.govInfoBuildingList.length; i++) {
+        if(theList[this.govInfoBuildingList[i][0]]) {
+          theList[this.govInfoBuildingList[i][0]] += this.govInfoBuildingList[i][3].split(',').length
+        } else {
+          theList[this.govInfoBuildingList[i][0]] = 1
+        }
+      }
+
+      let sortable = [];
+      for (let district in theList) {
+          sortable.push([district, theList[district]]);
+      }
+
+      sortable.sort(function(a, b) {
+        return b[1] - a[1];
+      })
+
+      this.infectionDistricts = sortable
     }
   },
   computed: {
@@ -265,6 +258,7 @@ export default {
 
     .updated-date {
       font-size: 12px;
+      width: 100%;
     }
 
     .section-main-stat-item {
@@ -329,13 +323,15 @@ export default {
           width: 100%;
 
           .stat-female,
-          .stat-unknow {
+          .stat-unknow,
+          .stat-overseas {
             position: absolute;
             right: 0;
           }
 
           .label-male,
-          .label-inland {
+          .label-inland,
+          .label-oversea {
             position: absolute;
             top: 32px;
             left: 0;

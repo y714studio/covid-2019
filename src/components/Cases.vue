@@ -83,7 +83,7 @@ export default {
 
       .icon-close {
         cursor: pointer;
-        width: 24px;
+        width: 16px;
         position: absolute;
         right: 30px;
         top: 12px;
