@@ -133,13 +133,13 @@
 
         <div class="section-main-stat-item section-main-stat-item">
           <div class="stat-label">
-            <p>
-              <span class="text-bold">檢疫人士居住地區</span>
+            <p class="small">
+              首五個過去14天內曾有確診個案居住過的住宅地區; 或過去 14 天內曾出現兩宗或以上確診個案的非住宅地區
             </p>
           </div>
           <div class="districts">
             <div v-for="(district, n) in infectionDistricts" :key="n" class="d-flex district">
-              <label>{{ district[0] }}</label>
+              <label>{{ district[0] }}({{district[1]}})</label>
               <div class="district-bar">
                 <div class="district-bar-inner" :style="{width: (district[1]*100/infectionDistricts[0][1]) + '%'}" />
               </div>
@@ -284,6 +284,8 @@ export default {
       }
 
       .districts {
+        margin-top: 16px;
+
         .district {
           margin: 4px 0;
 
