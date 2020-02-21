@@ -1,7 +1,7 @@
 <template>
   <div>
-    <h4>合魚花長者正打</h4>
-    <p>等不山景義記是童金西主麼太雖中排會平聲一色現級營養絕於聲確，體角的四天藝去們此西因型學正情樂英為與，不的知爸分一一</p>
+    <h4>病源</h4>
+    <p>「本地病源個案」指過去14日內沒有到過中國大陸、不曾與確診病例緊密接觸，實際病源不明，此處分類包括確診的本地個案密切接觸者。同樣，「可能本地病源個案」包括其密切接觸者；「輸入個案」包括其密切接觸者。</p>
     <div class="ring" ref="chartdivring" />
   </div>
 </template>
@@ -52,7 +52,7 @@ export default {
         "country": "輸入個案",
         "litres":  this.categories['輸入個案']
       }, {
-        "country": "未能確定",
+        "country": "可能本地個案",
         "litres":  this.categories['未能確定']
       }]
       // Set inner radius

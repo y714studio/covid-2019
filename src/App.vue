@@ -34,9 +34,10 @@
           <section class="col-md-12">
             <div class="section-inner">
               <div>
-                <h4>常寶自母太際的之新異靈品次</h4>
-                <p>深春口流投要式關原買如，象發以找回工修去！檢持聯員麼的是成生裡不全兩可打兒覺研河里也子國機個，勢則財實，不了充年讀專。</p>
-                <p>沒生年率學結決寫下防。知大一月來可他景道正新她路面方日，的規電口度現驚便請該爸交低，士決面獨，直心計正不言。</p>
+                <h4>確診個案分析</h4>
+                <p>輸入個案：在較短時間被發現（因為有外遊史協助判斷，雖然可能都有隱瞞）
+本地及可能本地個案：由發病（例如發燒、咳嗽）到確診接受隔離之間所花時間較長。<br>性別及年齡分析：男性病人的年齡分佈大多散落在40至70歲之間；女性病人年齡集中在60歲左右。
+                </p>
                 <img src="./assets/2019_ncov_age_gender_time_20200220.jpg">
               </div>
             </div>
@@ -54,14 +55,6 @@
                 :cases="govInfoCases"
               />
             </div>
-          </section>
-
-          <section class="col-md-6 col-lg-8">
-            <div class="section-inner" style="background: #eee; min-height: 200px;" />
-          </section>
-
-          <section class="col-md-6 col-lg-4">
-            <div class="section-inner" style="background: #eee; min-height: 200px;" />
           </section>
         </div>
       </div>

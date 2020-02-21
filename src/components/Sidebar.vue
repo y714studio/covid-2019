@@ -100,7 +100,7 @@
         <div class="section-main-stat-item">
           <div class="stat-label">
             <p>
-              <span class="text-bold">感染地方</span>
+              <span class="text-bold">病源</span>
             </p>
           </div>
           <div class="ratio-bar-container">
@@ -121,7 +121,7 @@
                 輸入
               </span>
               <span class="label-unknown color-grey small">
-                未能確定
+                可能本地
               </span>
             </div>
             <div class="male-female-ratio-bar">
