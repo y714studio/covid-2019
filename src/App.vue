@@ -37,7 +37,8 @@
                 <h4>常寶自母太際的之新異靈品次</h4>
                 <p>深春口流投要式關原買如，象發以找回工修去！檢持聯員麼的是成生裡不全兩可打兒覺研河里也子國機個，勢則財實，不了充年讀專。</p>
                 <p>沒生年率學結決寫下防。知大一月來可他景道正新她路面方日，的規電口度現驚便請該爸交低，士決面獨，直心計正不言。</p>
-                <img src="./assets/some-graph.jpeg">
+                <!-- <img src="./assets/some-graph.jpeg"> -->
+                <date-graph />
               </div>
             </div>
           </section>
@@ -78,6 +79,7 @@ import Dailystat from './components/Dailystat.vue'
 import Ring from './components/Ring.vue'
 import Cases from './components/Cases.vue'
 import LatestCases from './components/LatestCases.vue'
+import DateGraph from './components/DateGraph.vue'
 
 export default {
   name: 'app',
@@ -87,7 +89,8 @@ export default {
     Dailystat,
     Ring,
     Cases,
-    LatestCases
+    LatestCases,
+    DateGraph
   },
   data() {
     return {
