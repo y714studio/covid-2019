@@ -35,10 +35,11 @@
             <div class="section-inner">
               <div>
                 <h4>確診個案分析</h4>
-                <p>輸入個案：在較短時間被發現（因為有外遊史協助判斷，雖然可能都有隱瞞）
-本地及可能本地個案：由發病（例如發燒、咳嗽）到確診接受隔離之間所花時間較長。<br>性別及年齡分析：男性病人的年齡分佈大多散落在40至70歲之間；女性病人年齡集中在60歲左右。
+                <p>
+                  輸入個案：在較短時間被發現（因為有外遊史協助判斷，雖然可能都有隱瞞）本地及可能本地個案：由發病（例如發燒、咳嗽）到確診接受隔離之間所花時間較長。<br>性別及年齡分析：男性病人的年齡分佈大多散落在40至70歲之間；女性病人年齡集中在60歲左右。
                 </p>
-                <img src="./assets/2019_ncov_age_gender_time_20200220.jpg">
+                <!-- <img src="./assets/2019_ncov_age_gender_time_20200220.jpg"> -->
+                <date-graph />
               </div>
             </div>
           </section>
@@ -71,6 +72,7 @@ import Dailystat from './components/Dailystat.vue'
 import Ring from './components/Ring.vue'
 import Cases from './components/Cases.vue'
 import LatestCases from './components/LatestCases.vue'
+import DateGraph from './components/DateGraph.vue'
 
 export default {
   name: 'app',
@@ -80,7 +82,8 @@ export default {
     Dailystat,
     Ring,
     Cases,
-    LatestCases
+    LatestCases,
+    DateGraph
   },
   data() {
     return {
