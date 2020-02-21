@@ -1,6 +1,12 @@
 <template>
   <svg id="date-graph">
-    <line class="date-line" v-for="(date, i) in dates" :x1="datesx[i] + graphx - offsetx" :y1="margin" :x2="datesx[i] + graphx - offsetx" :y2="margin + yaxish" :key="'date-line-' + i" />
+    <text class="age" v-for="n in 5" :x="datesx[0] + graphx - offsetx - 15" :y="margin + yaxish*0.2*(n - 1)" v-text="100 - (n - 1)*20" :key="'age-' + n" />
+    
+
+    <rect class="stripe" v-for="n in 5" :x="graphx - offsetx" :y="margin + yaxish*0.2*(n - 1)" :width="graphw" :height="yaxish*0.1" :key="'stripe-' + n" />    
+    <line class="age-line" v-for="n in 5" :x1="graphx - offsetx - 10" :y1="margin + yaxish*0.2*(n - 1)" :x2="graphw + graphx - offsetx" :y2="margin + yaxish*0.2*(n - 1)" :key="'age-line-' + n" />
+    <line class="x-axis" :x1="graphx - offsetx" :y1="margin + yaxish" :x2="graphw + graphx - offsetx" :y2="margin + yaxish" />
+    <line class="date-line" :class="{ 'first': i == 0 }" v-for="(date, i) in dates" :x1="datesx[i] + graphx - offsetx" :y1="margin" :x2="datesx[i] + graphx - offsetx" :y2="margin + yaxish" :key="'date-line-' + i" />
     <text class="date" v-for="(sunday, i) in sundays" :x="datesx[firstSundayi + 7*i] + graphx - offsetx" :y="margin + yaxish + 10" v-text="sundaysName[i]" :key="'date-' + i" />
   </svg>
 </template>
@@ -15,9 +21,10 @@ const margin = 50;
 const graphx = 100;
 const graphy = 50;
 const xaxisi = 29; // i = increment
-const yaxish = 400;
+const yaxish = 280;
 
 const dates = [
+  20200117,
   20200118,
   20200119,
   20200120,
@@ -90,6 +97,9 @@ export default {
       return this.sundays.map((date) => {
         return ((date - (~~(date/10000)*10000))/100).toFixed(2);
       })
+    },
+    graphw () { // graph width
+      return this.datesx[this.datesx.length - 1];
     }
   },
   mounted () {
@@ -100,7 +110,7 @@ export default {
       this.mousex = event.clientX;
     });
 
-    const dragRange = this.datesx[this.datesx.length - 1] + graphx - datagraph.getBoundingClientRect().width + margin;
+    const dragRange = this.graphw + graphx - datagraph.getBoundingClientRect().width + margin;
 
     datagraph.addEventListener('mousemove', (event) => {
       if (this.isdragging == true) {
@@ -133,6 +143,23 @@ export default {
     cursor: grabbing;
   }
 
+  .stripe {
+    fill: #8f8f8c;
+    opacity: 0.1;
+  }
+
+  .x-axis {
+    stroke: #8f8f8c;
+    opacity: 0.75;
+  }
+
+  .age {
+    fill: #8f8f8c;
+    font-size: 12px;
+    text-anchor: end;
+    dominant-baseline: middle;
+  }
+
   .date {
     fill: red;
     font-size: 12px;
@@ -144,8 +171,14 @@ export default {
     -webkit-user-select: none;
   }
 
-  .date-line {
+  .date-line,
+  .age-line {
     stroke: #dcddde;
+    opacity: 0.75;
+  }
+
+  .date-line.first {
+    display: none;
   }
 }
 </style>
