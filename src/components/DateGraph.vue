@@ -1,25 +1,30 @@
 <template>
   <svg id="date-graph">
-    <!-- Side Graph -->
-    <text class="age" v-for="n in 5" :x="margin - offsetx - 15" :y="graphy + yaxish*0.2*(n - 1)" v-text="100 - (n - 1)*20" :key="'side-age-' + n" />
-    <rect class="stripe" v-for="n in 5" :x="margin - offsetx" :y="graphy + yaxish*0.2*(n - 1)" :width="sidegraphw" :height="yaxish*0.1" :key="'side-stripe-' + n" />
-    <line class="age-line" v-for="n in 5" :x1="margin - offsetx - 10" :y1="graphy + yaxish*0.2*(n - 1)" :x2="sidegraphw + margin - offsetx" :y2="graphy + yaxish*0.2*(n - 1)" :key="'side-age-line-' + n" />
-    <line class="x-axis" :x1="margin - offsetx" :y1="graphy + yaxish" :x2="sidegraphw + margin - offsetx" :y2="graphy + yaxish" />
-    <template v-for="(patient, i) in cases" >
-      <path class="case" v-if="patient.gender == 'male'" :d="drawDiamond(sideMalex - offsetx, (1-(patient.age/100))*yaxish + margin)" :fill="patient.origin.substring(0, 5) == 'local' ? '#e83d96' : '#1e52a4'" :key="'side-case-' + i" />
-      <circle class="case" v-if="patient.gender == 'female'" :cx="sideFemalex - offsetx" :cy="(1-(patient.age/100))*yaxish + margin" :r="8" :fill="patient.origin.substring(0, 5) == 'local' ? '#e83d96' : '#1e52a4'" :key="'side-case-' + i" />
-    </template>
-    <text class="gender" :x="sideMalex - offsetx" :y="graphy + yaxish + 10" :key="'date-' + i">男</text>
-    <text class="gender" :x="sideFemalex - offsetx" :y="graphy + yaxish + 10" :key="'date-' + i">女</text>
-
     <!-- Main Graph -->
-    <text class="age" v-for="n in 5" :x="datesx[0] + graphx - offsetx - 15" :y="graphy + yaxish*0.2*(n - 1)" v-text="100 - (n - 1)*20" :key="'age-' + n" />
-    <rect class="stripe" v-for="n in 5" :x="graphx - offsetx" :y="graphy + yaxish*0.2*(n - 1)" :width="graphw" :height="yaxish*0.1" :key="'stripe-' + n" />    
-    <line class="age-line" v-for="n in 5" :x1="graphx - offsetx - 10" :y1="graphy + yaxish*0.2*(n - 1)" :x2="graphw + graphx - offsetx" :y2="graphy + yaxish*0.2*(n - 1)" :key="'age-line-' + n" />
+    <rect class="stripe" v-for="n in 5" :x="graphx - offsetx" :y="graphy + yaxish*0.2*(n - 1)" :width="graphw" :height="yaxish*0.1" :key="'stripe-' + n" />  
+    <line class="age-line" v-for="n in 5" :x1="graphx - offsetx" :y1="graphy + yaxish*0.2*(n - 1)" :x2="graphw + graphx - offsetx" :y2="graphy + yaxish*0.2*(n - 1)" :key="'age-line-' + n" />
     <line class="x-axis" :x1="graphx - offsetx" :y1="graphy + yaxish" :x2="graphw + graphx - offsetx" :y2="graphy + yaxish" />
     <line class="date-line" :class="{ 'first': i == 0 }" v-for="(date, i) in dates" :x1="datesx[i] + graphx - offsetx" :y1="margin" :x2="datesx[i] + graphx - offsetx" :y2="graphy + yaxish" :key="'date-line-' + i" />
     <text class="date" v-for="(sunday, i) in sundays" :x="datesx[firstSundayi + 7*i] + graphx - offsetx" :y="graphy + yaxish + 10" v-text="sundaysName[i]" :key="'date-' + i" />
     <path class="case" v-for="(patient, i) in cases" :d="drawPath(patient.gender, datesxIndex[patient.start] + graphx - offsetx, datesxIndex[patient.confirmed] + graphx - offsetx, (1-(patient.age/100))*yaxish + margin)" :fill="patient.origin.substring(0, 5) == 'local' ? '#e83d96' : '#1e52a4'" :key="'case-' + i" />
+    <rect class="side-bg" :x="0" :y="0" :width="graphx" :height="margin + yaxish + margin" />
+    <text class="age" v-for="n in 5" :x="datesx[0] + graphx - 15" :y="graphy + yaxish*0.2*(n - 1)" v-text="100 - (n - 1)*20" :key="'age-' + n" />
+    <line class="age-line" v-for="n in 5" :x1="graphx - 10" :y1="graphy + yaxish*0.2*(n - 1)" :x2="graphx" :y2="graphy + yaxish*0.2*(n - 1)" :key="'age-line-y-axis-' + n" />
+    <text class="fit-graph" :x="graphx" :y="margin - 20">Fit Graph</text>
+    <text class="expand-graph" :x="graphx + 80" :y="margin - 20">Expand Graph</text>
+
+
+    <!-- Side Graph -->
+    <text class="age" v-for="n in 5" :x="margin - 15" :y="graphy + yaxish*0.2*(n - 1)" v-text="100 - (n - 1)*20" :key="'side-age-' + n" />
+    <rect class="stripe" v-for="n in 5" :x="margin" :y="graphy + yaxish*0.2*(n - 1)" :width="sidegraphw" :height="yaxish*0.1" :key="'side-stripe-' + n" />
+    <line class="age-line" v-for="n in 5" :x1="margin - 10" :y1="graphy + yaxish*0.2*(n - 1)" :x2="sidegraphw + margin" :y2="graphy + yaxish*0.2*(n - 1)" :key="'side-age-line-' + n" />
+    <line class="x-axis" :x1="margin" :y1="graphy + yaxish" :x2="sidegraphw + margin" :y2="graphy + yaxish" />
+    <template v-for="(patient, i) in cases" >
+      <path class="case" v-if="patient.gender == 'male'" :d="drawDiamond(sideMalex, (1-(patient.age/100))*yaxish + margin)" :fill="patient.origin.substring(0, 5) == 'local' ? '#e83d96' : '#1e52a4'" :key="'side-case-' + i" />
+      <circle class="case" v-if="patient.gender == 'female'" :cx="sideFemalex" :cy="(1-(patient.age/100))*yaxish + margin" :r="8" :fill="patient.origin.substring(0, 5) == 'local' ? '#e83d96' : '#1e52a4'" :key="'side-case-' + i" />
+    </template>
+    <text class="gender" :x="sideMalex" :y="graphy + yaxish + 10">男</text>
+    <text class="gender" :x="sideFemalex" :y="graphy + yaxish + 10">女</text>
   </svg>
 </template>
 
@@ -852,11 +857,14 @@ export default {
       graphy: graphy,
       xaxisi: xaxisi, // i = increment
       yaxish: yaxish,
-      sidegraphw: sidegraphw,
-      mousex: null,
-      offsetx: 0,
       sideMalex: sideMalex,
       sideFemalex: sideFemalex,
+      sidegraphw: sidegraphw,
+      datagraph: document.querySelector('#date-graph'),
+      expandIntervalId: 0,
+      fitIntervalId: 0,
+      mousex: null,
+      offsetx: 0,
       isdragging: false,
       dates: dates,
       cases: cases
@@ -865,7 +873,7 @@ export default {
   computed: {
     datesx () {
       return this.dates.map((date, i) => {
-        return i * xaxisi;
+        return i * this.xaxisi;
       })
     },
     datesxIndex () {
@@ -890,32 +898,51 @@ export default {
     },
     graphw () { // graph width
       return this.datesx[this.datesx.length - 1];
+    },
+    dragRange () {
+      return this.graphw + this.graphx - this.datagraph.getBoundingClientRect().width + this.margin;
+    },
+    graphvp () {
+      return this.datagraph.getBoundingClientRect().width - graphx - margin;
+    },
+    fitxaxisi () {
+      return this.graphvp / (this.datesx.length - 1);
     }
   },
   mounted () {
-    const datagraph = document.querySelector('#date-graph');
+    this.datagraph = document.querySelector('#date-graph');
 
-    datagraph.addEventListener('mousedown', () => {
+    /* dragging */
+
+    this.datagraph.addEventListener('mousedown', () => {
       this.isdragging = true;
       this.mousex = event.clientX;
     });
 
-    const dragRange = this.graphw + graphx - datagraph.getBoundingClientRect().width + margin;
-
-    datagraph.addEventListener('mousemove', (event) => {
+    this.datagraph.addEventListener('mousemove', (event) => {
       if (this.isdragging == true) {
-        this.offsetx = Math.min(dragRange ,Math.max(0, this.offsetx + this.mousex - event.clientX));
+        this.offsetx = Math.min(this.dragRange ,Math.max(0, this.offsetx + this.mousex - event.clientX));
         this.mousex = event.clientX;
       }
     });
 
-    datagraph.addEventListener('mouseup', () => {
+    this.datagraph.addEventListener('mouseup', () => {
       this.isdragging = false;
     });
 
-    datagraph.addEventListener('mouseleave', () => {
+    this.datagraph.addEventListener('mouseleave', () => {
       this.isdragging = false;
     });
+
+    /* intro animation */
+
+    this.xaxisi = this.fitxaxisi;
+    this.expandGraph();
+
+    /* fit and expand graph */
+    document.querySelector('.fit-graph').addEventListener('click', this.fitGraph);
+    document.querySelector('.expand-graph').addEventListener('click', this.expandGraph);
+
   },
   methods: {
     drawPath (gender, startx, endx, y) {
@@ -948,6 +975,34 @@ export default {
         'L ' + x + ' ' + (y + 10) + ' ' +
         'Z'
       );
+    },
+    expandGraph () {
+      window.clearInterval(this.fitIntervalId);
+      window.clearInterval(this.expandIntervalId);
+
+      this.expandIntervalId = window.setInterval(()=>{
+        if (this.xaxisi < xaxisi) {
+          this.xaxisi = this.xaxisi + (xaxisi - this.fitxaxisi)/12;
+          this.offsetx = this.dragRange;
+        } else {
+          window.clearInterval(this.expandIntervalId);
+        }
+      }, 10);
+    },
+    fitGraph () {
+      const offsetxDiff = this.offsetx;
+
+      window.clearInterval(this.fitIntervalId);
+      window.clearInterval(this.expandIntervalId);
+
+      this.fitIntervalId = window.setInterval(()=>{
+        if (this.xaxisi > this.fitxaxisi) {
+          this.xaxisi = this.xaxisi - (xaxisi - this.fitxaxisi)/12;
+          this.offsetx = this.offsetx - offsetxDiff/12;
+        } else {
+          window.clearInterval(this.fitIntervalId);
+        }
+      }, 10);
     }
   }
 }
@@ -971,6 +1026,10 @@ export default {
     opacity: 0.1;
   }
 
+  .side-bg {
+    fill: #fff;
+  }
+
   .x-axis {
     stroke: #8f8f8c;
     opacity: 0.75;
@@ -978,12 +1037,19 @@ export default {
 
   .age,
   .date,
-  .gender {
+  .gender,
+  .fit-graph,
+  .expand-graph {
     font-size: 12px;
-    pointer-events: none;
     user-select: none;
     -ms-user-select: none;
     -webkit-user-select: none;
+  }
+
+  .age,
+  .date,
+  .gender {
+    pointer-events: none;
   }
 
   .age {
@@ -1002,6 +1068,12 @@ export default {
     fill: #8f8f8c;
     text-anchor: middle;
     dominant-baseline: hanging;
+  }
+
+  .fit-graph,
+  .expand-graph {
+    fill: #8f8f8c;
+    cursor: pointer;
   }
 
   .date-line,
