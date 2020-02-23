@@ -36,6 +36,10 @@ export default {
       let chart = am4core.create(this.$refs.chartdivring, am4charts.PieChart)
 
       for (let i = 0; i < this.govInfoCases.length; i++) {
+        // if (this.categories[this.govInfoCases[i][8]]) {
+        //   this.categories[this.govInfoCases[i][8]] += 1
+        // }
+
         if (this.govInfoCases[i][8] === '本地個案' || this.govInfoCases[i][8] === '輸入個案的密切接觸者' || this.govInfoCases[i][8] === '本地個案的密切接觸者' || this.govInfoCases[i][8] === '本地個案(源頭不明)') {
           this.categories['本地個案'] += 1
         } else if (this.govInfoCases[i][8] === '輸入個案') {
