@@ -4,7 +4,7 @@
       <div class="row header-row">
         <h1>
           <span>眾新聞 - 肺炎資訊</span>
-          <a href="#">
+          <a title="眾新聞" target="_blank" href="https://www.hkcnews.com">
             <img class="icon-close" src="./../assets/hkcnews_400x400.png">
           </a>
         </h1>
@@ -268,6 +268,10 @@ export default {
         height: 44px;
         position: relative;
         overflow: hidden;
+
+        @include media-breakpoint-down(sm) {
+          margin: 10px 0 0;
+        }
 
         span {
           display: block;

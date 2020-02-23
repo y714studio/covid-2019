@@ -126,7 +126,7 @@ export default {
     padding-left: 280px;
 
     @include media-breakpoint-down(sm) {
-      padding: 15px;
+      padding: 15px 0;
     }
 
     .section-inner {
