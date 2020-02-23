@@ -24,11 +24,7 @@ export default {
   },
   data() {
     return {
-      categories: {
-        '本地個案': 0,
-        '輸入個案': 0,
-        '未能確定': 0
-      }
+      categories: {}
     }
   },
   watch: {
@@ -36,29 +32,33 @@ export default {
       let chart = am4core.create(this.$refs.chartdivring, am4charts.PieChart)
 
       for (let i = 0; i < this.govInfoCases.length; i++) {
-        // if (this.categories[this.govInfoCases[i][8]]) {
-        //   this.categories[this.govInfoCases[i][8]] += 1
-        // }
+        console.log(this.govInfoCases[i][8])
 
-        if (this.govInfoCases[i][8] === '本地個案' || this.govInfoCases[i][8] === '輸入個案的密切接觸者' || this.govInfoCases[i][8] === '本地個案的密切接觸者' || this.govInfoCases[i][8] === '本地個案(源頭不明)') {
-          this.categories['本地個案'] += 1
-        } else if (this.govInfoCases[i][8] === '輸入個案') {
-          this.categories['輸入個案'] += 1
+        if (this.categories[this.govInfoCases[i][8]]) {
+          this.categories[this.govInfoCases[i][8]] += 1
         } else {
-          this.categories['未能確定'] += 1
+          this.categories[this.govInfoCases[i][8]] = 1
         }
+
+        // if (this.govInfoCases[i][8] === '本地個案' || this.govInfoCases[i][8] === '輸入個案的密切接觸者' || this.govInfoCases[i][8] === '本地個案的密切接觸者' || this.govInfoCases[i][8] === '本地個案(源頭不明)') {
+        //   this.categories['本地個案'] += 1
+        // } else if (this.govInfoCases[i][8] === '輸入個案') {
+        //   this.categories['輸入個案'] += 1
+        // } else {
+        //   this.categories['未能確定'] += 1
+        // }
       }
 
-      chart.data = [ {
-        "country": "本地個案",
-        "litres":  this.categories['本地個案']
-      }, {
-        "country": "輸入個案",
-        "litres":  this.categories['輸入個案']
-      }, {
-        "country": "可能本地個案",
-        "litres":  this.categories['未能確定']
-      }]
+      let ringArr = []
+
+      for (let cat of Object.keys(this.categories)) {
+        ringArr.push({
+          "country": cat,
+          "litres": this.categories[cat]
+        })
+      }
+
+      chart.data = ringArr
       // Set inner radius
       chart.innerRadius = am4core.percent(50);
 
