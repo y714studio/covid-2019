@@ -1,31 +1,79 @@
 <template>
-  <svg id="date-graph">
-    <!-- Main Graph -->
-    <rect class="stripe" v-for="n in 5" :x="graphx - offsetx" :y="graphy + yaxish*0.2*(n - 1)" :width="graphw" :height="yaxish*0.1" :key="'stripe-' + n" />  
-    <line class="age-line" v-for="n in 5" :x1="graphx - offsetx" :y1="graphy + yaxish*0.2*(n - 1)" :x2="graphw + graphx - offsetx" :y2="graphy + yaxish*0.2*(n - 1)" :key="'age-line-' + n" />
-    <line class="x-axis" :x1="graphx - offsetx" :y1="graphy + yaxish" :x2="graphw + graphx - offsetx" :y2="graphy + yaxish" />
-    <line class="date-line" :class="{ 'first': i == 0 }" v-for="(date, i) in dates" :x1="datesx[i] + graphx - offsetx" :y1="margin" :x2="datesx[i] + graphx - offsetx" :y2="graphy + yaxish" :key="'date-line-' + i" />
-    <text class="date" v-for="(sunday, i) in sundays" :x="datesx[firstSundayi + 7*i] + graphx - offsetx" :y="graphy + yaxish + 10" v-text="sundaysName[i]" :key="'date-' + i" />
-    <path class="case" v-for="(patient, i) in cases" :d="drawPath(patient.gender, datesxIndex[patient.start] + graphx - offsetx, datesxIndex[patient.confirmed] + graphx - offsetx, (1-(patient.age/100))*yaxish + margin)" :fill="patient.origin.substring(0, 5) == 'local' ? '#e83d96' : '#1e52a4'" :key="'case-' + i" />
-    <rect class="side-bg" :x="0" :y="0" :width="graphx" :height="margin + yaxish + margin" />
-    <text class="age" v-for="n in 5" :x="datesx[0] + graphx - 15" :y="graphy + yaxish*0.2*(n - 1)" v-text="100 - (n - 1)*20" :key="'age-' + n" />
-    <line class="age-line" v-for="n in 5" :x1="graphx - 10" :y1="graphy + yaxish*0.2*(n - 1)" :x2="graphx" :y2="graphy + yaxish*0.2*(n - 1)" :key="'age-line-y-axis-' + n" />
-    <text class="fit-graph" :x="graphx" :y="margin - 20">縮小</text>
-    <text class="expand-graph" :x="graphx + 40" :y="margin - 20">放大</text>
+  <div>
+    <svg id="date-graph">
+      <!-- Main Graph -->
+      <rect class="stripe" v-for="n in 5" :x="graphx - offsetx" :y="graphy + yaxish*0.2*(n - 1)" :width="graphw" :height="yaxish*0.1" :key="'stripe-' + n" />  
+      <line class="age-line" v-for="n in 5" :x1="graphx - offsetx" :y1="graphy + yaxish*0.2*(n - 1)" :x2="graphw + graphx - offsetx" :y2="graphy + yaxish*0.2*(n - 1)" :key="'age-line-' + n" />
+      <line class="x-axis" :x1="graphx - offsetx" :y1="graphy + yaxish" :x2="graphw + graphx - offsetx" :y2="graphy + yaxish" />
+      <line class="date-line" :class="{ 'first': i == 0 }" v-for="(date, i) in dates" :x1="datesx[i] + graphx - offsetx" :y1="margin" :x2="datesx[i] + graphx - offsetx" :y2="graphy + yaxish" :key="'date-line-' + i" />
+      <text class="date" v-for="(sunday, i) in sundays" :x="datesx[firstSundayi + 7*i] + graphx - offsetx" :y="graphy + yaxish + 10" v-text="sundaysName[i]" :key="'date-' + i" />
+      <path class="case" v-for="(patient, i) in cases" :d="drawPath(patient.gender, datesxIndex[patient.start] + graphx - offsetx, datesxIndex[patient.confirmed] + graphx - offsetx, (1-(patient.age/100))*yaxish + margin)" :fill="patient.origin.substring(0, 5) == 'local' ? '#e83d96' : '#1e52a4'" :key="'case-' + i" />
+      <rect class="side-bg" :x="0" :y="0" :width="graphx" :height="margin + yaxish + margin" />
+      <text class="age" v-for="n in 5" :x="datesx[0] + graphx - 15" :y="graphy + yaxish*0.2*(n - 1)" v-text="100 - (n - 1)*20" :key="'age-' + n" />
+      <line class="age-line" v-for="n in 5" :x1="graphx - 10" :y1="graphy + yaxish*0.2*(n - 1)" :x2="graphx" :y2="graphy + yaxish*0.2*(n - 1)" :key="'age-line-y-axis-' + n" />
+      <text class="fit-graph" :x="graphx" :y="margin - 20">縮小</text>
+      <text class="expand-graph" :x="graphx + 40" :y="margin - 20">放大</text>
 
 
-    <!-- Side Graph -->
-    <text class="age" v-for="n in 5" :x="margin - 30" :y="graphy + yaxish*0.2*(n - 1)" v-text="100 - (n - 1)*20" :key="'side-age-' + n" />
-    <rect class="stripe" v-for="n in 5" :x="margin - 15" :y="graphy + yaxish*0.2*(n - 1)" :width="sidegraphw" :height="yaxish*0.1" :key="'side-stripe-' + n" />
-    <line class="age-line" v-for="n in 5" :x1="margin - 25" :y1="graphy + yaxish*0.2*(n - 1)" :x2="sidegraphw + 35" :y2="graphy + yaxish*0.2*(n - 1)" :key="'side-age-line-' + n" />
-    <line class="x-axis" :x1="margin" :y1="graphy + yaxish" :x2="sidegraphw + margin" :y2="graphy + yaxish" />
-    <template v-for="(patient, i) in cases" >
-      <path class="case" v-if="patient.gender == 'male'" :d="drawDiamond(sideMalex, (1-(patient.age/100))*yaxish + margin)" :fill="patient.origin.substring(0, 5) == 'local' ? '#e83d96' : '#1e52a4'" :key="'side-case-' + i" />
-      <circle class="case" v-if="patient.gender == 'female'" :cx="sideFemalex" :cy="(1-(patient.age/100))*yaxish + margin" :r="8" :fill="patient.origin.substring(0, 5) == 'local' ? '#e83d96' : '#1e52a4'" :key="'side-case-' + i" />
-    </template>
-    <text class="gender" :x="sideMalex" :y="graphy + yaxish + 10">男性</text>
-    <text class="gender" :x="sideFemalex" :y="graphy + yaxish + 10">女性</text>
-  </svg>
+      <!-- Side Graph -->
+      <text class="age" v-for="n in 5" :x="margin - 30" :y="graphy + yaxish*0.2*(n - 1)" v-text="100 - (n - 1)*20" :key="'side-age-' + n" />
+      <rect class="stripe" v-for="n in 5" :x="margin - 15" :y="graphy + yaxish*0.2*(n - 1)" :width="sidegraphw" :height="yaxish*0.1" :key="'side-stripe-' + n" />
+      <line class="age-line" v-for="n in 5" :x1="margin - 25" :y1="graphy + yaxish*0.2*(n - 1)" :x2="sidegraphw + 35" :y2="graphy + yaxish*0.2*(n - 1)" :key="'side-age-line-' + n" />
+      <line class="x-axis" :x1="margin" :y1="graphy + yaxish" :x2="sidegraphw + margin" :y2="graphy + yaxish" />
+      <template v-for="(patient, i) in cases" >
+        <path class="case" v-if="patient.gender == 'male'" :d="drawDiamond(sideMalex, (1-(patient.age/100))*yaxish + margin)" :fill="patient.origin.substring(0, 5) == 'local' ? '#e83d96' : '#1e52a4'" :key="'side-case-' + i" />
+        <circle class="case" v-if="patient.gender == 'female'" :cx="sideFemalex" :cy="(1-(patient.age/100))*yaxish + margin" :r="8" :fill="patient.origin.substring(0, 5) == 'local' ? '#e83d96' : '#1e52a4'" :key="'side-case-' + i" />
+      </template>
+      <text class="gender" :x="sideMalex" :y="graphy + yaxish + 10">男性</text>
+      <text class="gender" :x="sideFemalex" :y="graphy + yaxish + 10">女性</text>
+    </svg>
+    <div class="date-legends">
+      <div class="row align-items-end">
+        <div class="col-md-3">
+          <svg class="tall">
+            <path class="case grey" d="M16,38H198l9-8.5,10,10-10,10L198,41H16Z"/>
+            <line class="date-line" x1="16.5" y1="19" x2="16.5" y2="41"/>
+            <line class="date-line" x1="206.5" y1="19" x2="206.5" y2="41"/>
+            <text class="legend-text" transform="translate(0.76 11.21)">發病日</text>
+            <text class="legend-text" transform="translate(190.76 11.21)">確診日</text>
+          </svg>
+        </div>
+        <div class="col-md-2">
+          <svg class="short">
+            <path class="case grey" d="M59.53,9.2H74a8.24,8.24,0,1,1,0,3.1H59.53Z"/>
+            <path class="case grey" d="M0,9H12L21,.5l10,10-10,10L12,12H0Z"/>
+            <text class="legend-text" transform="translate(34.76 15.21)">男</text>
+            <text class="legend-text" transform="translate(94.76 15.21)">女</text>
+          </svg>
+        </div>
+        <div class="col-md-3 offset-md-2">
+          <svg class="short">
+            <path class="case" d="M0,9H12L21,.5l10,10-10,10L12,12H0Z"/>
+            <path class="case" d="M95,9h12l9-8.5,10,10-10,10L107,12H95Z"/>
+            <text class="legend-text" transform="translate(34.76 14.21)">輸入個案</text>            
+            <text class="legend-text" transform="translate(130.76 14.21)">輸入個案的密切接觸者</text>
+          </svg>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4 offset-md-3">
+          <svg class="short">
+            <path class="cls-1" d="M0,9H12L21,.5l10,10-10,10L12,12H0Z"/>
+            <path class="cls-1" d="M119,9h12l9-8.5,10,10-10,10L131,12H119Z"/>
+            <text class="legend-text" transform="translate(34.76 14.21)">可能本地個案</text>
+            <text class="legend-text" transform="translate(154.76 14.21)">可能本地個案的密切接觸者</text>
+          </svg>
+        </div>
+        <div class="col-md-4">
+          <svg class="short">
+            <path class="cls-1" d="M0,9H12L21,.5l10,10-10,10L12,12H0Z"/>
+            <path class="cls-1" d="M148,9h12l9-8.5,10,10-10,10L160,12H148Z"/>
+            <text class="legend-text" transform="translate(34.76 14.21)">本地個案(源頭不明)</text>            
+            <text class="legend-text" transform="translate(183.76 14.21)">本地個案的密切接觸者</text></svg>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -94,7 +142,7 @@ const cases = [
     hospital: 'PMH',
     status: 'hospitalized',
     resident: 'NHKR',
-    origin: 'foreign'
+    origin: 'imported'
   },
   {
     caseNo: 2,
@@ -105,7 +153,7 @@ const cases = [
     hospital: 'PMH',
     status: 'hospitalized',
     resident: 'HKR',
-    origin: 'foreign'
+    origin: 'imported'
   },
   {
     caseNo: 3,
@@ -116,7 +164,7 @@ const cases = [
     hospital: 'PMH',
     status: 'hospitalized',
     resident: 'NHKR',
-    origin: 'foreign'
+    origin: 'imported'
   },
   {
     caseNo: 4,
@@ -127,7 +175,7 @@ const cases = [
     hospital: 'PMH',
     status: 'hospitalized',
     resident: 'NHKR',
-    origin: 'foreign'
+    origin: 'imported'
   },
   {
     caseNo: 5,
@@ -138,7 +186,7 @@ const cases = [
     hospital: 'PMH',
     status: 'hospitalized',
     resident: 'NHKR',
-    origin: 'foreign'
+    origin: 'imported'
   },
   {
     caseNo: 6,
@@ -149,7 +197,7 @@ const cases = [
     hospital: 'PMH',
     status: 'hospitalized',
     resident: 'HKR',
-    origin: 'foreign'
+    origin: 'imported'
   },
   {
     caseNo: 7,
@@ -160,7 +208,7 @@ const cases = [
     hospital: 'PMH',
     status: 'hospitalized',
     resident: 'HKR',
-    origin: 'foreign'
+    origin: 'imported'
   },
   {
     caseNo: 8,
@@ -171,7 +219,7 @@ const cases = [
     hospital: 'PMH',
     status: 'hospitalized',
     resident: 'NHKR',
-    origin: 'foreign'
+    origin: 'imported'
   },
   {
     caseNo: 9,
@@ -182,7 +230,7 @@ const cases = [
     hospital: 'PMH',
     status: 'hospitalized',
     resident: 'NHKR',
-    origin: 'foreign'
+    origin: 'imported'
   },
   {
     caseNo: 10,
@@ -193,7 +241,7 @@ const cases = [
     hospital: 'PMH',
     status: 'hospitalized',
     resident: 'NHKR',
-    origin: 'foreign'
+    origin: 'imported'
   },
   {
     caseNo: 11,
@@ -204,7 +252,7 @@ const cases = [
     hospital: 'PMH',
     status: 'hospitalized',
     resident: 'HKR',
-    origin: 'foreign/contact'
+    origin: 'imported-contact'
   },
   {
     caseNo: 12,
@@ -215,7 +263,7 @@ const cases = [
     hospital: 'PMH',
     status: 'hospitalized',
     resident: 'HKR',
-    origin: 'local/possible'
+    origin: 'local-possible'
   },
   {
     caseNo: 13,
@@ -226,7 +274,7 @@ const cases = [
     hospital: 'PMH',
     status: 'dead',
     resident: 'HKR',
-    origin: 'foreign'
+    origin: 'imported'
   },
   {
     caseNo: 14,
@@ -237,7 +285,7 @@ const cases = [
     hospital: 'PMH',
     status: 'hospitalized',
     resident: 'HKR',
-    origin: 'local/possible'
+    origin: 'local-possible'
   },
   {
     caseNo: 15,
@@ -248,7 +296,7 @@ const cases = [
     hospital: 'PMH',
     status: 'hospitalized',
     resident: 'HKR',
-    origin: 'foreign/contact'
+    origin: 'imported-contact'
   },
   {
     caseNo: 16,
@@ -259,7 +307,7 @@ const cases = [
     hospital: 'PMH',
     status: 'hospitalized',
     resident: 'HKR',
-    origin: 'local/unknown'
+    origin: 'local-unknown'
   },
   {
     caseNo: 17,
@@ -270,7 +318,7 @@ const cases = [
     hospital: 'PMH',
     status: 'hospitalized',
     resident: 'HKR',
-    origin: 'local/unknown'
+    origin: 'local-unknown'
   },
   {
     caseNo: 18,
@@ -281,7 +329,7 @@ const cases = [
     hospital: 'PMH',
     status: 'hospitalized',
     resident: 'HKR',
-    origin: 'local/unknown'
+    origin: 'local-unknown'
   },
   {
     caseNo: 19,
@@ -292,7 +340,7 @@ const cases = [
     hospital: 'PMH',
     status: 'hospitalized',
     resident: 'HKR',
-    origin: 'local/contact'
+    origin: 'local-contact'
   },
   {
     caseNo: 20,
@@ -303,7 +351,7 @@ const cases = [
     hospital: 'PMH',
     status: 'hospitalized',
     resident: 'HKR',
-    origin: 'local/contact'
+    origin: 'local-contact'
   },
   {
     caseNo: 21,
@@ -314,7 +362,7 @@ const cases = [
     hospital: 'PMH',
     status: 'hospitalized',
     resident: 'HKR',
-    origin: 'local/possible'
+    origin: 'local-possible'
   },
   {
     caseNo: 22,
@@ -325,7 +373,7 @@ const cases = [
     hospital: 'PMH',
     status: 'hospitalized',
     resident: 'HKR',
-    origin: 'local/possible/contact'
+    origin: 'local-possible-contact'
   },
   {
     caseNo: 23,
@@ -336,7 +384,7 @@ const cases = [
     hospital: 'PYN',
     status: 'hospitalized',
     resident: 'HKR',
-    origin: 'local/unknown'
+    origin: 'local-unknown'
   },
   {
     caseNo: 24,
@@ -347,7 +395,7 @@ const cases = [
     hospital: 'PWH',
     status: 'hospitalized',
     resident: 'HKR',
-    origin: 'local/unknown'
+    origin: 'local-unknown'
   },
   {
     caseNo: 25,
@@ -358,7 +406,7 @@ const cases = [
     hospital: 'NDH',
     status: 'hospitalized',
     resident: 'HKR',
-    origin: 'foreign'
+    origin: 'imported'
   },
   {
     caseNo: 26,
@@ -369,7 +417,7 @@ const cases = [
     hospital: 'PWH',
     status: 'hospitalized',
     resident: 'HKR',
-    origin: 'foreign'
+    origin: 'imported'
   },
   {
     caseNo: 27,
@@ -380,7 +428,7 @@ const cases = [
     hospital: 'RH',
     status: 'hospitalized',
     resident: 'HKR',
-    origin: 'local/possible'
+    origin: 'local-possible'
   },
   {
     caseNo: 28,
@@ -391,7 +439,7 @@ const cases = [
     hospital: 'UCH',
     status: 'hospitalized',
     resident: 'HKR',
-    origin: 'local/unknown'
+    origin: 'local-unknown'
   },
   {
     caseNo: 29,
@@ -402,7 +450,7 @@ const cases = [
     hospital: 'PYN' ,
     status: 'hospitalized',
     resident: 'HKR',
-    origin: 'local/possible/contact'
+    origin: 'local-possible-contact'
   },
   {
     caseNo: 30,
@@ -413,7 +461,7 @@ const cases = [
     hospital: 'RH',
     status: 'hospitalized',
     resident: 'HKR',
-    origin: 'local/possible/contact'
+    origin: 'local-possible-contact'
   },
   {
     caseNo: 31,
@@ -424,7 +472,7 @@ const cases = [
     hospital: 'RH',
     status: 'hospitalized',
     resident: 'HKR',
-    origin: 'local/possible/contact'
+    origin: 'local-possible-contact'
   },
   {
     caseNo: 32,
@@ -435,7 +483,7 @@ const cases = [
     hospital: 'PYN',
     status: 'hospitalized',
     resident: 'HKR',
-    origin: 'local/possible/contact'
+    origin: 'local-possible-contact'
   },
   {
     caseNo: 33,
@@ -446,7 +494,7 @@ const cases = [
     hospital: 'RH',
     status: 'hospitalized',
     resident: 'HKR',
-    origin: 'local/possible/contact'
+    origin: 'local-possible-contact'
   },
   {
     caseNo: 34,
@@ -457,7 +505,7 @@ const cases = [
     hospital: 'PYN',
     status: 'hospitalized',
     resident: 'HKR',
-    origin: 'local/possible/contact'
+    origin: 'local-possible-contact'
   },
   {
     caseNo: 35,
@@ -468,7 +516,7 @@ const cases = [
     hospital: 'PYN',
     status: 'hospitalized',
     resident: 'HKR',
-    origin: 'local/possible/contact'
+    origin: 'local-possible-contact'
   },
   {
     caseNo: 36,
@@ -479,7 +527,7 @@ const cases = [
     hospital: 'RH',
     status: 'hospitalized',
     resident: 'HKR',
-    origin: 'local/possible/contact'
+    origin: 'local-possible-contact'
   },
   {
     caseNo: 41,
@@ -490,7 +538,7 @@ const cases = [
     hospital: 'PYN',
     status: 'hospitalized',
     resident: 'HKR',
-    origin: 'local/possible/contact'
+    origin: 'local-possible-contact'
   },
   {
     caseNo: 37,
@@ -501,7 +549,7 @@ const cases = [
     hospital: 'PWH',
     status: 'hospitalized',
     resident: 'HKR',
-    origin: 'local/possible/contact'
+    origin: 'local-possible-contact'
   },
   {
     caseNo: 42,
@@ -512,7 +560,7 @@ const cases = [
     hospital: 'PMH',
     status: 'hospitalized',
     resident: 'HKR',
-    origin: 'local/unknown'
+    origin: 'local-unknown'
   },
   {
     caseNo: 39,
@@ -523,7 +571,7 @@ const cases = [
     hospital: 'PYN',
     status: 'hospitalized',
     resident: 'HKR',
-    origin: 'local/contact'
+    origin: 'local-contact'
   },
   {
     caseNo: 38,
@@ -534,7 +582,7 @@ const cases = [
     hospital: 'PYN',
     status: 'hospitalized',
     resident: 'HKR',
-    origin: 'local/unknown'
+    origin: 'local-unknown'
   },
   {
     caseNo: 40,
@@ -545,7 +593,7 @@ const cases = [
     hospital: 'PYN',
     status: 'hospitalized',
     resident: 'HKR',
-    origin: 'local/contact'
+    origin: 'local-contact'
   },
   {
     caseNo: 48,
@@ -556,7 +604,7 @@ const cases = [
     hospital: 'PMH',
     status: 'hospitalized',
     resident: 'HKR',
-    origin: 'local/contact'
+    origin: 'local-contact'
   },
   {
     caseNo: 49,
@@ -567,7 +615,7 @@ const cases = [
     hospital: 'PMH',
     status: 'hospitalized',
     resident: 'HKR',
-    origin: 'local/contact'
+    origin: 'local-contact'
   },
   {
     caseNo: 43,
@@ -578,7 +626,7 @@ const cases = [
     hospital: 'PYN',
     status: 'hospitalized',
     resident: 'HKR',
-    origin: 'local/unknown'
+    origin: 'local-unknown'
   },
   {
     caseNo: 44,
@@ -589,7 +637,7 @@ const cases = [
     hospital: 'RH',
     status: 'hospitalized',
     resident: 'HKR',
-    origin: 'local/possible/contact'
+    origin: 'local-possible-contact'
   },
   {
     caseNo: 47,
@@ -600,7 +648,7 @@ const cases = [
     hospital: 'TMH',
     status: 'hospitalized',
     resident: 'HKR',
-    origin: 'local/unknown'
+    origin: 'local-unknown'
   },
   {
     caseNo: 45,
@@ -611,7 +659,7 @@ const cases = [
     hospital: 'TKO',
     status: 'hospitalized',
     resident: 'HKR',
-    origin: 'local/unknown'
+    origin: 'local-unknown'
   },
   {
     caseNo: 46,
@@ -622,7 +670,7 @@ const cases = [
     hospital: 'QMH',
     status: 'hospitalized',
     resident: 'HKR',
-    origin: 'local/contact'
+    origin: 'local-contact'
   },
   {
     caseNo: 50,
@@ -633,7 +681,7 @@ const cases = [
     hospital: 'QEH'   ,
     status: 'hospitalized',
     resident: 'HKR',
-    origin: 'local/possible/contact'
+    origin: 'local-possible-contact'
   },
   {
     caseNo: 51,
@@ -644,7 +692,7 @@ const cases = [
     hospital: 'TMH',
     status: 'hospitalized',
     resident: 'HKR',
-    origin: 'local/unknown'
+    origin: 'local-unknown'
   },
   {
     caseNo: 52,
@@ -655,7 +703,7 @@ const cases = [
     hospital: 'RH',
     status: 'hospitalized',
     resident: 'HKR',
-    origin: 'local/contact'
+    origin: 'local-contact'
   },
   {
     caseNo: 53,
@@ -666,7 +714,7 @@ const cases = [
     hospital: 'RH',
     status: 'hospitalized',
     resident: 'HKR',
-    origin: 'local/contact'
+    origin: 'local-contact'
   },
   {
     caseNo: 54,
@@ -677,7 +725,7 @@ const cases = [
     hospital: 'RH',
     status: 'hospitalized',
     resident: 'HKR',
-    origin: 'local/contact'
+    origin: 'local-contact'
   },
   {
     caseNo: 55,
@@ -688,7 +736,7 @@ const cases = [
     hospital: 'PMH',
     status: 'hospitalized',
     resident: 'HKR',
-    origin: 'local/possible'
+    origin: 'local-possible'
   },
   {
     caseNo: 56,
@@ -699,7 +747,7 @@ const cases = [
     hospital: 'QMH',
     status: 'hospitalized',
     resident: 'HKR',
-    origin: 'local/unknown'
+    origin: 'local-unknown'
   },
   {
     caseNo: 57,
@@ -710,7 +758,7 @@ const cases = [
     hospital: 'PYN',
     status: 'hospitalized',
     resident: 'HKR',
-    origin: 'local/possible/contact'
+    origin: 'local-possible-contact'
   },
   {
     caseNo: 58,
@@ -721,7 +769,7 @@ const cases = [
     hospital: 'CMC',
     status: 'hospitalized',
     resident: 'HKR',
-    origin: 'local/unknown'
+    origin: 'local-unknown'
   },
   {
     caseNo: 59,
@@ -732,7 +780,7 @@ const cases = [
     hospital: 'QEH',
     status: 'hospitalized',
     resident: 'HKR',
-    origin: 'local/possible/contact'
+    origin: 'local-possible-contact'
   },
   {
     caseNo: 60,
@@ -743,7 +791,7 @@ const cases = [
     hospital: 'PYN',
     status: 'hospitalized',
     resident: 'HKR',
-    origin: 'local/possible/contact'
+    origin: 'local-possible-contact'
   },
   {
     caseNo: 61,
@@ -754,7 +802,7 @@ const cases = [
     hospital: 'PYN',
     status: 'hospitalized',
     resident: 'NHKR',
-    origin: 'local/contact'
+    origin: 'local-contact'
   },
   {
     caseNo: 62,
@@ -765,7 +813,7 @@ const cases = [
     hospital: 'UCH',
     status: 'hospitalized',
     resident: 'HKR',
-    origin: 'foreign/contact'
+    origin: 'imported-contact'
   },
   {
     caseNo: 63,
@@ -776,7 +824,7 @@ const cases = [
     hospital: 'TMH',
     status: 'hospitalized',
     resident: 'HKR',
-    origin: 'local/possible/contact'
+    origin: 'local-possible-contact'
   },
   {
     caseNo: 64,
@@ -787,7 +835,7 @@ const cases = [
     hospital: 'PYN',
     status: 'hospitalized',
     resident: 'HKR',
-    origin: 'local/unknown'
+    origin: 'local-unknown'
   },
   {
     caseNo: 65,
@@ -798,7 +846,7 @@ const cases = [
     hospital: 'PYN',
     status: 'hospitalized',
     resident: 'HKR',
-    origin: 'local/contact'
+    origin: 'local-contact'
   },
   {
     caseNo: 66,
@@ -809,7 +857,7 @@ const cases = [
     hospital: 'TMH',
     status: 'hospitalized',
     resident: 'HKR',
-    origin: 'local/possible'
+    origin: 'local-possible'
   },
   {
     caseNo: 67,
@@ -820,7 +868,7 @@ const cases = [
     hospital: 'UCH',
     status: 'hospitalized',
     resident: 'HKR',
-    origin: 'local/unknown'
+    origin: 'local-unknown'
   },
   {
     caseNo: 68,
@@ -831,7 +879,7 @@ const cases = [
     hospital: 'NDH',
     status: 'hospitalized',
     resident: 'HKR',
-    origin: 'local/unknown'
+    origin: 'local-unknown'
   },
   {
     caseNo: 69,
@@ -842,7 +890,7 @@ const cases = [
     hospital: 'UCH',
     status: 'hospitalized',
     resident: 'HKR',
-    origin: 'local/unknown'
+    origin: 'local-unknown'
   }
 ];
 
@@ -1070,6 +1118,8 @@ export default {
     dominant-baseline: hanging;
   }
 
+  
+
   .fit-graph,
   .expand-graph {
     fill: #8f8f8c;
@@ -1089,6 +1139,37 @@ export default {
   .case {
     opacity: 0.75;
     mix-blend-mode: multiply;
+  }
+}
+
+.date-legends {
+  svg {
+    width: 100%;
+
+    &.tall {
+      height: 50px;
+    }
+
+    &.short {
+      height: 21px;
+    }
+
+    .legend-text {
+      font-size: 12px;
+      fill: #8f8f8c;
+      user-select: none;
+      -ms-user-select: none;
+      -webkit-user-select: none;
+    }
+
+    .date-line {
+      stroke: #dcddde;
+      opacity: 0.75;
+    }
+
+    path.grey {
+      fill: #dcddde;
+    }
   }
 }
 </style>
