@@ -10,21 +10,21 @@
     <rect class="side-bg" :x="0" :y="0" :width="graphx" :height="margin + yaxish + margin" />
     <text class="age" v-for="n in 5" :x="datesx[0] + graphx - 15" :y="graphy + yaxish*0.2*(n - 1)" v-text="100 - (n - 1)*20" :key="'age-' + n" />
     <line class="age-line" v-for="n in 5" :x1="graphx - 10" :y1="graphy + yaxish*0.2*(n - 1)" :x2="graphx" :y2="graphy + yaxish*0.2*(n - 1)" :key="'age-line-y-axis-' + n" />
-    <text class="fit-graph" :x="graphx" :y="margin - 20">Fit Graph</text>
-    <text class="expand-graph" :x="graphx + 80" :y="margin - 20">Expand Graph</text>
+    <text class="fit-graph" :x="graphx" :y="margin - 20">縮小</text>
+    <text class="expand-graph" :x="graphx + 40" :y="margin - 20">放大</text>
 
 
     <!-- Side Graph -->
-    <text class="age" v-for="n in 5" :x="margin - 15" :y="graphy + yaxish*0.2*(n - 1)" v-text="100 - (n - 1)*20" :key="'side-age-' + n" />
-    <rect class="stripe" v-for="n in 5" :x="margin" :y="graphy + yaxish*0.2*(n - 1)" :width="sidegraphw" :height="yaxish*0.1" :key="'side-stripe-' + n" />
-    <line class="age-line" v-for="n in 5" :x1="margin - 10" :y1="graphy + yaxish*0.2*(n - 1)" :x2="sidegraphw + margin" :y2="graphy + yaxish*0.2*(n - 1)" :key="'side-age-line-' + n" />
+    <text class="age" v-for="n in 5" :x="margin - 30" :y="graphy + yaxish*0.2*(n - 1)" v-text="100 - (n - 1)*20" :key="'side-age-' + n" />
+    <rect class="stripe" v-for="n in 5" :x="margin - 15" :y="graphy + yaxish*0.2*(n - 1)" :width="sidegraphw" :height="yaxish*0.1" :key="'side-stripe-' + n" />
+    <line class="age-line" v-for="n in 5" :x1="margin - 25" :y1="graphy + yaxish*0.2*(n - 1)" :x2="sidegraphw + 35" :y2="graphy + yaxish*0.2*(n - 1)" :key="'side-age-line-' + n" />
     <line class="x-axis" :x1="margin" :y1="graphy + yaxish" :x2="sidegraphw + margin" :y2="graphy + yaxish" />
     <template v-for="(patient, i) in cases" >
       <path class="case" v-if="patient.gender == 'male'" :d="drawDiamond(sideMalex, (1-(patient.age/100))*yaxish + margin)" :fill="patient.origin.substring(0, 5) == 'local' ? '#e83d96' : '#1e52a4'" :key="'side-case-' + i" />
       <circle class="case" v-if="patient.gender == 'female'" :cx="sideFemalex" :cy="(1-(patient.age/100))*yaxish + margin" :r="8" :fill="patient.origin.substring(0, 5) == 'local' ? '#e83d96' : '#1e52a4'" :key="'side-case-' + i" />
     </template>
-    <text class="gender" :x="sideMalex" :y="graphy + yaxish + 10">男</text>
-    <text class="gender" :x="sideFemalex" :y="graphy + yaxish + 10">女</text>
+    <text class="gender" :x="sideMalex" :y="graphy + yaxish + 10">男性</text>
+    <text class="gender" :x="sideFemalex" :y="graphy + yaxish + 10">女性</text>
   </svg>
 </template>
 
@@ -39,9 +39,9 @@ const graphx = 250;
 const graphy = 50;
 const xaxisi = 29; // i = increment
 const yaxish = 480;
-const sidegraphw = 150;
-const sideMalex = 100;
-const sideFemalex = 150;
+const sidegraphw = 145;
+const sideMalex = 80;
+const sideFemalex = 135;
 
 const dates = [
   20200117,
