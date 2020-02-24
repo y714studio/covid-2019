@@ -189,6 +189,12 @@ export default {
   },
   watch: {
     govInfoCases: function() {
+      this.infectionCategories = {
+        '本地個案': 0,
+        '輸入個案': 0,
+        '未能確定': 0
+      }
+
       for (let i = 0; i < this.govInfoCases.length; i++) {
         if (this.govInfoCases[i][8] === '本地個案' || this.govInfoCases[i][8] === '輸入個案的密切接觸者' || this.govInfoCases[i][8] === '本地個案的密切接觸者' || this.govInfoCases[i][8] === '本地個案(源頭不明)') {
           this.infectionCategories['本地個案'] += 1
