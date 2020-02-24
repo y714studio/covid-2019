@@ -89,7 +89,8 @@ export default {
     return {
       govInfoCases: [],
       govInfoDailyStat: [],
-      govInfoBuildingList: []
+      govInfoBuildingList: [],
+      testResponse: []
     }
   },
   mounted () {
@@ -110,6 +111,11 @@ export default {
       axios.get('https://api.data.gov.hk/v1/filter?q=%7B%22resource%22%3A%22http%3A%2F%2Fwww.chp.gov.hk%2Ffiles%2Fmisc%2Fbuilding_list_chi.csv%22%2C%22section%22%3A1%2C%22format%22%3A%22json%22%7D')
       .then((response) => {
         this.govInfoBuildingList = response.data.rows
+      })
+
+      axios.get('https://ilssqevq.apicdn.sanity.io/v1/data/query/production?query={%22cases%22:*[_type==%22covidcase%22]}')
+      .then((response) => {
+        this.testResponse = response.data.result
       })
     }
   }
