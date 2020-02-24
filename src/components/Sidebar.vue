@@ -1,6 +1,6 @@
 <template>
   <aside>
-    <section class="section-main-stat">
+    <section v-if="govInfoDailyStat.length" class="section-main-stat">
       <div class="row header-row">
         <h1>
           <span>眾新聞 - 肺炎資訊</span>
@@ -13,7 +13,7 @@
           <p>更新日期: {{ govInfoDailyStat[govInfoDailyStat.length - 1][0] }}</p>
         </div>
       </div>
-      <div v-if="govInfoDailyStat.length" class="row">
+      <div class="row">
         <div class="d-flex section-main-stat-item section-main-stat-item-half">
           <div class="number">
             <h2 class="color-purple">{{ govInfoDailyStat[govInfoDailyStat.length - 1][6] }}</h2>
