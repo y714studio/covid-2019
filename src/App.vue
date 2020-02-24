@@ -46,7 +46,9 @@
 
           <section class="col-md-12 col-lg-4">
             <div class="section-inner">
-              <latest-cases />
+              <latest-cases
+                :cases="govInfoCases"
+              />
             </div>
           </section>
 
@@ -89,7 +91,8 @@ export default {
     return {
       govInfoCases: [],
       govInfoDailyStat: [],
-      govInfoBuildingList: []
+      govInfoBuildingList: [],
+      sanityInfoCases: []
     }
   },
   mounted () {
@@ -100,6 +103,19 @@ export default {
       axios.get('https://api.data.gov.hk/v1/filter?q=%7B%22resource%22%3A%22http%3A%2F%2Fwww.chp.gov.hk%2Ffiles%2Fmisc%2Fenhanced_sur_pneumonia_wuhan_chi.csv%22%2C%22section%22%3A1%2C%22format%22%3A%22json%22%7D')
       .then((response) => {
         this.govInfoCases = response.data.rows
+
+          axios.get('https://ilssqevq.apicdn.sanity.io/v1/data/query/production?query={%22cases%22:*[_type==%22covidcase%22]}')
+          .then((response) => {
+            this.sanityInfoCases = response.data.result.cases
+
+            for (let i = 0; i < this.sanityInfoCases.length; i++) {
+              const caseNo = this.sanityInfoCases[i].cno
+
+              this.govInfoCases[caseNo - 1].push(this.sanityInfoCases[i].description)
+              this.govInfoCases[caseNo - 1].push(this.sanityInfoCases[i].lat)
+              this.govInfoCases[caseNo - 1].push(this.sanityInfoCases[i].lng)
+            }
+          })
       })
 
       axios.get('https://api.data.gov.hk/v1/filter?q=%7B%22resource%22%3A%22http%3A%2F%2Fwww.chp.gov.hk%2Ffiles%2Fmisc%2Flatest_situation_of_reported_cases_wuhan_chi.csv%22%2C%22section%22%3A1%2C%22format%22%3A%22json%22%7D')
@@ -126,7 +142,7 @@ export default {
     padding-left: 280px;
 
     @include media-breakpoint-down(sm) {
-      padding: 15px;
+      padding: 15px 0;
     }
 
     .section-inner {

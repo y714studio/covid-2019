@@ -1,10 +1,19 @@
 <template>
   <aside>
-    <section class="section-main-stat">
-      <h1>Covid 2019</h1>
-      <div v-if="govInfoDailyStat.length" class="row">
-        <p class="color-grey updated-date">更新日期:<br>
-          {{ govInfoDailyStat[govInfoDailyStat.length - 1][0] }}</p>
+    <section v-if="govInfoDailyStat.length" class="section-main-stat">
+      <div class="row header-row">
+        <h1>
+          <span>眾新聞 - 肺炎資訊</span>
+          <a title="眾新聞" target="_blank" href="https://www.hkcnews.com">
+            <img class="icon-close" src="./../assets/hkcnews_400x400.png">
+          </a>
+        </h1>
+        <div class="title">
+          <h2>Covid 2019</h2>
+          <p>更新日期: {{ govInfoDailyStat[govInfoDailyStat.length - 1][0] }}</p>
+        </div>
+      </div>
+      <div class="row">
         <div class="d-flex section-main-stat-item section-main-stat-item-half">
           <div class="number">
             <h2 class="color-purple">{{ govInfoDailyStat[govInfoDailyStat.length - 1][6] }}</h2>
@@ -180,6 +189,12 @@ export default {
   },
   watch: {
     govInfoCases: function() {
+      this.infectionCategories = {
+        '本地個案': 0,
+        '輸入個案': 0,
+        '未能確定': 0
+      }
+
       for (let i = 0; i < this.govInfoCases.length; i++) {
         if (this.govInfoCases[i][8] === '本地個案' || this.govInfoCases[i][8] === '輸入個案的密切接觸者' || this.govInfoCases[i][8] === '本地個案的密切接觸者' || this.govInfoCases[i][8] === '本地個案(源頭不明)') {
           this.infectionCategories['本地個案'] += 1
@@ -248,12 +263,53 @@ export default {
       padding: 15px 30px 0;
     }
 
-    h1 {
-      position: absolute;
-      right: 15px;
-      top: 25px;
-      margin-top: 0;
-      opacity: 0.1;
+    .header-row {
+      margin-bottom: 14px;
+
+      h1 {
+        line-height: 1;
+        border-radius: 50%;
+        margin: 15px 0 0;
+        width: 44px;
+        height: 44px;
+        position: relative;
+        overflow: hidden;
+
+        @include media-breakpoint-down(sm) {
+          margin: 10px 0 0;
+        }
+
+        span {
+          display: block;
+          height: 0;
+          text-indent: -9999px;
+        }
+
+        img {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          top: 0;
+          left: 0;
+        }
+      }
+
+      .title {
+        position: absolute;
+        right: 15px;
+        top: 25px;
+        opacity: 0.4;
+        text-align: right;
+
+        h2,
+        p {
+          margin: 0;
+        }
+
+        p {
+          font-size: 12px;
+        }
+      }
     }
 
     .updated-date {
@@ -264,6 +320,10 @@ export default {
     .section-main-stat-item {
       width: 100%;
       margin-bottom: 6px;
+
+      h2 {
+        font-size: 44px;
+      }
 
       h2,
       h3,

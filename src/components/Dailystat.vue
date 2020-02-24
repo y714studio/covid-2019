@@ -30,7 +30,7 @@ export default {
 
       for (let i = 0; i < newVal.length; i++) {
         data.push({
-          "date": new Date(this.govInfoDailyStat[i][0].substring(6, 10), this.govInfoDailyStat[i][0].substring(3, 5) - 1, this.govInfoDailyStat[i][0].substring(0, 2)),
+          "date": new Date(this.govInfoDailyStat[i][0].split('/')[2], this.govInfoDailyStat[i][0].split('/')[1] - 1, this.govInfoDailyStat[i][0].split('/')[0]),
           "value": this.govInfoDailyStat[i][6],
           "value2": this.govInfoDailyStat[i][4],
           "value3": this.govInfoDailyStat[i][2]
