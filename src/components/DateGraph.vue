@@ -7,7 +7,7 @@
       <line class="x-axis" :x1="graphx - offsetx" :y1="graphy + yaxish" :x2="graphw + graphx - offsetx" :y2="graphy + yaxish" />
       <line class="date-line" :class="{ 'first': i == 0 }" v-for="(date, i) in dates" :x1="datesx[i] + graphx - offsetx" :y1="margin" :x2="datesx[i] + graphx - offsetx" :y2="graphy + yaxish" :key="'date-line-' + i" />
       <text class="date" v-for="(sunday, i) in sundays" :x="datesx[firstSundayi + 7*i] + graphx - offsetx" :y="graphy + yaxish + 10" v-text="sundaysName[i]" :key="'date-' + i" />
-      <path class="case" v-for="(patient, i) in cases" :d="drawPath(patient.gender, datesxIndex[patient.start] + graphx - offsetx, datesxIndex[patient.confirmed] + graphx - offsetx, (1-(patient.age/100))*yaxish + margin)" :fill="patient.origin.substring(0, 5) == 'local' ? '#e83d96' : '#1e52a4'" :key="'case-' + i" />
+      <path class="case" :class="patient.origin" v-for="(patient, i) in cases" :d="drawPath(patient.gender, datesxIndex[patient.start] + graphx - offsetx, datesxIndex[patient.confirmed] + graphx - offsetx, (1-(patient.age/100))*yaxish + margin)" :key="'case-' + i" />
       <rect class="side-bg" :x="0" :y="0" :width="graphx" :height="margin + yaxish + margin" />
       <text class="age" v-for="n in 5" :x="datesx[0] + graphx - 15" :y="graphy + yaxish*0.2*(n - 1)" v-text="100 - (n - 1)*20" :key="'age-' + n" />
       <line class="age-line" v-for="n in 5" :x1="graphx - 10" :y1="graphy + yaxish*0.2*(n - 1)" :x2="graphx" :y2="graphy + yaxish*0.2*(n - 1)" :key="'age-line-y-axis-' + n" />
@@ -21,8 +21,8 @@
       <line class="age-line" v-for="n in 5" :x1="sidegraphx - 10" :y1="graphy + yaxish*0.2*(n - 1)" :x2="sidegraphw + 35" :y2="graphy + yaxish*0.2*(n - 1)" :key="'side-age-line-' + n" />
       <line class="x-axis" :x1="sidegraphx" :y1="graphy + yaxish" :x2="sidegraphx + sidegraphw" :y2="graphy + yaxish" />
       <template v-for="(patient, i) in cases" >
-        <path class="case" v-if="patient.gender == 'male'" :d="drawDiamond(sideMalex, (1-(patient.age/100))*yaxish + margin)" :fill="patient.origin.substring(0, 5) == 'local' ? '#e83d96' : '#1e52a4'" :key="'side-case-' + i" />
-        <circle class="case" v-if="patient.gender == 'female'" :cx="sideFemalex" :cy="(1-(patient.age/100))*yaxish + margin" :r="8" :fill="patient.origin.substring(0, 5) == 'local' ? '#e83d96' : '#1e52a4'" :key="'side-case-' + i" />
+        <path class="case" :class="patient.origin" v-if="patient.gender == 'male'" :d="drawDiamond(sideMalex, (1-(patient.age/100))*yaxish + margin)" :key="'side-case-' + i" />
+        <circle class="case" :class="patient.origin" v-if="patient.gender == 'female'" :cx="sideFemalex" :cy="(1-(patient.age/100))*yaxish + margin" :r="8" :key="'side-case-' + i" />
       </template>
       <text class="gender" :x="sideMalex" :y="graphy + yaxish + 10">男性</text>
       <text class="gender" :x="sideFemalex" :y="graphy + yaxish + 10">女性</text>
@@ -48,8 +48,8 @@
         </div>
         <div class="col-md-3 offset-md-2">
           <svg class="short">
-            <path class="case" d="M0,9H12L21,.5l10,10-10,10L12,12H0Z"/>
-            <path class="case" d="M95,9h12l9-8.5,10,10-10,10L107,12H95Z"/>
+            <path class="case imported" d="M95,9h12l9-8.5,10,10-10,10L107,12H95Z"/>
+            <path class="case imported-contact" d="M0,9H12L21,.5l10,10-10,10L12,12H0Z"/>
             <text class="legend-text" transform="translate(34.76 14.21)">輸入個案</text>            
             <text class="legend-text" transform="translate(130.76 14.21)">輸入個案的密切接觸者</text>
           </svg>
@@ -58,16 +58,16 @@
       <div class="row">
         <div class="col-md-4 offset-md-3">
           <svg class="short">
-            <path class="cls-1" d="M0,9H12L21,.5l10,10-10,10L12,12H0Z"/>
-            <path class="cls-1" d="M119,9h12l9-8.5,10,10-10,10L131,12H119Z"/>
+            <path class="case local-possible" d="M0,9H12L21,.5l10,10-10,10L12,12H0Z"/>
+            <path class="case local-possible-contact" d="M119,9h12l9-8.5,10,10-10,10L131,12H119Z"/>
             <text class="legend-text" transform="translate(34.76 14.21)">可能本地個案</text>
             <text class="legend-text" transform="translate(154.76 14.21)">可能本地個案的密切接觸者</text>
           </svg>
         </div>
         <div class="col-md-4">
           <svg class="short">
-            <path class="cls-1" d="M0,9H12L21,.5l10,10-10,10L12,12H0Z"/>
-            <path class="cls-1" d="M148,9h12l9-8.5,10,10-10,10L160,12H148Z"/>
+            <path class="case local-unknown" d="M0,9H12L21,.5l10,10-10,10L12,12H0Z"/>
+            <path class="case local-contact" d="M148,9h12l9-8.5,10,10-10,10L160,12H148Z"/>
             <text class="legend-text" transform="translate(34.76 14.21)">本地個案(源頭不明)</text>            
             <text class="legend-text" transform="translate(183.76 14.21)">本地個案的密切接觸者</text></svg>
         </div>
@@ -1061,6 +1061,34 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.case {
+  opacity: 0.8;
+
+  &.imported {
+    fill: #E7384C;
+  }
+
+  &.imported-contact {
+    fill: #E0439F;
+  }
+
+  &.local-unknown {
+    fill: #905FD4;
+  }
+
+  &.local-contact {
+    fill: #2E65C9;
+  }
+
+  &.local-possible {
+    fill: #4DB8D4;
+  }
+
+  &.local-possible-contact {
+    fill: #42C79B;
+  }
+}
+
 #date-graph {
   width: 100%;
   height: 580px;
@@ -1120,8 +1148,6 @@ export default {
     dominant-baseline: hanging;
   }
 
-  
-
   .fit-graph,
   .expand-graph {
     fill: #8f8f8c;
@@ -1139,7 +1165,6 @@ export default {
   }
 
   .case {
-    opacity: 0.75;
     mix-blend-mode: multiply;
   }
 }
