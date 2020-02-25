@@ -16,10 +16,10 @@
 
 
       <!-- Side Graph -->
-      <text class="age" v-for="n in 5" :x="margin - 30" :y="graphy + yaxish*0.2*(n - 1)" v-text="100 - (n - 1)*20" :key="'side-age-' + n" />
-      <rect class="stripe" v-for="n in 5" :x="margin - 15" :y="graphy + yaxish*0.2*(n - 1)" :width="sidegraphw" :height="yaxish*0.1" :key="'side-stripe-' + n" />
-      <line class="age-line" v-for="n in 5" :x1="margin - 25" :y1="graphy + yaxish*0.2*(n - 1)" :x2="sidegraphw + 35" :y2="graphy + yaxish*0.2*(n - 1)" :key="'side-age-line-' + n" />
-      <line class="x-axis" :x1="margin" :y1="graphy + yaxish" :x2="sidegraphw + margin" :y2="graphy + yaxish" />
+      <text class="age" v-for="n in 5" :x="sidegraphx - 15" :y="graphy + yaxish*0.2*(n - 1)" v-text="100 - (n - 1)*20" :key="'side-age-' + n" />
+      <rect class="stripe" v-for="n in 5" :x="sidegraphx" :y="graphy + yaxish*0.2*(n - 1)" :width="sidegraphw" :height="yaxish*0.1" :key="'side-stripe-' + n" />
+      <line class="age-line" v-for="n in 5" :x1="sidegraphx - 10" :y1="graphy + yaxish*0.2*(n - 1)" :x2="sidegraphw + 35" :y2="graphy + yaxish*0.2*(n - 1)" :key="'side-age-line-' + n" />
+      <line class="x-axis" :x1="sidegraphx" :y1="graphy + yaxish" :x2="sidegraphx + sidegraphw" :y2="graphy + yaxish" />
       <template v-for="(patient, i) in cases" >
         <path class="case" v-if="patient.gender == 'male'" :d="drawDiamond(sideMalex, (1-(patient.age/100))*yaxish + margin)" :fill="patient.origin.substring(0, 5) == 'local' ? '#e83d96' : '#1e52a4'" :key="'side-case-' + i" />
         <circle class="case" v-if="patient.gender == 'female'" :cx="sideFemalex" :cy="(1-(patient.age/100))*yaxish + margin" :r="8" :fill="patient.origin.substring(0, 5) == 'local' ? '#e83d96' : '#1e52a4'" :key="'side-case-' + i" />
@@ -87,6 +87,7 @@ const graphx = 250;
 const graphy = 50;
 const xaxisi = 29; // i = increment
 const yaxish = 480;
+const sidegraphx = margin - 15;
 const sidegraphw = 145;
 const sideMalex = 80;
 const sideFemalex = 135;
@@ -907,6 +908,7 @@ export default {
       yaxish: yaxish,
       sideMalex: sideMalex,
       sideFemalex: sideFemalex,
+      sidegraphx: sidegraphx,
       sidegraphw: sidegraphw,
       datagraph: document.querySelector('#date-graph'),
       expandIntervalId: 0,
