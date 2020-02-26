@@ -1254,6 +1254,8 @@ export default {
 }
 
 #date-legends {
+  margin-bottom: 40px;
+
   svg {
     width: 100%;
 
