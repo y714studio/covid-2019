@@ -1,6 +1,6 @@
 <template>
   <div>
-    <svg id="date-graph">
+    <svg id="date-graph" class="hide">
       <!-- Main Graph -->
       <rect class="stripe" v-for="n in 5" :x="graphx - offsetx" :y="graphy + yaxish*0.2*(n - 1)" :width="graphw" :height="yaxish*0.1" :key="'stripe-' + n" />  
       <line class="age-line" v-for="n in 5" :x1="graphx - offsetx" :y1="graphy + yaxish*0.2*(n - 1)" :x2="graphw + graphx - offsetx" :y2="graphy + yaxish*0.2*(n - 1)" :key="'age-line-' + n" />
@@ -961,6 +961,7 @@ export default {
   },
   mounted () {
     this.datagraph = document.querySelector('#date-graph');
+    const datagraph = this.datagraph;
 
     /* dragging */
 
@@ -987,7 +988,17 @@ export default {
     /* intro animation */
 
     this.xaxisi = this.fitxaxisi;
-    this.expandGraph();
+
+    function intro () {
+      if (this.datagraph.getBoundingClientRect().top < window.innerHeight/2) {
+        this.datagraph.classList.remove('hide');
+        window.setTimeout(this.expandGraph, 1000);
+        window.removeEventListener('scroll', intro); 
+      }
+    }
+
+    window.addEventListener('scroll', intro.bind(this));
+    window.setTimeout(intro.bind(this), 1000);
 
     /* fit and expand graph */
     document.querySelector('.fit-graph').addEventListener('click', this.fitGraph);
@@ -1092,8 +1103,14 @@ export default {
 #date-graph {
   width: 100%;
   height: 580px;
+  opacity: 1;
   cursor: move; /* fallback if grab cursor is unsupported */
   cursor: grab;
+  transition: 0.5s opacity ease-in-out;
+
+  &.hide {
+    opacity: 0;
+  }
 
   &:active {
     cursor: grabbing;
