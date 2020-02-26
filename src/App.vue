@@ -11,7 +11,9 @@
 
           <section class="col-lg-12">
             <div class="section-inner" style="background: #eee;">
-              <web-map :sanityInfoCases="sanityInfoCases"/>
+              <web-map
+                :cases="govInfoCases"
+              />
             </div>
           </section>
 
@@ -108,12 +110,22 @@ export default {
           .then((response) => {
             this.sanityInfoCases = response.data.result.cases
 
-            for (let i = 0; i < this.sanityInfoCases.length; i++) {
-              const caseNo = this.sanityInfoCases[i].cno
+            for (let i = 0; i < this.govInfoCases.length; i++) {
+              const sanityCase = this.sanityInfoCases.find((element) => {
+                return element.cno == this.govInfoCases[i][0]
+              })
 
-              this.govInfoCases[caseNo - 1].push(this.sanityInfoCases[i].description)
-              this.govInfoCases[caseNo - 1].push(this.sanityInfoCases[i].lat)
-              this.govInfoCases[caseNo - 1].push(this.sanityInfoCases[i].lng)
+              if(sanityCase) {
+                this.govInfoCases[i].push(sanityCase.description? sanityCase.description: '')
+                this.govInfoCases[i].push(sanityCase.locations? sanityCase.locations: '')
+                this.govInfoCases[i].push(sanityCase.lat)
+                this.govInfoCases[i].push(sanityCase.lng)
+              } else {
+                this.govInfoCases[i].push('')
+                this.govInfoCases[i].push('')
+                this.govInfoCases[i].push('')
+                this.govInfoCases[i].push('')
+              }
             }
           })
       })
