@@ -130,8 +130,6 @@ export default {
                     popupTemplate: popupTemplate
                   })
 
-                  console.log(pointGraphic)
-
                   graphicsLayer.add(pointGraphic);
                 }
               }
@@ -183,6 +181,6 @@ div {
   padding: 0;
   margin: 0;
   width: 100%;
-  height: 380px;
+  height: 400px;
 }
 </style>
