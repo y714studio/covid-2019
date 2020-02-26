@@ -1,5 +1,5 @@
 <template>
-  <div class="cases-container" :class="{'details-active': popupActive}">
+  <div v-if="cases.length > 0" class="cases-container" :class="{'details-active': popupActive}">
     <table>
       <tr v-for="(cs, n) in cases.slice().reverse()" :key="n" class="case">
         <td class="case-no">編號 {{ cs[0] }}</td>
@@ -38,7 +38,7 @@ export default {
   data() {
     return {
       popupActive: false,
-      selectedCase: 0
+      selectedCase: 1
     }
   },
   methods: {
