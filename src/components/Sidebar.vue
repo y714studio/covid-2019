@@ -3,7 +3,7 @@
     <section v-if="govInfoDailyStat.length" class="section-main-stat">
       <div class="row header-row">
         <h1>
-          <span>眾新聞 - 肺炎資訊</span>
+          <span>眾新聞 - 武漢肺炎本港疫情</span>
           <a title="眾新聞" target="_blank" href="https://www.hkcnews.com">
             <img class="icon-close" src="./../assets/hkcnews_400x400.png">
           </a>
@@ -111,6 +111,9 @@
             <p>
               <span class="text-bold">病源</span>
             </p>
+            <p>
+              「本地 」 個案指病人過去14日內沒有到過中國大陸、不曾與確診病例緊密接觸，實際病源不明，此處分類包括本地個案密切接觸者。「可能本地 」個案包括可能本地個案的密切接觸者；「輸入 」個案包括輸入個案密切接觸者。
+            </p>
           </div>
           <div class="ratio-bar-container">
             <div class="male-female-ratio-label">
@@ -142,8 +145,11 @@
 
         <div class="section-main-stat-item section-main-stat-item">
           <div class="stat-label">
+            <p>
+              <span class="text-bold">確診個案住宅或到訪大廈所在地區</span>
+            </p>
             <p class="small">
-              首五個過去14天內曾有確診個案居住過的住宅地區; 或過去 14 天內曾出現兩宗或以上確診個案的非住宅地區
+              綜合過去14天內曾有確診個案居住過的住宅大廈、曾有確診個案於發病前兩天起到訪過的大廈、超過一宗確診個案在潛伏期或發病到到訪過的非住宅大廈名單，以下列出五個涉事大廈最多的地區。
             </p>
           </div>
           <div class="districts">
@@ -155,6 +161,8 @@
             </div>
           </div>
         </div>
+
+        <p>本網資料源自衛生防護中心，每日更新一次，增幅／減幅顯示與前一天數字的比較。</p>
       </div>
     </section>
   </aside>
