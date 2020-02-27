@@ -77,21 +77,7 @@
     </div>
     <svg id="date-graph-mobile">
       <template v-if="isMobile">
-        <!-- Main Graph -->
-        <!-- <rect class="stripe" v-for="n in 5" :x="graphx - offsetx" :y="graphy + yaxish*0.2*(n - 1)" :width="graphw" :height="yaxish*0.1" :key="'stripe-' + n" />  
-        <line class="age-line" v-for="n in 5" :x1="graphx - offsetx" :y1="graphy + yaxish*0.2*(n - 1)" :x2="graphw + graphx - offsetx" :y2="graphy + yaxish*0.2*(n - 1)" :key="'age-line-' + n" />
-        <line class="x-axis" :x1="graphx - offsetx" :y1="graphy + yaxish" :x2="graphw + graphx - offsetx" :y2="graphy + yaxish" />
-        <line class="date-line" :class="{ 'first': i == 0 }" v-for="(date, i) in dates" :x1="datesx[i] + graphx - offsetx" :y1="margin" :x2="datesx[i] + graphx - offsetx" :y2="graphy + yaxish" :key="'date-line-' + i" />
-        <text class="date" v-for="(sunday, i) in sundays" :x="datesx[firstSundayi + 7*i] + graphx - offsetx" :y="graphy + yaxish + 10" v-text="sundaysName[i]" :key="'date-' + i" />
-        <path class="case" :class="patient.origin" v-for="(patient, i) in cases" :d="drawPath(patient.gender, datesxIndex[patient.start] + graphx - offsetx, datesxIndex[patient.confirmed] + graphx - offsetx, (1-(patient.age/100))*yaxish + margin)" :key="'case-' + i" />
-        <rect class="side-bg" :x="0" :y="0" :width="graphx" :height="margin + yaxish + margin" />
-        <text class="age" v-for="n in 5" :x="datesx[0] + graphx - 15" :y="graphy + yaxish*0.2*(n - 1)" v-text="100 - (n - 1)*20" :key="'age-' + n" />
-        <line class="age-line" v-for="n in 5" :x1="graphx - 10" :y1="graphy + yaxish*0.2*(n - 1)" :x2="graphx" :y2="graphy + yaxish*0.2*(n - 1)" :key="'age-line-y-axis-' + n" />
-        <text class="fit-graph" :x="graphx" :y="margin - 20">縮小</text>
-        <text class="expand-graph" :x="graphx + 40" :y="margin - 20">放大</text> -->
-
-
-        <!-- Side Graph -->
+        <!-- Mobile Top Graph -->
         <text class="age" v-for="n in 6" :x="mgraphx + mxaxisw*0.2*(n - 1)" :y="mtopgraphy - 15" v-text="(n - 1)*20" :key="'m-side-age-' + n" />
         <rect class="stripe" v-for="n in 5" :x="mgraphx + mxaxisw*(0.1 + 0.2*(n - 1))" :y="mtopgraphy" :width="mxaxisw * 0.1" :height="mtopgraphh" :key="'m-side-stripe-' + n" />
         <line class="age-line" v-for="n in 5" :x1="mgraphx + mxaxisw*0.2*n" :y1="mtopgraphy - 10" :x2="mgraphx + mxaxisw*0.2*n" :y2="mtopgraphy +mtopgraphh" :key="'m-side-age-line-' + n" />
@@ -103,6 +89,19 @@
         </template>
         <text class="gender" :x="mgraphx - 10" :y="mtopMaley">男性</text>
         <text class="gender" :x="mgraphx - 10" :y="mtopFemaley">女性</text>
+
+        <!-- Mobile Main Graph -->
+        <!-- <rect class="stripe" v-for="n in 5" :x="graphx - offsetx" :y="graphy + yaxish*0.2*(n - 1)" :width="graphw" :height="yaxish*0.1" :key="'stripe-' + n" />  
+        <line class="age-line" v-for="n in 5" :x1="graphx - offsetx" :y1="graphy + yaxish*0.2*(n - 1)" :x2="graphw + graphx - offsetx" :y2="graphy + yaxish*0.2*(n - 1)" :key="'age-line-' + n" />
+        <line class="x-axis" :x1="graphx - offsetx" :y1="graphy + yaxish" :x2="graphw + graphx - offsetx" :y2="graphy + yaxish" />
+        <line class="date-line" :class="{ 'first': i == 0 }" v-for="(date, i) in dates" :x1="datesx[i] + graphx - offsetx" :y1="margin" :x2="datesx[i] + graphx - offsetx" :y2="graphy + yaxish" :key="'date-line-' + i" />
+        <text class="date" v-for="(sunday, i) in sundays" :x="datesx[firstSundayi + 7*i] + graphx - offsetx" :y="graphy + yaxish + 10" v-text="sundaysName[i]" :key="'date-' + i" />
+        <path class="case" :class="patient.origin" v-for="(patient, i) in cases" :d="drawPath(patient.gender, datesxIndex[patient.start] + graphx - offsetx, datesxIndex[patient.confirmed] + graphx - offsetx, (1-(patient.age/100))*yaxish + margin)" :key="'case-' + i" />
+        <rect class="side-bg" :x="0" :y="0" :width="graphx" :height="margin + yaxish + margin" />
+        <text class="age" v-for="n in 5" :x="datesx[0] + graphx - 15" :y="graphy + yaxish*0.2*(n - 1)" v-text="100 - (n - 1)*20" :key="'age-' + n" />
+        <line class="age-line" v-for="n in 5" :x1="graphx - 10" :y1="graphy + yaxish*0.2*(n - 1)" :x2="graphx" :y2="graphy + yaxish*0.2*(n - 1)" :key="'age-line-y-axis-' + n" />
+        <text class="fit-graph" :x="graphx" :y="margin - 20">縮小</text>
+        <text class="expand-graph" :x="graphx + 40" :y="margin - 20">放大</text> -->
       </template>
     </svg>
   </div>
