@@ -12,8 +12,8 @@
         <rect class="side-bg" :x="0" :y="0" :width="graphx" :height="margin + yaxish + margin" />
         <text class="age" v-for="n in 5" :x="datesx[0] + graphx - 15" :y="graphy + yaxish*0.2*(n - 1)" v-text="100 - (n - 1)*20" :key="'age-' + n" />
         <line class="age-line" v-for="n in 5" :x1="graphx - 10" :y1="graphy + yaxish*0.2*(n - 1)" :x2="graphx" :y2="graphy + yaxish*0.2*(n - 1)" :key="'age-line-y-axis-' + n" />
-        <text class="fit-graph" :x="graphx" :y="margin - 20">縮小</text>
-        <text class="expand-graph" :x="graphx + 40" :y="margin - 20">放大</text>
+        <text class="fit-graph" :x="graphx" :y="margin - 20" v-on:click="fitGraph">縮小</text>
+        <text class="expand-graph" :x="graphx + 40" :y="margin - 20" v-on:click="expandGraph">放大</text>
 
 
         <!-- Side Graph -->
@@ -29,7 +29,7 @@
         <text class="gender" :x="sideFemalex" :y="graphy + yaxish + 10">女性</text>
       </template>
     </svg>
-    <div id="date-legends">
+    <div id="date-legends" class="d-none d-lg-block">
       <div class="row align-items-end">
         <div class="col-md-3">
           <svg class="tall">
@@ -72,6 +72,46 @@
             <path class="case local-contact" d="M165,9h12l9-8.5,10,10-10,10L177,12H165Z"/>
             <text class="legend-text" x="51.76" y="14.21">本地個案(源頭不明)</text>            
             <text class="legend-text" x="200.76" y="14.21">本地個案的密切接觸者</text></svg>
+        </div>
+      </div>
+    </div>
+    <div id="date-legends-mobile" class="d-lg-none">
+      <div class="row align-items-start">
+        <div class="col-2">
+          <svg class="wide">
+            <!-- <path class="case grey" d="M 5,5 H 20 V 140 Z"/> -->
+            <path class="case grey" d="M 5,7 H 7 V 130 L 12 135.5 L 6 141.5 L 0.5 135.5 L 5 130 Z"/>
+            <line class="date-line" x1="5" y1="7" x2="20" y2="7"/>
+            <line class="date-line" x1="5" y1="135.5" x2="20" y2="135.5"/>
+            <text class="legend-text" x="25" y="7">發病日</text>
+            <text class="legend-text" x="25" y="135.5">確診日</text>
+          </svg>
+        </div>
+        <div class="col-10">
+          <svg class="short">
+            <path class="case grey" d="M 5,7 H 7 V 15 L 12 20.5 L 6 26.5 L 0.5 20.5 L 5 15 Z"/>
+            <path class="case grey" d="M 55,7 H 57 V 16 A 5 5 0 1 1 55 16 Z"/>
+            <!-- <path class="case grey" d="M75.5,9.2H90c0.9-4.5,5.2-7.4,9.6-6.5c4.5,0.9,7.4,5.2,6.5,9.6s-5.2,7.4-9.6,6.5c-3.3-0.6-5.9-3.2-6.5-6.5H75.5V9.2z"/> -->
+            <text class="legend-text" x="15" y="18">男</text>
+            <text class="legend-text" x="65" y="18">女</text>
+          </svg>
+          <svg class="short">
+            <path class="case imported-contact" d="M 5,7 H 7 V 15 L 12 20.5 L 6 26.5 L 0.5 20.5 L 5 15 Z"/>
+            <path class="case imported" d="M 85,7 H 87 V 15 L 92 20.5 L 86 26.5 L 80.5 20.5 L 85 15 Z"/>
+            <text class="legend-text" x="15" y="18">輸入個案</text>            
+            <text class="legend-text" x="96" y="18">輸入個案的密切接觸者</text>
+          </svg>
+          <svg class="short">
+            <path class="case local-possible" d="M 5,7 H 7 V 15 L 12 20.5 L 6 26.5 L 0.5 20.5 L 5 15 Z"/>
+            <path class="case local-possible-contact" d="M 105,7 H 107 V 15 L 112 20.5 L 106 26.5 L 100.5 20.5 L 105 15 Z"/>
+            <text class="legend-text" x="15" y="18">可能本地個案</text>
+            <text class="legend-text" x="116" y="18">可能本地個案的密切接觸者</text>
+          </svg>
+          <svg class="short">
+            <path class="case local-unknown" d="M 5,7 H 7 V 15 L 12 20.5 L 6 26.5 L 0.5 20.5 L 5 15 Z"/>
+            <path class="case local-contact" d="M 135,7 H 137 V 15 L 142 20.5 L 136 26.5 L 130.5 20.5 L 135 15 Z"/>
+            <text class="legend-text" x="15" y="18">本地個案(源頭不明)</text>            
+            <text class="legend-text" x="146" y="18">本地個案的密切接觸者</text></svg>
         </div>
       </div>
     </div>
@@ -273,9 +313,9 @@ export default {
     window.addEventListener('scroll', intro);
     window.setTimeout(intro, 1000);
 
-    /* fit and expand graph */
-    document.querySelector('.fit-graph').addEventListener('click', this.fitGraph);
-    document.querySelector('.expand-graph').addEventListener('click', this.expandGraph);
+    /* fit and expand graph buttons */
+    // document.querySelector('.fit-graph').addEventListener('click', this.fitGraph);
+    // document.querySelector('.expand-graph').addEventListener('click', this.expandGraph);
 
     /* mobile or desktop mode */
 
@@ -404,7 +444,8 @@ export default {
 <style lang="scss" scoped>
 #date-graph,
 #date-graph-mobile,
-#date-legends {
+#date-legends,
+#date-legends-mobile {
   .case {
     opacity: 0.8;
 
@@ -567,9 +608,8 @@ export default {
   }
 }
 
-#date-legends {
-  margin-bottom: 40px;
-
+#date-legends,
+#date-legends-mobile {
   svg {
     width: 100%;
 
@@ -592,6 +632,31 @@ export default {
     path.grey {
       fill: #dcddde;
     }
+  }
+}
+
+#date-legends {
+  margin-bottom: 40px;
+}
+
+#date-legends-mobile {
+  margin-top: 20px;
+
+  svg {
+    &.wide {
+      width: calc(100% + 30px);;
+    }
+
+    &.short {
+      width: calc(100% - 10px);
+      margin-left: 10px;
+      height: 26px;
+    }
+  }
+
+  .legend-text {
+    text-anchor: start;
+    dominant-baseline: middle;
   }
 }
 </style>
