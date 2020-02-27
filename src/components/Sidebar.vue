@@ -121,23 +121,23 @@
                 {{(infectionCategories['本地個案']*100 / this.govInfoCases.length).toFixed(1)}}%
               </span>
               <span class="stat-overseas color-green text-bold" :style="{left: (infectionCategories['本地個案']*100 / this.govInfoCases.length).toFixed(1) + '%'}">
-                {{(infectionCategories['輸入個案']*100 / this.govInfoCases.length).toFixed(1)}}%
+                {{(infectionCategories['未能確定']*100 / this.govInfoCases.length).toFixed(1)}}%
               </span>
               <span class="stat-unknow color-pink text-bold">
-                {{(infectionCategories['未能確定']*100 / this.govInfoCases.length).toFixed(1)}}%
+                {{(infectionCategories['輸入個案']*100 / this.govInfoCases.length).toFixed(1)}}%
               </span>
               <span class="label-inland color-grey small">
                 本地
               </span>
               <span class="label-oversea color-grey small" :style="{left: (infectionCategories['本地個案']*100 / this.govInfoCases.length).toFixed(1) + '%'}">
-                輸入
+                可能本地
               </span>
               <span class="label-unknown color-grey small">
-                可能本地
+                輸入
               </span>
             </div>
             <div class="male-female-ratio-bar">
-              <div class="ratio-bar inland-bar" :style="{width: ((infectionCategories['本地個案'] + infectionCategories['輸入個案'])*100 / this.govInfoCases.length).toFixed(1) + '%'}" />
+              <div class="ratio-bar inland-bar" :style="{width: ((infectionCategories['本地個案'] + infectionCategories['未能確定'])*100 / this.govInfoCases.length).toFixed(1) + '%'}" />
               <div class="ratio-bar oversears-bar" :style="{width: (infectionCategories['本地個案']*100 / this.govInfoCases.length).toFixed(2) + '%'}" />
             </div>
           </div>
