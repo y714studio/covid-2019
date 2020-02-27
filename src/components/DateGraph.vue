@@ -7,13 +7,13 @@
         <line class="age-line" v-for="n in 5" :x1="graphx - offsetx" :y1="graphy + yaxish*0.2*(n - 1)" :x2="graphw + graphx - offsetx" :y2="graphy + yaxish*0.2*(n - 1)" :key="'age-line-' + n" />
         <line class="x-axis" :x1="graphx - offsetx" :y1="graphy + yaxish" :x2="graphw + graphx - offsetx" :y2="graphy + yaxish" />
         <line class="date-line" :class="{ 'first': i == 0 }" v-for="(date, i) in dates" :x1="datesx[i] + graphx - offsetx" :y1="margin" :x2="datesx[i] + graphx - offsetx" :y2="graphy + yaxish" :key="'date-line-' + i" />
-        <text class="date" v-for="(sunday, i) in sundays" :x="datesx[firstSundayi + 7*i] + graphx - offsetx" :y="graphy + yaxish + 10" v-text="sundaysName[i]" :key="'date-' + i" />
+        <text class="date sunday" v-for="(sunday, i) in sundays" :x="datesx[firstSundayi + 7*i] + graphx - offsetx" :y="graphy + yaxish + 10" v-text="sundaysName[i]" :key="'date-' + i" />
         <path class="case" :class="patient.origin" v-for="(patient, i) in cases" :d="drawPath(patient.gender, datesxIndex[patient.start] + graphx - offsetx, datesxIndex[patient.confirmed] + graphx - offsetx, (1-(patient.age/100))*yaxish + margin)" :key="'case-' + i" />
         <rect class="side-bg" :x="0" :y="0" :width="graphx" :height="margin + yaxish + margin" />
         <text class="age" v-for="n in 5" :x="datesx[0] + graphx - 15" :y="graphy + yaxish*0.2*(n - 1)" v-text="100 - (n - 1)*20" :key="'age-' + n" />
         <line class="age-line" v-for="n in 5" :x1="graphx - 10" :y1="graphy + yaxish*0.2*(n - 1)" :x2="graphx" :y2="graphy + yaxish*0.2*(n - 1)" :key="'age-line-y-axis-' + n" />
-        <text class="fit-graph" :x="graphx" :y="margin - 20">縮小</text>
-        <text class="expand-graph" :x="graphx + 40" :y="margin - 20">放大</text>
+        <text class="fit-graph" :x="graphx" :y="margin - 20" v-on:click="fitGraph">縮小</text>
+        <text class="expand-graph" :x="graphx + 40" :y="margin - 20" v-on:click="expandGraph">放大</text>
 
 
         <!-- Side Graph -->
@@ -29,7 +29,7 @@
         <text class="gender" :x="sideFemalex" :y="graphy + yaxish + 10">女性</text>
       </template>
     </svg>
-    <div id="date-legends">
+    <div id="date-legends" class="d-none d-lg-block">
       <div class="row align-items-end">
         <div class="col-md-3">
           <svg class="tall">
@@ -75,27 +75,53 @@
         </div>
       </div>
     </div>
+    <div id="date-legends-mobile" class="d-lg-none">
+      <div class="row align-items-start">
+        <div class="col-2">
+          <svg class="wide">
+            <!-- <path class="case grey" d="M 5,5 H 20 V 140 Z"/> -->
+            <path class="case grey" d="M 5,7 H 7 V 130 L 12 135.5 L 6 141.5 L 0.5 135.5 L 5 130 Z"/>
+            <line class="date-line" x1="5" y1="7" x2="20" y2="7"/>
+            <line class="date-line" x1="5" y1="135.5" x2="20" y2="135.5"/>
+            <text class="legend-text" x="25" y="7">發病日</text>
+            <text class="legend-text" x="25" y="135.5">確診日</text>
+          </svg>
+        </div>
+        <div class="col-10">
+          <svg class="short">
+            <path class="case grey" d="M 5,7 H 7 V 15 L 12 20.5 L 6 26.5 L 0.5 20.5 L 5 15 Z"/>
+            <path class="case grey" d="M 55,7 H 57 V 16 A 5 5 0 1 1 55 16 Z"/>
+            <!-- <path class="case grey" d="M75.5,9.2H90c0.9-4.5,5.2-7.4,9.6-6.5c4.5,0.9,7.4,5.2,6.5,9.6s-5.2,7.4-9.6,6.5c-3.3-0.6-5.9-3.2-6.5-6.5H75.5V9.2z"/> -->
+            <text class="legend-text" x="15" y="18">男</text>
+            <text class="legend-text" x="65" y="18">女</text>
+          </svg>
+          <svg class="short">
+            <path class="case imported-contact" d="M 5,7 H 7 V 15 L 12 20.5 L 6 26.5 L 0.5 20.5 L 5 15 Z"/>
+            <path class="case imported" d="M 85,7 H 87 V 15 L 92 20.5 L 86 26.5 L 80.5 20.5 L 85 15 Z"/>
+            <text class="legend-text" x="15" y="18">輸入個案</text>            
+            <text class="legend-text" x="96" y="18">輸入個案的密切接觸者</text>
+          </svg>
+          <svg class="short">
+            <path class="case local-possible" d="M 5,7 H 7 V 15 L 12 20.5 L 6 26.5 L 0.5 20.5 L 5 15 Z"/>
+            <path class="case local-possible-contact" d="M 105,7 H 107 V 15 L 112 20.5 L 106 26.5 L 100.5 20.5 L 105 15 Z"/>
+            <text class="legend-text" x="15" y="18">可能本地個案</text>
+            <text class="legend-text" x="116" y="18">可能本地個案的密切接觸者</text>
+          </svg>
+          <svg class="short">
+            <path class="case local-unknown" d="M 5,7 H 7 V 15 L 12 20.5 L 6 26.5 L 0.5 20.5 L 5 15 Z"/>
+            <path class="case local-contact" d="M 135,7 H 137 V 15 L 142 20.5 L 136 26.5 L 130.5 20.5 L 135 15 Z"/>
+            <text class="legend-text" x="15" y="18">本地個案(源頭不明)</text>            
+            <text class="legend-text" x="146" y="18">本地個案的密切接觸者</text></svg>
+        </div>
+      </div>
+    </div>
     <svg id="date-graph-mobile">
       <template v-if="isMobile">
-        <!-- Main Graph -->
-        <!-- <rect class="stripe" v-for="n in 5" :x="graphx - offsetx" :y="graphy + yaxish*0.2*(n - 1)" :width="graphw" :height="yaxish*0.1" :key="'stripe-' + n" />  
-        <line class="age-line" v-for="n in 5" :x1="graphx - offsetx" :y1="graphy + yaxish*0.2*(n - 1)" :x2="graphw + graphx - offsetx" :y2="graphy + yaxish*0.2*(n - 1)" :key="'age-line-' + n" />
-        <line class="x-axis" :x1="graphx - offsetx" :y1="graphy + yaxish" :x2="graphw + graphx - offsetx" :y2="graphy + yaxish" />
-        <line class="date-line" :class="{ 'first': i == 0 }" v-for="(date, i) in dates" :x1="datesx[i] + graphx - offsetx" :y1="margin" :x2="datesx[i] + graphx - offsetx" :y2="graphy + yaxish" :key="'date-line-' + i" />
-        <text class="date" v-for="(sunday, i) in sundays" :x="datesx[firstSundayi + 7*i] + graphx - offsetx" :y="graphy + yaxish + 10" v-text="sundaysName[i]" :key="'date-' + i" />
-        <path class="case" :class="patient.origin" v-for="(patient, i) in cases" :d="drawPath(patient.gender, datesxIndex[patient.start] + graphx - offsetx, datesxIndex[patient.confirmed] + graphx - offsetx, (1-(patient.age/100))*yaxish + margin)" :key="'case-' + i" />
-        <rect class="side-bg" :x="0" :y="0" :width="graphx" :height="margin + yaxish + margin" />
-        <text class="age" v-for="n in 5" :x="datesx[0] + graphx - 15" :y="graphy + yaxish*0.2*(n - 1)" v-text="100 - (n - 1)*20" :key="'age-' + n" />
-        <line class="age-line" v-for="n in 5" :x1="graphx - 10" :y1="graphy + yaxish*0.2*(n - 1)" :x2="graphx" :y2="graphy + yaxish*0.2*(n - 1)" :key="'age-line-y-axis-' + n" />
-        <text class="fit-graph" :x="graphx" :y="margin - 20">縮小</text>
-        <text class="expand-graph" :x="graphx + 40" :y="margin - 20">放大</text> -->
-
-
-        <!-- Side Graph -->
+        <!-- Mobile Top Graph -->
         <text class="age" v-for="n in 6" :x="mgraphx + mxaxisw*0.2*(n - 1)" :y="mtopgraphy - 15" v-text="(n - 1)*20" :key="'m-side-age-' + n" />
         <rect class="stripe" v-for="n in 5" :x="mgraphx + mxaxisw*(0.1 + 0.2*(n - 1))" :y="mtopgraphy" :width="mxaxisw * 0.1" :height="mtopgraphh" :key="'m-side-stripe-' + n" />
         <line class="age-line" v-for="n in 5" :x1="mgraphx + mxaxisw*0.2*n" :y1="mtopgraphy - 10" :x2="mgraphx + mxaxisw*0.2*n" :y2="mtopgraphy +mtopgraphh" :key="'m-side-age-line-' + n" />
-        <line class="y-axis" :x1="mgraphx" :y1="mtopgraphy" :x2="mgraphx" :y2="mtopgraphy + mtopgraphh" />
+        <line class="y-axis" :x1="mgraphx" :y1="mtopgraphy - 10" :x2="mgraphx" :y2="mtopgraphy + mtopgraphh" />
         <line class="x-axis" :x1="mgraphx" :y1="mtopgraphy" :x2="mgraphx + mxaxisw" :y2="mtopgraphy" />
         <template v-for="(patient, i) in cases" >
           <path class="case" :class="patient.origin" v-if="patient.gender == 'male'" :d="drawMobileDiamond((patient.age/100)*mxaxisw + mgraphx, mtopMaley)" :key="'m-side-case-' + i" />
@@ -103,6 +129,17 @@
         </template>
         <text class="gender" :x="mgraphx - 10" :y="mtopMaley">男性</text>
         <text class="gender" :x="mgraphx - 10" :y="mtopFemaley">女性</text>
+
+        <!-- Mobile Main Graph -->
+        <rect class="stripe" v-for="n in 5" :x="mgraphx + mxaxisw*(0.1 + 0.2*(n - 1))" :y="mgraphy" :width="mxaxisw * 0.1" :height="mgraphh" :key="'m-stripe-' + n" /> 
+        <line class="age-line" v-for="n in 5" :x1="mgraphx + mxaxisw*0.2*n" :y1="mgraphy - 10" :x2="mgraphx + mxaxisw*0.2*n" :y2="mgraphy + mgraphh" :key="'m-age-line-' + n" />
+        <line class="y-axis" :x1="mgraphx" :y1="mgraphy - 10" :x2="mgraphx" :y2="mgraphy + mgraphh" />
+        <line class="date-line" v-for="(date, i) in dates" :x1="mgraphx" :y1="mdatesy[i] + mgraphy" :x2="mgraphx + mxaxisw" :y2="mdatesy[i] + mgraphy" :key="'m-date-line-' + i" />
+        <text class="date" :class="{ sunday: i % 7 == firstSundayi }" v-for="(date, i) in dates" :x="mgraphx - 10" :y="mdatesy[i] + mgraphy" v-text="datesName[i]" :key="'m-date-' + i" />
+        <path class="case" :class="patient.origin" v-for="(patient, i) in cases" :d="drawMobilePath(patient.gender, (patient.age/100)*mxaxisw + mgraphx, mdatesyIndex[patient.start] + mgraphy, mdatesyIndex[patient.confirmed] + mgraphy)" :key="'m-case-' + i" />
+        <!-- <rect class="side-bg" :x="0" :y="0" :width="graphx" :height="margin + yaxish + margin" /> -->
+        <text class="age" v-for="n in 6" :x="mgraphx + mxaxisw*0.2*(n - 1)" :y="mgraphy - 20" v-text="(n - 1)*20" :key="'m-age-' + n" />
+        <!-- <line class="age-line" v-for="n in 5" :x1="graphx - 10" :y1="graphy + yaxish*0.2*(n - 1)" :x2="graphx" :y2="graphy + yaxish*0.2*(n - 1)" :key="'age-line-y-axis-' + n" /> -->
       </template>
     </svg>
   </div>
@@ -126,13 +163,14 @@ const sideMalex = 80;
 const sideFemalex = 135;
 
 const mmargin = 25;
-const mgraphx = mmargin + 25;
-const mgraphy = 250;
-const myaxisi = 29; // i = increment
 const mtopgraphy = mmargin;
-const mtopgraphh = 120;
-const mtopMaley = 60;
-const mtopFemaley = 100;
+const mtopgraphh = 85;
+const mtopMaley = 53;
+const mtopFemaley = 81;
+const mgraphx = mmargin + 10;
+const mgraphy = mmargin + mtopgraphh + mmargin + mmargin;
+const myaxisi = 29; // i = increment
+
 
 export default {
   name: 'date-graph',
@@ -200,6 +238,11 @@ export default {
 
       return map;
     },
+    datesName () {
+      return this.dates.map((date) => {
+        return ((date - (~~(date/10000)*10000))/100).toFixed(2);
+      })
+    },
     firstSundayi () { 
       return dates.indexOf(firstSunday);
     },
@@ -207,9 +250,7 @@ export default {
       return this.dates.filter((date, i) => i % 7 == this.firstSundayi);
     },
     sundaysName () {
-      return this.sundays.map((date) => {
-        return ((date - (~~(date/10000)*10000))/100).toFixed(2);
-      })
+      return this.datesName.filter((date, i) => i % 7 == this.firstSundayi);
     },
     graphw () { // graph width
       return this.datesx[this.datesx.length - 1];
@@ -272,9 +313,9 @@ export default {
     window.addEventListener('scroll', intro);
     window.setTimeout(intro, 1000);
 
-    /* fit and expand graph */
-    document.querySelector('.fit-graph').addEventListener('click', this.fitGraph);
-    document.querySelector('.expand-graph').addEventListener('click', this.expandGraph);
+    /* fit and expand graph buttons */
+    // document.querySelector('.fit-graph').addEventListener('click', this.fitGraph);
+    // document.querySelector('.expand-graph').addEventListener('click', this.expandGraph);
 
     /* mobile or desktop mode */
 
@@ -288,11 +329,20 @@ export default {
     /* mobile graph width */
 
     const fitmxaxisw = () => {
-      this.mxaxisw = Math.max(0, this.dategraphMobile.getBoundingClientRect().width - this.mgraphx - this.mmargin);
+      this.mxaxisw = Math.max(0, this.dategraphMobile.getBoundingClientRect().width - this.mgraphx - 10);
     }
 
     fitmxaxisw();
     window.addEventListener('resize', fitmxaxisw);
+
+    /* mobile svg height */
+
+    const setMobileSvgh = () => {
+      this.dategraphMobile.style.height = this.mgraphy + this.mgraphh + this.mmargin + 'px';
+    }
+
+    setMobileSvgh();
+    window.addEventListener('resize', setMobileSvgh);
   },
   methods: {
     drawPath (gender, startx, endx, y) {
@@ -313,6 +363,28 @@ export default {
           'H ' + (endx - 8) + ' ' +
           'A 8 8 0 1 1 ' + (endx - 8) + ' ' + (y + 1.5) + ' ' +
           'H ' + startx + ' ' +
+          'Z' 
+        );
+      }
+    },
+    drawMobilePath (gender, x, starty, endy) {
+      if (gender == 'male') {
+        return (
+          'M ' + (x + 1) + ' ' + starty + ' ' +
+          'V ' + (endy - 5.5) + ' ' +
+          'L ' + (x + 6) + ' ' + endy + ' ' +
+          'L ' + x + ' ' + (endy + 6) + ' ' +
+          'L ' + (x - 6) + ' ' + endy + ' ' +
+          'L ' + (x - 1) + ' ' + (endy - 5.5) + ' ' +
+          'V ' + starty + ' ' +
+          'Z' 
+        );
+      } else {
+        return (
+          'M '  + (x + 1) + ' ' + starty + ' ' +
+          'V ' + (endy - 5) + ' ' +
+          'A 5 5 0 1 1 ' + (x - 1) + ' ' + (endy - 5) + ' ' +
+          'V ' + starty + ' ' +
           'Z' 
         );
       }
@@ -372,7 +444,8 @@ export default {
 <style lang="scss" scoped>
 #date-graph,
 #date-graph-mobile,
-#date-legends {
+#date-legends,
+#date-legends-mobile {
   .case {
     opacity: 0.8;
 
@@ -448,7 +521,11 @@ export default {
   }
 
   .date {
-    fill: red;
+    fill: #8f8f8c;
+
+    &.sunday {
+      fill: red;
+    }
   }
 
   .gender {
@@ -494,11 +571,7 @@ export default {
     dominant-baseline: middle;
   }
 
-  .date {
-    text-anchor: middle;
-    dominant-baseline: hanging;
-  }
-
+  .date,
   .gender {
     text-anchor: middle;
     dominant-baseline: hanging;
@@ -507,7 +580,7 @@ export default {
 
 #date-graph-mobile {
   display: none;
-  height: 500px;
+  height: 2000px;
 
   @include media-breakpoint-down(md) {
     display: block;
@@ -528,15 +601,15 @@ export default {
     dominant-baseline: baseline;
   }
 
+  .date,
   .gender {
     text-anchor: end;
     dominant-baseline: middle;
   }
 }
 
-#date-legends {
-  margin-bottom: 40px;
-
+#date-legends,
+#date-legends-mobile {
   svg {
     width: 100%;
 
@@ -559,6 +632,31 @@ export default {
     path.grey {
       fill: #dcddde;
     }
+  }
+}
+
+#date-legends {
+  margin-bottom: 40px;
+}
+
+#date-legends-mobile {
+  margin-top: 20px;
+
+  svg {
+    &.wide {
+      width: calc(100% + 30px);;
+    }
+
+    &.short {
+      width: calc(100% - 10px);
+      margin-left: 10px;
+      height: 26px;
+    }
+  }
+
+  .legend-text {
+    text-anchor: start;
+    dominant-baseline: middle;
   }
 }
 </style>
