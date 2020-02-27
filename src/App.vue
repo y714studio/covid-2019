@@ -10,10 +10,16 @@
         <div class="row">
 
           <section class="col-lg-12">
-            <div class="section-inner" style="background: #eee;">
+            <div class="section-inner">
               <web-map
                 :cases="govInfoCases"
               />
+              <div class="legands text-right">
+                <div class="legand">
+                  <span class="dot-blue" />
+                  疑似/確診個案大廈名單
+                </div>
+              </div>
             </div>
           </section>
 
@@ -166,6 +172,26 @@ export default {
 
   .age-vs-gender {
     padding-right: 20px;
+  }
+
+  .legands {
+    margin-top: 12px;
+    text-align: right;
+
+    .legand {
+      display: inline-block;
+      font-size: 12px;
+
+      .dot-blue {
+        display: block;
+        width: 17px;
+        height: 17px;
+        background: #1e52a4;
+        border-radius: 50%;
+        float: left;
+        margin-right: 8px;
+      }
+    }
   }
 }
 </style>
