@@ -112,7 +112,7 @@ export default {
 
                 for(let y = 0; y < casePoints.length; y++) {
                   popupTemplate = {
-                    title: "{Name}",
+                    title: "個案{No}- {Name}",
                     content: "<span><b>更多資料:</b></span> {Description}"
                   }
 
@@ -125,7 +125,8 @@ export default {
                     symbol: simpleMarkerSymbol,
                     attributes: {
                       Name: casePoints[y].label,
-                      Description: this.cases[i].description
+                      Description: this.cases[i][10],
+                      No: this.cases[i][0]
                     },
                     popupTemplate: popupTemplate
                   })
