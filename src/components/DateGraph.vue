@@ -2,30 +2,32 @@
   <div>
     <svg id="date-graph" class="hide">
       <!-- Main Graph -->
-      <rect class="stripe" v-for="n in 5" :x="graphx - offsetx" :y="graphy + yaxish*0.2*(n - 1)" :width="graphw" :height="yaxish*0.1" :key="'stripe-' + n" />  
-      <line class="age-line" v-for="n in 5" :x1="graphx - offsetx" :y1="graphy + yaxish*0.2*(n - 1)" :x2="graphw + graphx - offsetx" :y2="graphy + yaxish*0.2*(n - 1)" :key="'age-line-' + n" />
-      <line class="x-axis" :x1="graphx - offsetx" :y1="graphy + yaxish" :x2="graphw + graphx - offsetx" :y2="graphy + yaxish" />
-      <line class="date-line" :class="{ 'first': i == 0 }" v-for="(date, i) in dates" :x1="datesx[i] + graphx - offsetx" :y1="margin" :x2="datesx[i] + graphx - offsetx" :y2="graphy + yaxish" :key="'date-line-' + i" />
-      <text class="date" v-for="(sunday, i) in sundays" :x="datesx[firstSundayi + 7*i] + graphx - offsetx" :y="graphy + yaxish + 10" v-text="sundaysName[i]" :key="'date-' + i" />
-      <path class="case" :class="patient.origin" v-for="(patient, i) in cases" :d="drawPath(patient.gender, datesxIndex[patient.start] + graphx - offsetx, datesxIndex[patient.confirmed] + graphx - offsetx, (1-(patient.age/100))*yaxish + margin)" :key="'case-' + i" />
-      <rect class="side-bg" :x="0" :y="0" :width="graphx" :height="margin + yaxish + margin" />
-      <text class="age" v-for="n in 5" :x="datesx[0] + graphx - 15" :y="graphy + yaxish*0.2*(n - 1)" v-text="100 - (n - 1)*20" :key="'age-' + n" />
-      <line class="age-line" v-for="n in 5" :x1="graphx - 10" :y1="graphy + yaxish*0.2*(n - 1)" :x2="graphx" :y2="graphy + yaxish*0.2*(n - 1)" :key="'age-line-y-axis-' + n" />
-      <text class="fit-graph" :x="graphx" :y="margin - 20">縮小</text>
-      <text class="expand-graph" :x="graphx + 40" :y="margin - 20">放大</text>
+      <template v-if="!isMobile">
+        <rect class="stripe" v-for="n in 5" :x="graphx - offsetx" :y="graphy + yaxish*0.2*(n - 1)" :width="graphw" :height="yaxish*0.1" :key="'stripe-' + n" />  
+        <line class="age-line" v-for="n in 5" :x1="graphx - offsetx" :y1="graphy + yaxish*0.2*(n - 1)" :x2="graphw + graphx - offsetx" :y2="graphy + yaxish*0.2*(n - 1)" :key="'age-line-' + n" />
+        <line class="x-axis" :x1="graphx - offsetx" :y1="graphy + yaxish" :x2="graphw + graphx - offsetx" :y2="graphy + yaxish" />
+        <line class="date-line" :class="{ 'first': i == 0 }" v-for="(date, i) in dates" :x1="datesx[i] + graphx - offsetx" :y1="margin" :x2="datesx[i] + graphx - offsetx" :y2="graphy + yaxish" :key="'date-line-' + i" />
+        <text class="date" v-for="(sunday, i) in sundays" :x="datesx[firstSundayi + 7*i] + graphx - offsetx" :y="graphy + yaxish + 10" v-text="sundaysName[i]" :key="'date-' + i" />
+        <path class="case" :class="patient.origin" v-for="(patient, i) in cases" :d="drawPath(patient.gender, datesxIndex[patient.start] + graphx - offsetx, datesxIndex[patient.confirmed] + graphx - offsetx, (1-(patient.age/100))*yaxish + margin)" :key="'case-' + i" />
+        <rect class="side-bg" :x="0" :y="0" :width="graphx" :height="margin + yaxish + margin" />
+        <text class="age" v-for="n in 5" :x="datesx[0] + graphx - 15" :y="graphy + yaxish*0.2*(n - 1)" v-text="100 - (n - 1)*20" :key="'age-' + n" />
+        <line class="age-line" v-for="n in 5" :x1="graphx - 10" :y1="graphy + yaxish*0.2*(n - 1)" :x2="graphx" :y2="graphy + yaxish*0.2*(n - 1)" :key="'age-line-y-axis-' + n" />
+        <text class="fit-graph" :x="graphx" :y="margin - 20">縮小</text>
+        <text class="expand-graph" :x="graphx + 40" :y="margin - 20">放大</text>
 
 
-      <!-- Side Graph -->
-      <text class="age" v-for="n in 5" :x="sidegraphx - 15" :y="graphy + yaxish*0.2*(n - 1)" v-text="100 - (n - 1)*20" :key="'side-age-' + n" />
-      <rect class="stripe" v-for="n in 5" :x="sidegraphx" :y="graphy + yaxish*0.2*(n - 1)" :width="sidegraphw" :height="yaxish*0.1" :key="'side-stripe-' + n" />
-      <line class="age-line" v-for="n in 5" :x1="sidegraphx - 10" :y1="graphy + yaxish*0.2*(n - 1)" :x2="sidegraphw + 35" :y2="graphy + yaxish*0.2*(n - 1)" :key="'side-age-line-' + n" />
-      <line class="x-axis" :x1="sidegraphx" :y1="graphy + yaxish" :x2="sidegraphx + sidegraphw" :y2="graphy + yaxish" />
-      <template v-for="(patient, i) in cases" >
-        <path class="case" :class="patient.origin" v-if="patient.gender == 'male'" :d="drawDiamond(sideMalex, (1-(patient.age/100))*yaxish + margin)" :key="'side-case-' + i" />
-        <circle class="case" :class="patient.origin" v-if="patient.gender == 'female'" :cx="sideFemalex" :cy="(1-(patient.age/100))*yaxish + margin" :r="8" :key="'side-case-' + i" />
+        <!-- Side Graph -->
+        <text class="age" v-for="n in 5" :x="sidegraphx - 15" :y="graphy + yaxish*0.2*(n - 1)" v-text="100 - (n - 1)*20" :key="'side-age-' + n" />
+        <rect class="stripe" v-for="n in 5" :x="sidegraphx" :y="graphy + yaxish*0.2*(n - 1)" :width="sidegraphw" :height="yaxish*0.1" :key="'side-stripe-' + n" />
+        <line class="age-line" v-for="n in 5" :x1="sidegraphx - 10" :y1="graphy + yaxish*0.2*(n - 1)" :x2="sidegraphw + 35" :y2="graphy + yaxish*0.2*(n - 1)" :key="'side-age-line-' + n" />
+        <line class="x-axis" :x1="sidegraphx" :y1="graphy + yaxish" :x2="sidegraphx + sidegraphw" :y2="graphy + yaxish" />
+        <template v-for="(patient, i) in cases" >
+          <path class="case" :class="patient.origin" v-if="patient.gender == 'male'" :d="drawDiamond(sideMalex, (1-(patient.age/100))*yaxish + margin)" :key="'side-case-' + i" />
+          <circle class="case" :class="patient.origin" v-if="patient.gender == 'female'" :cx="sideFemalex" :cy="(1-(patient.age/100))*yaxish + margin" :r="8" :key="'side-case-' + i" />
+        </template>
+        <text class="gender" :x="sideMalex" :y="graphy + yaxish + 10">男性</text>
+        <text class="gender" :x="sideFemalex" :y="graphy + yaxish + 10">女性</text>
       </template>
-      <text class="gender" :x="sideMalex" :y="graphy + yaxish + 10">男性</text>
-      <text class="gender" :x="sideFemalex" :y="graphy + yaxish + 10">女性</text>
     </svg>
     <div id="date-legends">
       <div class="row align-items-end">
@@ -74,31 +76,34 @@
       </div>
     </div>
     <svg id="date-graph-mobile">
-      <!-- Main Graph -->
-      <rect class="stripe" v-for="n in 5" :x="graphx - offsetx" :y="graphy + yaxish*0.2*(n - 1)" :width="graphw" :height="yaxish*0.1" :key="'stripe-' + n" />  
-      <line class="age-line" v-for="n in 5" :x1="graphx - offsetx" :y1="graphy + yaxish*0.2*(n - 1)" :x2="graphw + graphx - offsetx" :y2="graphy + yaxish*0.2*(n - 1)" :key="'age-line-' + n" />
-      <line class="x-axis" :x1="graphx - offsetx" :y1="graphy + yaxish" :x2="graphw + graphx - offsetx" :y2="graphy + yaxish" />
-      <line class="date-line" :class="{ 'first': i == 0 }" v-for="(date, i) in dates" :x1="datesx[i] + graphx - offsetx" :y1="margin" :x2="datesx[i] + graphx - offsetx" :y2="graphy + yaxish" :key="'date-line-' + i" />
-      <text class="date" v-for="(sunday, i) in sundays" :x="datesx[firstSundayi + 7*i] + graphx - offsetx" :y="graphy + yaxish + 10" v-text="sundaysName[i]" :key="'date-' + i" />
-      <path class="case" :class="patient.origin" v-for="(patient, i) in cases" :d="drawPath(patient.gender, datesxIndex[patient.start] + graphx - offsetx, datesxIndex[patient.confirmed] + graphx - offsetx, (1-(patient.age/100))*yaxish + margin)" :key="'case-' + i" />
-      <rect class="side-bg" :x="0" :y="0" :width="graphx" :height="margin + yaxish + margin" />
-      <text class="age" v-for="n in 5" :x="datesx[0] + graphx - 15" :y="graphy + yaxish*0.2*(n - 1)" v-text="100 - (n - 1)*20" :key="'age-' + n" />
-      <line class="age-line" v-for="n in 5" :x1="graphx - 10" :y1="graphy + yaxish*0.2*(n - 1)" :x2="graphx" :y2="graphy + yaxish*0.2*(n - 1)" :key="'age-line-y-axis-' + n" />
-      <text class="fit-graph" :x="graphx" :y="margin - 20">縮小</text>
-      <text class="expand-graph" :x="graphx + 40" :y="margin - 20">放大</text>
+      <template v-if="isMobile">
+        <!-- Main Graph -->
+        <!-- <rect class="stripe" v-for="n in 5" :x="graphx - offsetx" :y="graphy + yaxish*0.2*(n - 1)" :width="graphw" :height="yaxish*0.1" :key="'stripe-' + n" />  
+        <line class="age-line" v-for="n in 5" :x1="graphx - offsetx" :y1="graphy + yaxish*0.2*(n - 1)" :x2="graphw + graphx - offsetx" :y2="graphy + yaxish*0.2*(n - 1)" :key="'age-line-' + n" />
+        <line class="x-axis" :x1="graphx - offsetx" :y1="graphy + yaxish" :x2="graphw + graphx - offsetx" :y2="graphy + yaxish" />
+        <line class="date-line" :class="{ 'first': i == 0 }" v-for="(date, i) in dates" :x1="datesx[i] + graphx - offsetx" :y1="margin" :x2="datesx[i] + graphx - offsetx" :y2="graphy + yaxish" :key="'date-line-' + i" />
+        <text class="date" v-for="(sunday, i) in sundays" :x="datesx[firstSundayi + 7*i] + graphx - offsetx" :y="graphy + yaxish + 10" v-text="sundaysName[i]" :key="'date-' + i" />
+        <path class="case" :class="patient.origin" v-for="(patient, i) in cases" :d="drawPath(patient.gender, datesxIndex[patient.start] + graphx - offsetx, datesxIndex[patient.confirmed] + graphx - offsetx, (1-(patient.age/100))*yaxish + margin)" :key="'case-' + i" />
+        <rect class="side-bg" :x="0" :y="0" :width="graphx" :height="margin + yaxish + margin" />
+        <text class="age" v-for="n in 5" :x="datesx[0] + graphx - 15" :y="graphy + yaxish*0.2*(n - 1)" v-text="100 - (n - 1)*20" :key="'age-' + n" />
+        <line class="age-line" v-for="n in 5" :x1="graphx - 10" :y1="graphy + yaxish*0.2*(n - 1)" :x2="graphx" :y2="graphy + yaxish*0.2*(n - 1)" :key="'age-line-y-axis-' + n" />
+        <text class="fit-graph" :x="graphx" :y="margin - 20">縮小</text>
+        <text class="expand-graph" :x="graphx + 40" :y="margin - 20">放大</text> -->
 
 
-      <!-- Side Graph -->
-      <text class="age" v-for="n in 5" :x="sidegraphx - 15" :y="graphy + yaxish*0.2*(n - 1)" v-text="100 - (n - 1)*20" :key="'side-age-' + n" />
-      <rect class="stripe" v-for="n in 5" :x="sidegraphx" :y="graphy + yaxish*0.2*(n - 1)" :width="sidegraphw" :height="yaxish*0.1" :key="'side-stripe-' + n" />
-      <line class="age-line" v-for="n in 5" :x1="sidegraphx - 10" :y1="graphy + yaxish*0.2*(n - 1)" :x2="sidegraphw + 35" :y2="graphy + yaxish*0.2*(n - 1)" :key="'side-age-line-' + n" />
-      <line class="x-axis" :x1="sidegraphx" :y1="graphy + yaxish" :x2="sidegraphx + sidegraphw" :y2="graphy + yaxish" />
-      <template v-for="(patient, i) in cases" >
-        <path class="case" :class="patient.origin" v-if="patient.gender == 'male'" :d="drawDiamond(sideMalex, (1-(patient.age/100))*yaxish + margin)" :key="'side-case-' + i" />
-        <circle class="case" :class="patient.origin" v-if="patient.gender == 'female'" :cx="sideFemalex" :cy="(1-(patient.age/100))*yaxish + margin" :r="8" :key="'side-case-' + i" />
+        <!-- Side Graph -->
+        <text class="age" v-for="n in 6" :x="mgraphx + mxaxisw*0.2*(n - 1)" :y="mtopgraphy - 15" v-text="(n - 1)*20" :key="'m-side-age-' + n" />
+        <rect class="stripe" v-for="n in 5" :x="mgraphx + mxaxisw*(0.1 + 0.2*(n - 1))" :y="mtopgraphy" :width="mxaxisw * 0.1" :height="mtopgraphh" :key="'m-side-stripe-' + n" />
+        <line class="age-line" v-for="n in 5" :x1="mgraphx + mxaxisw*0.2*n" :y1="mtopgraphy - 10" :x2="mgraphx + mxaxisw*0.2*n" :y2="mtopgraphy +mtopgraphh" :key="'m-side-age-line-' + n" />
+        <line class="y-axis" :x1="mgraphx" :y1="mtopgraphy" :x2="mgraphx" :y2="mtopgraphy + mtopgraphh" />
+        <line class="x-axis" :x1="mgraphx" :y1="mtopgraphy" :x2="mgraphx + mxaxisw" :y2="mtopgraphy" />
+        <template v-for="(patient, i) in cases" >
+          <path class="case" :class="patient.origin" v-if="patient.gender == 'male'" :d="drawMobileDiamond((patient.age/100)*mxaxisw + mgraphx, mtopMaley)" :key="'m-side-case-' + i" />
+          <circle class="case" :class="patient.origin" v-if="patient.gender == 'female'" :cx="(patient.age/100)*mxaxisw + mgraphx" :cy="mtopFemaley" :r="5" :key="'m-side-case-' + i" />
+        </template>
+        <text class="gender" :x="mgraphx - 10" :y="mtopMaley">男性</text>
+        <text class="gender" :x="mgraphx - 10" :y="mtopFemaley">女性</text>
       </template>
-      <text class="gender" :x="sideMalex" :y="graphy + yaxish + 10">男性</text>
-      <text class="gender" :x="sideFemalex" :y="graphy + yaxish + 10">女性</text>
     </svg>
   </div>
 </template>
@@ -108,7 +113,7 @@
 
 import { SVG } from '@svgdotjs/svg.js'
 import svgPath from '../scripts/svg.path.js'
-import { dates, cases } from '../data/cases.js'
+import { firstSunday, dates, cases } from '../data/cases.js'
 
 const margin = 50;
 const graphx = 250;
@@ -120,17 +125,14 @@ const sidegraphw = 145;
 const sideMalex = 80;
 const sideFemalex = 135;
 
-const mmargin = 50;
-const mgraphx = 250;
-const mgraphy = 50;
-const mxaxisi = 29; // i = increment
-const myaxish = 480;
-const msidegraphx = margin - 15;
-const msidegraphw = 145;
-const msideMalex = 80;
-const msideFemalex = 135;
-
-const firstSunday = 20200119;
+const mmargin = 25;
+const mgraphx = mmargin + 25;
+const mgraphy = 250;
+const myaxisi = 29; // i = increment
+const mtopgraphy = mmargin;
+const mtopgraphh = 120;
+const mtopMaley = 60;
+const mtopFemaley = 100;
 
 export default {
   name: 'date-graph',
@@ -139,12 +141,26 @@ export default {
       margin: margin,
       graphx: graphx,
       graphy: graphy,
-      xaxisi: xaxisi, // i = increment
+      xaxisi: xaxisi,
       yaxish: yaxish,
-      sideMalex: sideMalex,
-      sideFemalex: sideFemalex,
       sidegraphx: sidegraphx,
       sidegraphw: sidegraphw,
+      sideMalex: sideMalex,
+      sideFemalex: sideFemalex,
+
+      mmargin: mmargin,
+      mgraphx: mgraphx,
+      mgraphy: mgraphy,
+      myaxisi: myaxisi,
+      mtopgraphy: mtopgraphy,
+      mtopgraphh: mtopgraphh,
+      mtopMaley: mtopMaley,
+      mtopFemaley: mtopFemaley,
+      mxaxisw: 0,
+
+      dates: dates,
+      cases: cases,
+      
       datagraph: document.querySelector('#date-graph'),
       dategraphMobile: document.querySelector('#date-graph-mobile'),
       expandIntervalId: 0,
@@ -152,8 +168,7 @@ export default {
       mousex: null,
       offsetx: 0,
       isdragging: false,
-      dates: dates,
-      cases: cases
+      isMobile: false
     }
   },
   computed: {
@@ -162,11 +177,25 @@ export default {
         return i * this.xaxisi;
       })
     },
+    mdatesy () {
+      return this.dates.map((date, i) => {
+        return i * this.myaxisi;
+      })
+    },
     datesxIndex () {
       let map = {};
 
       for (let i = 0; i < dates.length; i++) {
         map[this.dates[i]] = this.datesx[i];
+      }
+
+      return map;
+    },
+    mdatesyIndex () {
+      let map = {};
+
+      for (let i = 0; i < dates.length; i++) {
+        map[this.dates[i]] = this.mdatesy[i];
       }
 
       return map;
@@ -185,15 +214,22 @@ export default {
     graphw () { // graph width
       return this.datesx[this.datesx.length - 1];
     },
-    dragRange () {
-      return this.graphw + this.graphx - this.datagraph.getBoundingClientRect().width + this.margin;
+    mgraphh () { // graph width
+      return this.mdatesy[this.datesx.length - 1];
     },
-    graphvp () {
+    dragRange () {
+      if (!this.isMobile) {
+        return this.graphw + this.graphx - this.datagraph.getBoundingClientRect().width + this.margin;
+      } else {
+        return 0;
+      }
+    },
+    graphvp () { // graph viewport
       return this.datagraph.getBoundingClientRect().width - graphx - margin;
     },
     fitxaxisi () {
       return this.graphvp / (this.datesx.length - 1);
-    }
+    },
   },
   mounted () {
     this.datagraph = document.querySelector('#date-graph');
@@ -225,7 +261,7 @@ export default {
 
     this.xaxisi = this.fitxaxisi;
 
-    function intro () {
+    const intro = () => {
       if (this.datagraph.getBoundingClientRect().top < window.innerHeight/2) {
         this.datagraph.classList.remove('hide');
         window.setTimeout(this.expandGraph, 1000);
@@ -233,13 +269,30 @@ export default {
       }
     }
 
-    window.addEventListener('scroll', intro.bind(this));
-    window.setTimeout(intro.bind(this), 1000);
+    window.addEventListener('scroll', intro);
+    window.setTimeout(intro, 1000);
 
     /* fit and expand graph */
     document.querySelector('.fit-graph').addEventListener('click', this.fitGraph);
     document.querySelector('.expand-graph').addEventListener('click', this.expandGraph);
 
+    /* mobile or desktop mode */
+
+    const ifMobile = () => {
+      this.isMobile = window.innerWidth < 768;
+    }
+
+    ifMobile();
+    window.addEventListener('resize', ifMobile);
+
+    /* mobile graph width */
+
+    const fitmxaxisw = () => {
+      this.mxaxisw = Math.max(0, this.dategraphMobile.getBoundingClientRect().width - this.mgraphx - this.mmargin);
+    }
+
+    fitmxaxisw();
+    window.addEventListener('resize', fitmxaxisw);
   },
   methods: {
     drawPath (gender, startx, endx, y) {
@@ -270,6 +323,15 @@ export default {
         'L ' + x + ' ' + (y - 10) + ' ' +
         'L ' + (x + 10) + ' ' + y + ' ' +
         'L ' + x + ' ' + (y + 10) + ' ' +
+        'Z'
+      );
+    },
+    drawMobileDiamond (x, y) {
+      return (
+        'M ' + (x - 6) + ' ' + y + ' ' +
+        'L ' + x + ' ' + (y - 6) + ' ' +
+        'L ' + (x + 6) + ' ' + y + ' ' +
+        'L ' + x + ' ' + (y + 6) + ' ' +
         'Z'
       );
     },
@@ -359,7 +421,7 @@ export default {
     fill: #fff;
   }
 
-  .x-axis {
+  .x-axis{
     stroke: #8f8f8c;
     opacity: 0.75;
   }
@@ -445,10 +507,31 @@ export default {
 
 #date-graph-mobile {
   display: none;
+  height: 500px;
 
   @include media-breakpoint-down(md) {
     display: block;
-  }  
+  }
+
+  .x-axis {
+    stroke: #dcddde;
+    opacity: 0.75;
+  }
+
+  .y-axis{
+    stroke: #8f8f8c;
+    opacity: 0.75;
+  }
+
+  .age {
+    text-anchor: middle;
+    dominant-baseline: baseline;
+  }
+
+  .gender {
+    text-anchor: end;
+    dominant-baseline: middle;
+  }
 }
 
 #date-legends {

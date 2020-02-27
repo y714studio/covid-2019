@@ -1,3 +1,5 @@
+const firstSunday = 20200119;
+
 const dates = [
   20200117,
   20200118,
@@ -801,4 +803,4 @@ const cases = [
   }
 ];
 
-export { dates, cases };
+export { firstSunday, dates, cases };
