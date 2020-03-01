@@ -206,7 +206,10 @@ export default {
       dategraphMobile: document.querySelector('#date-graph-mobile'),
       expandIntervalId: 0,
       fitIntervalId: 0,
-      mousex: null,
+      dragRange: 0,
+      fitxaxisi: 0,
+      graphvp: 0,
+      mousex: 0,
       offsetx: 0,
       isdragging: false,
       isMobile: false
@@ -261,19 +264,6 @@ export default {
     mgraphh () { // graph width
       return this.mdatesy[this.datesx.length - 1];
     },
-    dragRange () {
-      if (!this.isMobile) {
-        return this.graphw + this.graphx - this.datagraph.getBoundingClientRect().width + this.margin;
-      } else {
-        return 0;
-      }
-    },
-    graphvp () { // graph viewport
-      return this.datagraph.getBoundingClientRect().width - graphx - margin;
-    },
-    fitxaxisi () {
-      return this.graphvp / (this.datesx.length - 1);
-    },
   },
   mounted () {
     this.datagraph = document.querySelector('#date-graph');
@@ -281,25 +271,66 @@ export default {
 
     /* dragging */
 
-    this.datagraph.addEventListener('mousedown', () => {
+    const dragStart = () => {
       this.isdragging = true;
-      this.mousex = event.clientX;
-    });
+      this.mousex = (event.clientX || event.touches[0].clientX);
+    };
 
-    this.datagraph.addEventListener('mousemove', (event) => {
+    this.datagraph.addEventListener('mousedown', dragStart);
+    this.datagraph.addEventListener('touchstart', dragStart);
+
+    const dragMove = (event) => {
       if (this.isdragging == true) {
-        this.offsetx = Math.min(this.dragRange ,Math.max(0, this.offsetx + this.mousex - event.clientX));
-        this.mousex = event.clientX;
+        this.offsetx = Math.min(this.dragRange, Math.max(0, this.offsetx + this.mousex - (event.clientX || event.touches[0].clientX)));
+        this.mousex = (event.clientX || event.touches[0].clientX);
       }
+    };
+
+    this.datagraph.addEventListener('mousemove', dragMove);
+    this.datagraph.addEventListener('touchmove', dragMove);
+
+    const dragEnd = () => {
+      this.isdragging = false;
+    };
+
+    this.datagraph.addEventListener('mouseup', dragEnd);
+    this.datagraph.addEventListener('mouseleave', dragEnd);
+    this.datagraph.addEventListener('touchend', dragEnd);
+
+    /* mobile or desktop mode */
+
+    const ifMobile = () => {
+      this.isMobile = window.innerWidth < 992;
+    }
+
+    ifMobile();
+    window.addEventListener('resize', ifMobile);
+
+    /* dragging range calculation */
+
+    this.calDragRange();
+    window.addEventListener('resize', this.calDragRange);
+
+
+    window.addEventListener('resize', () => {
+      this.offsetx = Math.min(this.dragRange, this.offsetx);
     });
 
-    this.datagraph.addEventListener('mouseup', () => {
-      this.isdragging = false;
-    });
+    /* fit interval calculation */
 
-    this.datagraph.addEventListener('mouseleave', () => {
-      this.isdragging = false;
-    });
+    const calGraphvp = () => { // graph viewport
+      return this.graphvp = this.datagraph.getBoundingClientRect().width - graphx - margin;
+    };
+
+    calGraphvp();
+    window.addEventListener('resize', calGraphvp);
+
+    const calFitxaxisi = () => {
+      return this.fitxaxisi = this.graphvp / (this.datesx.length - 1);
+    };
+
+    calFitxaxisi();
+    window.addEventListener('resize', calFitxaxisi);
 
     /* intro animation */
 
@@ -315,19 +346,6 @@ export default {
 
     window.addEventListener('scroll', intro);
     window.setTimeout(intro, 1000);
-
-    /* fit and expand graph buttons */
-    // document.querySelector('.fit-graph').addEventListener('click', this.fitGraph);
-    // document.querySelector('.expand-graph').addEventListener('click', this.expandGraph);
-
-    /* mobile or desktop mode */
-
-    const ifMobile = () => {
-      this.isMobile = window.innerWidth < 992;
-    }
-
-    ifMobile();
-    window.addEventListener('resize', ifMobile);
 
     /* mobile graph width */
 
@@ -410,15 +428,26 @@ export default {
         'Z'
       );
     },
+    calDragRange () {
+      if (this.isMobile) {
+        return this.dragRange = 0;
+      }
+
+      return this.dragRange = this.graphw + this.graphx - this.datagraph.getBoundingClientRect().width + this.margin;
+    },
     expandGraph () {
       window.clearInterval(this.fitIntervalId);
       window.clearInterval(this.expandIntervalId);
 
       this.expandIntervalId = window.setInterval(()=>{
-        if (this.xaxisi < xaxisi) {
+        if (this.xaxisi + 0.1 < xaxisi) {
           this.xaxisi = this.xaxisi + (xaxisi - this.fitxaxisi)/12;
+          this.calDragRange();
           this.offsetx = this.dragRange;
         } else {
+          this.xaxisi = xaxisi;
+          this.calDragRange();
+          this.offsetx = this.dragRange;
           window.clearInterval(this.expandIntervalId);
         }
       }, 10);
@@ -430,10 +459,14 @@ export default {
       window.clearInterval(this.expandIntervalId);
 
       this.fitIntervalId = window.setInterval(()=>{
-        if (this.xaxisi > this.fitxaxisi) {
+        if (this.xaxisi - 0.1 > this.fitxaxisi) {
           this.xaxisi = this.xaxisi - (xaxisi - this.fitxaxisi)/12;
+          this.calDragRange();
           this.offsetx = this.offsetx - offsetxDiff/12;
         } else {
+          this.xaxisi = this.fitxaxisi;
+          this.calDragRange();
+          this.offsetx = 0;
           window.clearInterval(this.fitIntervalId);
         }
       }, 10);
