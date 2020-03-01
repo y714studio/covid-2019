@@ -53,10 +53,10 @@
         </div>
         <div class="col-lg-6 offset-lg-3 col-xl-4 offset-xl-1">
           <svg class="short">
-            <path class="case imported" d="M112,9h12l9-8.5l10,10l-10,10l-9-8.5h-12V9z"/>
-            <path class="case imported-contact" d="M17,9h12l9-8.5l10,10l-10,10L29,12H17V9z"/>
+            <path class="case imported" d="M17,9h12l9-8.5l10,10l-10,10L29,12H17V9z"/>
+            <path class="case imported-contact" d="M124,9h12l9-8.5l10,10l-10,10l-9-8.5h-12V9z"/>
             <text class="legend-text" x="51.76" y="14.21">輸入個案</text>            
-            <text class="legend-text" x="147.76" y="14.21">輸入個案的密切接觸者</text>
+            <text class="legend-text" x="159.76" y="14.21">輸入個案的密切接觸者</text>
           </svg>
         </div>
       </div>
@@ -64,17 +64,17 @@
         <div class="col-lg-6 col-xl-4 offset-xl-2">
           <svg class="short">
             <path class="case local-possible" d="M17,9H29L38,.5l10,10-10,10L29,12H17Z"/>
-            <path class="case local-possible-contact" d="M136,9h12l9-8.5,10,10-10,10L148,12H136Z"/>
+            <path class="case local-possible-contact" d="M148,9h12l9-8.5,10,10-10,10L160,12H148Z"/>
             <text class="legend-text" x="51.76" y="14.21">可能本地個案</text>
-            <text class="legend-text" x="171.76" y="14.21">可能本地個案的密切接觸者</text>
+            <text class="legend-text" x="183.76" y="14.21">可能本地個案的密切接觸者</text>
           </svg>
         </div>
-        <div class="col-lg-6 col-xl-4">
+        <div class="col-lg-6 col-xl-5">
           <svg class="short">
             <path class="case local-unknown" d="M17,9H29L38,.5l10,10-10,10L29,12H17Z"/>
-            <path class="case local-contact" d="M165,9h12l9-8.5,10,10-10,10L177,12H165Z"/>
+            <path class="case local-contact" d="M185,9h12l9-8.5,10,10-10,10L197,12H185Z"/>
             <text class="legend-text" x="51.76" y="14.21">本地個案(源頭不明)</text>            
-            <text class="legend-text" x="200.76" y="14.21">本地個案的密切接觸者</text></svg>
+            <text class="legend-text" x="220.76" y="14.21">本地個案的密切接觸者</text></svg>
         </div>
       </div>
     </div>
@@ -486,19 +486,19 @@ export default {
     opacity: 0.8;
 
     &.imported {
-      fill: #E7384C;
+      fill: #ED3A3A;
     }
 
     &.imported-contact {
-      fill: #E0439F;
+      fill: #CF4FCF;
     }
 
     &.local-unknown {
-      fill: #905FD4;
+      fill: #8668DE;
     }
 
     &.local-contact {
-      fill: #2E65C9;
+      fill: #2C6BC2;
     }
 
     &.local-possible {
@@ -506,7 +506,7 @@ export default {
     }
 
     &.local-possible-contact {
-      fill: #42C79B;
+      fill: #67C788;
     }
   }
 
@@ -540,7 +540,7 @@ export default {
   .gender,
   .fit-graph,
   .expand-graph {
-    font-size: 12px;
+    font-size: 14px;
     user-select: none;
     -ms-user-select: none;
     -webkit-user-select: none;
@@ -658,7 +658,7 @@ export default {
     }
 
     .legend-text {
-      font-size: 12px;
+      font-size: 14px;
       fill: #8f8f8c;
       user-select: none;
       -ms-user-select: none;
@@ -666,7 +666,7 @@ export default {
     }
 
     path.grey {
-      fill: #dcddde;
+      fill: #ababab;
     }
   }
 }
