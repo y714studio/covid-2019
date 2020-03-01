@@ -31,16 +31,19 @@
     </svg>
     <div id="date-legends" class="d-none d-lg-block">
       <div class="row align-items-end">
-        <div class="col-md-3">
+        <div class="col-lg-3 offset-xl-2">
           <svg class="tall">
-            <path class="case grey" d="M16,38H198l9-8.5,10,10-10,10L198,41H16Z"/>
+            <!-- <path class="case grey" d="M16,38H198l9-8.5,10,10-10,10L198,41H16Z"/> -->
+            <path class="case grey" d="M 16,38 H 120 l 9-8.5,10,10-10,10 L120,41 H16 Z"/>
             <line class="date-line" x1="16.5" y1="19" x2="16.5" y2="41"/>
-            <line class="date-line" x1="206.5" y1="19" x2="206.5" y2="41"/>
-            <text class="legend-text" transform="translate(0.76 11.21)">發病日</text>
-            <text class="legend-text" transform="translate(190.76 11.21)">確診日</text>
+            <line class="date-line" x1="129" y1="19" x2="129" y2="30"/>
+            <text class="legend-text" x="0" y="11.21">發病日</text>
+            <text class="legend-text" x="110" y="11.21">確診日</text>
           </svg>
         </div>
-        <div class="col-md-2">
+      </div>
+      <div class="row">
+        <div class="col-lg-3 offset-xl-2">
           <svg class="short">
             <path class="case grey" d="M16,9h12l9-8.5l10,10l-10,10L28,12H16V9z"/>
             <path class="case grey" d="M75.5,9.2H90c0.9-4.5,5.2-7.4,9.6-6.5c4.5,0.9,7.4,5.2,6.5,9.6s-5.2,7.4-9.6,6.5c-3.3-0.6-5.9-3.2-6.5-6.5H75.5V9.2z"/>
@@ -48,7 +51,7 @@
             <text class="legend-text" x="110.76" y="15.21">女</text>
           </svg>
         </div>
-        <div class="col-md-4 offset-md-2">
+        <div class="col-lg-6 offset-lg-3 col-xl-4 offset-xl-1">
           <svg class="short">
             <path class="case imported" d="M112,9h12l9-8.5l10,10l-10,10l-9-8.5h-12V9z"/>
             <path class="case imported-contact" d="M17,9h12l9-8.5l10,10l-10,10L29,12H17V9z"/>
@@ -58,7 +61,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-md-4 offset-md-3">
+        <div class="col-lg-6 col-xl-4 offset-xl-2">
           <svg class="short">
             <path class="case local-possible" d="M17,9H29L38,.5l10,10-10,10L29,12H17Z"/>
             <path class="case local-possible-contact" d="M136,9h12l9-8.5,10,10-10,10L148,12H136Z"/>
@@ -66,7 +69,7 @@
             <text class="legend-text" x="171.76" y="14.21">可能本地個案的密切接觸者</text>
           </svg>
         </div>
-        <div class="col-md-4">
+        <div class="col-lg-6 col-xl-4">
           <svg class="short">
             <path class="case local-unknown" d="M17,9H29L38,.5l10,10-10,10L29,12H17Z"/>
             <path class="case local-contact" d="M165,9h12l9-8.5,10,10-10,10L177,12H165Z"/>
@@ -320,7 +323,7 @@ export default {
     /* mobile or desktop mode */
 
     const ifMobile = () => {
-      this.isMobile = window.innerWidth < 768;
+      this.isMobile = window.innerWidth < 992;
     }
 
     ifMobile();
