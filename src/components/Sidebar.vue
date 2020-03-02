@@ -9,7 +9,7 @@
           </a>
         </h1>
         <div class="title">
-          <h2>Covid 2019</h2>
+          <h4>武漢肺炎本港疫情互動專頁</h4>
           <p>更新日期: {{ govInfoDailyStat[govInfoDailyStat.length - 1][0] }}</p>
         </div>
       </div>
@@ -257,7 +257,7 @@ export default {
   aside {
     position: fixed;
     height: 100vh;
-    width: 280px;
+    width: 320px;
     top: 0;
     left: 0;
     padding: 12px 30px 0 40px;
@@ -306,15 +306,17 @@ export default {
         position: absolute;
         right: 15px;
         top: 25px;
-        opacity: 0.4;
+        // opacity: 0.4;
+        // color: blue;
         text-align: right;
 
-        h2,
+        h4,
         p {
           margin: 0;
         }
 
         p {
+          opacity: 0.6;
           font-size: 12px;
         }
       }

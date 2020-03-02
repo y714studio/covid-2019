@@ -161,7 +161,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
 
   .dashboard-container {
-    padding-left: 280px;
+    padding-left: 320px;
 
     @include media-breakpoint-down(sm) {
       padding: 15px 0;
