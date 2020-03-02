@@ -284,7 +284,7 @@ export default {
         overflow: hidden;
 
         @include media-breakpoint-down(sm) {
-          margin: 10px 0 0;
+          margin: 0;
         }
 
         span {
@@ -306,9 +306,14 @@ export default {
         position: absolute;
         right: 15px;
         top: 25px;
-        // opacity: 0.4;
-        // color: blue;
         text-align: right;
+
+        @include media-breakpoint-down(sm) {
+          top: 15px;
+          right: unset;
+          left: 70px;
+          text-align: left;
+        }
 
         h4,
         p {
