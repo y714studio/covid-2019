@@ -49,7 +49,7 @@
                   </p>
                 </div>
                 <!-- <img src="./assets/2019_ncov_age_gender_time_20200220.jpg"> -->
-                <date-graph />
+                <date-graph :raw-cases="govInfoCases" :raw-dates="govInfoDailyStat" />
               </div>
             </div>
           </section>
