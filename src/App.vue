@@ -17,7 +17,7 @@
               <div class="legands text-right">
                 <div class="legand">
                   <span class="dot-blue" />
-                  疑似/確診個案大廈名單
+                  患者蹤跡：確診／疑似個案曾經逗留過的建築物
                 </div>
               </div>
             </div>

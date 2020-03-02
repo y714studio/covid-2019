@@ -34,7 +34,7 @@
           </div>
           <div class="stat-label">
             <p>
-              <span class="text-bold">人感染</span><br>
+              <span class="text-bold">人確診</span><br>
               <span v-if="govInfoDailyStat[govInfoDailyStat.length - 1][2] - govInfoDailyStat[govInfoDailyStat.length - 2][2] !== 0" class="small color-pink">
                 ▲{{ govInfoDailyStat[govInfoDailyStat.length - 1][2] - govInfoDailyStat[govInfoDailyStat.length - 2][2] }}
               </span>
@@ -82,7 +82,7 @@
         <div class="section-main-stat-item">
           <div class="stat-label">
             <p>
-              <span class="text-bold">確診病人男女比例</span>
+              <span class="text-bold">個案男女比例</span>
             </p>
           </div>
           <div class="ratio-bar-container">
@@ -146,7 +146,7 @@
         <div class="section-main-stat-item section-main-stat-item">
           <div class="stat-label">
             <p>
-              <span class="text-bold">確診個案住宅或到訪大廈所在地區</span>
+              <span class="text-bold">個案居住或到訪地區</span>
             </p>
             <p class="small">
               綜合過去14天內曾有確診個案居住過的住宅大廈、曾有確診個案於發病前兩天起到訪過的大廈、超過一宗確診個案在潛伏期或發病到到訪過的非住宅大廈名單，以下列出五個涉事大廈最多的地區。
