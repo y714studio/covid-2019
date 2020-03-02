@@ -10,7 +10,7 @@
         </h1>
         <div class="title">
           <h4>武漢肺炎本港疫情互動專頁</h4>
-          <p>更新日期: {{ govInfoDailyStat[govInfoDailyStat.length - 1][0] }}</p>
+          <p>更新日期: {{ govInfoDailyStat[govInfoDailyStat.length - 1][0] }} {{ govInfoDailyStat[govInfoDailyStat.length - 1][1] }}</p>
         </div>
       </div>
       <div class="row">
