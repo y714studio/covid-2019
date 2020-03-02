@@ -21,7 +21,7 @@
       </p>
       <p>{{ cases[selectedCase - 1][5] }}</p>
       <p>{{ cases[selectedCase - 1][10] }}</p>
-      <a href="#">資料來源</a>
+      <a v-if="cases[selectedCase - 1][14].length" :href="cases[selectedCase - 1][14]">資料來源</a>
     </div>
   </div>
 </template>

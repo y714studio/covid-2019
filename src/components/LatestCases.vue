@@ -8,7 +8,7 @@
     </p>
     <p>{{ lastestCase[5] }}</p>
     <p>{{ lastestCase[10] }}</p>
-    <a target="_blank" :href="lastestCase[11]">資料來源</a>
+    <a v-if="lastestCase[14].length" target="_blank" :href="lastestCase[14]">資料來源</a>
   </div>
 </template>
 
