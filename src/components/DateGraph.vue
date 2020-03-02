@@ -223,7 +223,8 @@ export default {
       mousex: 0,
       offsetx: 0,
       isdragging: false,
-      isMobile: false
+      isMobile: false,
+      isExpanded: false
     }
   },
   computed: {
@@ -318,6 +319,26 @@ export default {
     ifMobile();
     window.addEventListener('resize', ifMobile);
 
+    /* fit interval calculation */
+
+    const calGraphvp = () => { // graph viewport
+      this.graphvp = this.datagraph.getBoundingClientRect().width - graphx - margin;
+    };
+
+    calGraphvp();
+    window.addEventListener('resize', calGraphvp);
+
+    const calFitxaxisi = () => {
+      this.fitxaxisi = this.graphvp / (this.datesx.length - 1);
+      
+      if (!this.isExpanded) {
+        this.xaxisi = this.fitxaxisi;
+      }
+    };
+
+    calFitxaxisi();
+    window.addEventListener('resize', calFitxaxisi);
+
     /* dragging range calculation */
 
     this.calDragRange();
@@ -325,24 +346,11 @@ export default {
 
 
     window.addEventListener('resize', () => {
+      console.log('this.dragRange');
+      console.log(this.dragRange);
+
       this.offsetx = Math.min(this.dragRange, this.offsetx);
     });
-
-    /* fit interval calculation */
-
-    const calGraphvp = () => { // graph viewport
-      return this.graphvp = this.datagraph.getBoundingClientRect().width - graphx - margin;
-    };
-
-    calGraphvp();
-    window.addEventListener('resize', calGraphvp);
-
-    const calFitxaxisi = () => {
-      return this.fitxaxisi = this.graphvp / (this.datesx.length - 1);
-    };
-
-    calFitxaxisi();
-    window.addEventListener('resize', calFitxaxisi);
 
     /* intro animation */
 
@@ -461,6 +469,7 @@ export default {
           this.xaxisi = xaxisi;
           this.calDragRange();
           this.offsetx = this.dragRange;
+          this.isExpanded = true;
           window.clearInterval(this.expandIntervalId);
         }
       }, 10);
@@ -480,6 +489,7 @@ export default {
           this.xaxisi = this.fitxaxisi;
           this.calDragRange();
           this.offsetx = 0;
+          this.isExpanded = false;
           window.clearInterval(this.fitIntervalId);
         }
       }, 10);
