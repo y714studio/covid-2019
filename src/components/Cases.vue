@@ -1,5 +1,5 @@
 <template>
-  <div v-if="cases.length > 0" class="cases-container" :class="{'details-active': popupActive}">
+  <div v-if="cases && cases.length" class="cases-container" :class="{'details-active': popupActive}">
     <table>
       <tr v-for="(cs, n) in cases.slice().reverse()" :key="n" class="case">
         <td class="case-no">編號 {{ cs[0] }}</td>
@@ -21,7 +21,7 @@
       </p>
       <p>{{ cases[selectedCase - 1][5] }}</p>
       <p>{{ cases[selectedCase - 1][10] }}</p>
-      <a v-if="cases[selectedCase - 1][14].length" :href="cases[selectedCase - 1][14]">資料來源</a>
+      <a v-if="cases[selectedCase - 1][14]" :href="cases[selectedCase - 1][14]">資料來源</a>
     </div>
   </div>
 </template>

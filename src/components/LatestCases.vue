@@ -1,5 +1,5 @@
 <template>
-  <div class="latest-case">
+  <div v-if="lastestCase" class="latest-case">
     <h4>最新個案</h4>
     <p class="meta">
       <span>性別: {{ lastestCase[3] }}</span>
@@ -8,7 +8,7 @@
     </p>
     <p>{{ lastestCase[5] }}</p>
     <p>{{ lastestCase[10] }}</p>
-    <a v-if="lastestCase[14].length" target="_blank" :href="lastestCase[14]">資料來源</a>
+    <a v-if="lastestCase[14]" target="_blank" :href="lastestCase[14]">資料來源</a>
   </div>
 </template>
 
@@ -28,7 +28,9 @@ export default {
   },
   watch: {
     cases: function() {
-      this.lastestCase = this.cases[this.cases.length - 1]
+      if (this.cases.length) {
+        this.lastestCase = this.cases[this.cases.length - 1];
+      }
     }
   }
 };

@@ -64,7 +64,7 @@
             <text class="legend-text" x="115.76" y="15.21">女</text>
           </svg>
         </div>
-        <div class="col-lg-6 offset-lg-3 col-xl-4 offset-xl-1">
+        <div class="col-lg-6 offset-lg-3 col-xl-4 offset-xl-2">
           <svg class="short">
             <path class="case imported" d="M17,9h12l9-8.5l10,10l-10,10L29,12H17V9z"/>
             <path class="case imported-contact" d="M124,9h12l9-8.5l10,10l-10,10l-9-8.5h-12V9z"/>
@@ -74,7 +74,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-lg-6 col-xl-4 offset-xl-2">
+        <div class="col-lg-6 col-xl-5 offset-xl-2">
           <svg class="short">
             <path class="case local-possible" d="M22,9H34L43,.5l10,10-10,10L34,12H22Z"/>
             <path class="case local-possible-contact" d="M153,9h12l9-8.5,10,10-10,10L165,12H153Z"/>
