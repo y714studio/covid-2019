@@ -17,7 +17,7 @@
       <p class="meta">
         <span>性別: {{ cases[selectedCase - 1][3] }}</span>
         <span>年齡: {{ cases[selectedCase - 1][4] }}</span>
-        <span>確診日期: {{ cases[selectedCase - 1][2] }}</span>
+        <span>發病日期: {{ cases[selectedCase - 1][2] }}</span>
       </p>
       <p>{{ cases[selectedCase - 1][5] }}</p>
       <p>{{ cases[selectedCase - 1][10] }}</p>
