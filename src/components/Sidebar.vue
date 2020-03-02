@@ -217,7 +217,7 @@ export default {
       let theList = {}
 
       for (let i = 0; i < this.govInfoBuildingList.length; i++) {
-        if(theList[this.govInfoBuildingList[i][0]]) {
+        if (theList[this.govInfoBuildingList[i][0]]) {
           theList[this.govInfoBuildingList[i][0]] += this.govInfoBuildingList[i][3].split(',').length
         } else {
           theList[this.govInfoBuildingList[i][0]] = 1
