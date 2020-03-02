@@ -24,14 +24,14 @@
           <svg id="date-graph" class="hide">
             <!-- Main Graph -->
             <template v-if="!isMobile">
-              <rect class="stripe" v-for="n in 5" :x="graphx - offsetx" :y="graphy + yaxish*0.2*(n - 1)" :width="graphw" :height="yaxish*0.1" :key="'stripe-' + n" />  
+              <rect class="stripe" v-for="n in 5" :x="graphx - offsetx" :y="graphy + yaxish*0.2*(n - 1)" :width="Math.max(graphw, 0)" :height="yaxish*0.1" :key="'stripe-' + n" />  
               <line class="age-line" v-for="n in 5" :x1="graphx - offsetx" :y1="graphy + yaxish*0.2*(n - 1)" :x2="graphw + graphx - offsetx" :y2="graphy + yaxish*0.2*(n - 1)" :key="'age-line-' + n" />
               <line class="x-axis" :x1="graphx - offsetx" :y1="graphy + yaxish" :x2="graphw + graphx - offsetx" :y2="graphy + yaxish" />
               <line class="date-line" :class="{ 'first': i == 0 }" v-for="(date, i) in dates" :x1="datesx[i] + graphx - offsetx" :y1="margin" :x2="datesx[i] + graphx - offsetx" :y2="graphy + yaxish" :key="'date-line-' + i" />
-              <text class="date sunday" v-for="(sunday, i) in sundays" :x="datesx[firstSundayi + 7*i] + graphx - offsetx" :y="graphy + yaxish + 10" v-text="sundaysName[i]" :key="'date-' + i" />
+              <text class="date sunday" v-for="(sunday, i) in sundays" :x="(datesx[firstSundayi + 7*i] + graphx - offsetx) || 0" :y="graphy + yaxish + 10" v-text="sundaysName[i]" :key="'date-' + i" />
               <path class="case" :class="patient.origin" v-for="(patient, i) in cases" :d="drawPath(patient.gender, datesxIndex[patient.start] + graphx - offsetx, datesxIndex[patient.confirmed] + graphx - offsetx, (1-(patient.age/100))*yaxish + margin)" :key="'case-' + i" />
               <rect class="side-bg" :x="0" :y="0" :width="graphx" :height="margin + yaxish + margin" />
-              <text class="age" v-for="n in 5" :x="datesx[0] + graphx - 15" :y="graphy + yaxish*0.2*(n - 1)" v-text="100 - (n - 1)*20" :key="'age-' + n" />
+              <text class="age" v-for="n in 5" :x="(datesx[0] + graphx - 15) || 0" :y="graphy + yaxish*0.2*(n - 1)" v-text="100 - (n - 1)*20" :key="'age-' + n" />
               <line class="age-line" v-for="n in 5" :x1="graphx - 10" :y1="graphy + yaxish*0.2*(n - 1)" :x2="graphx" :y2="graphy + yaxish*0.2*(n - 1)" :key="'age-line-y-axis-' + n" />
               <rect class="button-frame" :x="graphx" :y="margin - 35" :width="35" :height="20" />
               <text class="fit-graph" :x="graphx + 3" :y="margin - 20" v-on:click="fitGraph">縮小</text>
@@ -153,9 +153,7 @@
         <line class="date-line" v-for="(date, i) in dates" :x1="mgraphx" :y1="mdatesy[i] + mgraphy" :x2="mgraphx + mxaxisw" :y2="mdatesy[i] + mgraphy" :key="'m-date-line-' + i" />
         <text class="date" :class="{ sunday: i % 7 == firstSundayi }" v-for="(date, i) in dates" :x="mgraphx - 10" :y="mdatesy[i] + mgraphy" v-text="datesName[i]" :key="'m-date-' + i" />
         <path class="case" :class="patient.origin" v-for="(patient, i) in cases" :d="drawMobilePath(patient.gender, (patient.age/100)*mxaxisw + mgraphx, mdatesyIndex[patient.start] + mgraphy, mdatesyIndex[patient.confirmed] + mgraphy)" :key="'m-case-' + i" />
-        <!-- <rect class="side-bg" :x="0" :y="0" :width="graphx" :height="margin + yaxish + margin" /> -->
         <text class="age" v-for="n in 6" :x="mgraphx + mxaxisw*0.2*(n - 1)" :y="mgraphy - 20" v-text="(n - 1)*20" :key="'m-age-' + n" />
-        <!-- <line class="age-line" v-for="n in 5" :x1="graphx - 10" :y1="graphy + yaxish*0.2*(n - 1)" :x2="graphx" :y2="graphy + yaxish*0.2*(n - 1)" :key="'age-line-y-axis-' + n" /> -->
       </template>
     </svg>
   </div>
@@ -166,7 +164,7 @@
 
 import { SVG } from '@svgdotjs/svg.js'
 import svgPath from '../scripts/svg.path.js'
-import { firstSunday, dates, cases } from '../data/cases.js'
+import { firstSunday } from '../data/cases.js'
 
 const margin = 50;
 const graphx = 36;
@@ -183,13 +181,30 @@ const mtopgraphy = mmargin;
 const mtopgraphh = 85;
 const mtopMaley = 53;
 const mtopFemaley = 81;
-const mgraphx = mmargin + 10;
+const mgraphx = mmargin + 15;
 const mgraphy = mmargin + mtopgraphh + mmargin + mmargin;
 const myaxisi = 29; // i = increment
 
 
+const translations = {
+  '男': 'male',
+  '女': 'female',
+  '住院': 'hospitalized',
+  '出院': 'outpatient',
+  '死亡': 'dead',
+  '香港居民': 'HKR',
+  '非香港居民': 'NHKR',
+  '輸入個案': 'imported',
+  '輸入個案的密切接觸者': 'imported-contact',
+  '本地個案': 'local-unknown',
+  '本地個案的密切接觸者': 'local-contact',
+  '可能本地個案': 'local-possible',
+  '可能本地個案的密切接觸者': 'local-possible-contact'
+};
+
 export default {
   name: 'date-graph',
+  props: ['rawCases', 'rawDates'],
   data () {
     return {
       margin: margin,
@@ -212,9 +227,6 @@ export default {
       mtopFemaley: mtopFemaley,
       mxaxisw: 0,
 
-      dates: dates,
-      cases: cases,
-      
       dategraph: document.querySelector('#date-graph'),
       dategraphMobile: document.querySelector('#date-graph-mobile'),
       expandIntervalId: 0,
@@ -231,6 +243,10 @@ export default {
   },
   computed: {
     datesx () {
+      if (typeof this.dates[0] == 'undefined') {
+        return [];
+      }
+
       return this.dates.map((date, i) => {
         return i * this.xaxisi;
       })
@@ -243,7 +259,7 @@ export default {
     datesxIndex () {
       let map = {};
 
-      for (let i = 0; i < dates.length; i++) {
+      for (let i = 0; i < this.dates.length; i++) {
         map[this.dates[i]] = this.datesx[i];
       }
 
@@ -252,7 +268,7 @@ export default {
     mdatesyIndex () {
       let map = {};
 
-      for (let i = 0; i < dates.length; i++) {
+      for (let i = 0; i < this.dates.length; i++) {
         map[this.dates[i]] = this.mdatesy[i];
       }
 
@@ -264,7 +280,7 @@ export default {
       })
     },
     firstSundayi () { 
-      return dates.indexOf(firstSunday);
+      return this.dates.indexOf(firstSunday);
     },
     sundays () {
       return this.dates.filter((date, i) => i % 7 == this.firstSundayi);
@@ -273,16 +289,44 @@ export default {
       return this.datesName.filter((date, i) => i % 7 == this.firstSundayi);
     },
     graphw () { // graph width
+      if (typeof this.datesx[0] == 'undefined') {
+        return 0;
+      }
+
       return this.datesx[this.datesx.length - 1];
     },
     mgraphh () { // graph width
       return this.mdatesy[this.datesx.length - 1];
     },
+    cases () {
+      return this.rawCases.map(function(patient){
+        return {
+          caseNo: parseInt(patient[0]),
+          confirmed: parseInt(patient[1].split('/').reverse().join('')),
+          start: parseInt(patient[2].split('/').reverse().join('')),
+          gender: translations[patient[3]],
+          age: patient[4],
+          hospital: patient[5],
+          status: translations[patient[6]],
+          resident: translations[patient[7]],
+          origin: translations[patient[8]]
+        }
+      });
+    },
+    dates () {
+      return this.rawDates.map(function(date, i){
+        return parseInt(date[0].split('/').reverse().join(''));
+      });
+    }
   },
   mounted () {
     this.dategraph = document.querySelector('#date-graph');
     this.datesidegraph = document.querySelector('#date-side-graph');
     this.dategraphMobile = document.querySelector('#date-graph-mobile');
+
+    /* process cases */
+
+
 
     /* dragging */
 
@@ -390,7 +434,7 @@ export default {
     /* mobile graph width */
 
     const fitmxaxisw = () => {
-      this.mxaxisw = Math.max(0, this.dategraphMobile.getBoundingClientRect().width - this.mgraphx - 10);
+      this.mxaxisw = Math.max(0, this.dategraphMobile.getBoundingClientRect().width - this.mgraphx - 15);
     }
 
     fitmxaxisw();
@@ -406,8 +450,38 @@ export default {
     window.addEventListener('resize', setMobileSvgh);
   },
   methods: {
+    processCases (cases) {
+      return cases.map(function(patient, i){
+        return {
+          caseNo: parseInt(patient[0]),
+          confirmed: parseInt(patient[1].split('/').reverse().join('')),
+          start: parseInt(patient[2].split('/').reverse().join('')),
+          gender: translations[patient[3]],
+          age: patient[4],
+          hospital: patient[5],
+          status: translations[patient[6]],
+          resident: translations[patient[7]],
+          origin: translations[patient[8]]
+        }
+      });
+    },
     drawPath (gender, startx, endx, y) {
+      if (!(gender && startx && endx && y)) {
+        return '';
+      }
+
       if (gender == 'male') {
+        if (startx == endx) {
+          return (
+            'M ' + (endx - 9) + ' ' + (y - 1.5) + ' ' +
+            'L ' + (endx ) + ' ' + (y - 10) + ' ' +
+            'L ' + (endx + 10) + ' ' + y + ' ' +
+            'L ' + (endx ) + ' ' + (y + 10) + ' ' +
+            'L ' + (endx - 9) + ' ' + (y + 1.5) + ' ' +
+            'Z' 
+          )
+        }
+
         return (
           'M ' + startx + ' ' + (y - 1.5) + ' ' +
           'H ' + (endx - 9) + ' ' +
@@ -419,6 +493,14 @@ export default {
           'Z' 
         );
       } else {
+        if (startx == endx) {
+          return (
+            'M ' + (endx - 8) + ' ' + (y - 1.5) + ' ' +
+            'A 8 8 0 1 1 ' + (endx - 8) + ' ' + (y + 1.5) + ' ' +
+            'Z' 
+          )
+        }
+
         return (
           'M ' + startx + ' ' + (y - 1.5) + ' ' +
           'H ' + (endx - 8) + ' ' +
@@ -429,7 +511,22 @@ export default {
       }
     },
     drawMobilePath (gender, x, starty, endy) {
+      if (!(gender && x && starty && endy)) {
+        return '';
+      }
+
       if (gender == 'male') {
+        if (starty == endy) {
+          return (
+            'M ' + (x + 1) + ' ' + (endy - 5.5) + ' ' +
+            'L ' + (x + 6) + ' ' + endy + ' ' +
+            'L ' + x + ' ' + (endy + 6) + ' ' +
+            'L ' + (x - 6) + ' ' + endy + ' ' +
+            'L ' + (x - 1) + ' ' + (endy - 5.5) + ' ' +
+            'Z' 
+          )
+        }
+
         return (
           'M ' + (x + 1) + ' ' + starty + ' ' +
           'V ' + (endy - 5.5) + ' ' +
@@ -441,6 +538,14 @@ export default {
           'Z' 
         );
       } else {
+        if (starty == endy) {
+          return (
+            'M '  + (x + 1) + ' ' + (endy - 5) + ' ' +
+            'A 5 5 0 1 1 ' + (x - 1) + ' ' + (endy - 5) + ' ' +
+            'Z'
+          )
+        }
+
         return (
           'M '  + (x + 1) + ' ' + starty + ' ' +
           'V ' + (endy - 5) + ' ' +
@@ -451,6 +556,10 @@ export default {
       }
     },
     drawDiamond (x, y) {
+      if (!(x && y)) {
+        return '';
+      }
+
       return (
         'M ' + (x - 10) + ' ' + y + ' ' +
         'L ' + x + ' ' + (y - 10) + ' ' +
@@ -460,6 +569,10 @@ export default {
       );
     },
     drawMobileDiamond (x, y) {
+      if (!(x && y)) {
+        return '';
+      }
+
       return (
         'M ' + (x - 6) + ' ' + y + ' ' +
         'L ' + x + ' ' + (y - 6) + ' ' +
@@ -744,11 +857,12 @@ export default {
       margin-left: 10px;
       height: 26px;
     }
-  }
 
-  .legend-text {
-    text-anchor: start;
-    dominant-baseline: middle;
+    .legend-text {
+      font-size: 12px;
+      text-anchor: start;
+      dominant-baseline: middle;
+    }
   }
 }
 </style>
