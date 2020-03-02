@@ -324,6 +324,10 @@ export default {
     /* fit interval calculation */
 
     const calGraphvp = () => { // graph viewport
+      if (this.isMobile) {
+        return true;
+      }
+
       this.graphvp = this.dategraph.getBoundingClientRect().width - graphx - margin;
     };
 
@@ -331,6 +335,10 @@ export default {
     window.addEventListener('resize', calGraphvp);
 
     const calFitxaxisi = () => {
+      if (this.isMobile) {
+        return true;
+      }
+
       this.fitxaxisi = this.graphvp / (this.datesx.length - 1);
       
       if (!this.isExpanded) {
@@ -346,13 +354,22 @@ export default {
     this.calDragRange();
     window.addEventListener('resize', this.calDragRange);
 
+    /* offsetx calculation */
 
     window.addEventListener('resize', () => {
-      console.log('this.dragRange');
-      console.log(this.dragRange);
-
       this.offsetx = Math.min(this.dragRange, this.offsetx);
     });
+
+    /* side graph position calulation */
+
+    const calSidegraphPos = () => {
+      this.sidegraphw = this.datesidegraph.getBoundingClientRect().width - this.sidegraphx;
+      this.sideMalex = this.sidegraphx + this.sidegraphw * 0.33;
+      this.sideFemalex = this.sidegraphx + this.sidegraphw * 0.66;
+    }
+
+    calSidegraphPos();
+    window.addEventListener('resize', calSidegraphPos);
 
     /* intro animation */
 
