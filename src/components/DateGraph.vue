@@ -33,8 +33,10 @@
               <rect class="side-bg" :x="0" :y="0" :width="graphx" :height="margin + yaxish + margin" />
               <text class="age" v-for="n in 5" :x="datesx[0] + graphx - 15" :y="graphy + yaxish*0.2*(n - 1)" v-text="100 - (n - 1)*20" :key="'age-' + n" />
               <line class="age-line" v-for="n in 5" :x1="graphx - 10" :y1="graphy + yaxish*0.2*(n - 1)" :x2="graphx" :y2="graphy + yaxish*0.2*(n - 1)" :key="'age-line-y-axis-' + n" />
-              <text class="fit-graph" :x="graphx" :y="margin - 20" v-on:click="fitGraph">縮小</text>
-              <text class="expand-graph" :x="graphx + 40" :y="margin - 20" v-on:click="expandGraph">放大</text>
+              <rect class="button-frame" :x="graphx" :y="margin - 35" :width="35" :height="20" />
+              <text class="fit-graph" :x="graphx + 3" :y="margin - 20" v-on:click="fitGraph">縮小</text>
+              <rect class="button-frame" :x="graphx + 45" :y="margin - 35" :width="35" :height="20" />
+              <text class="expand-graph" :x="graphx + 48" :y="margin - 20" v-on:click="expandGraph">放大</text>
             </template>
           </svg>
         </div>
@@ -213,7 +215,7 @@ export default {
       dates: dates,
       cases: cases,
       
-      datagraph: document.querySelector('#date-graph'),
+      dategraph: document.querySelector('#date-graph'),
       dategraphMobile: document.querySelector('#date-graph-mobile'),
       expandIntervalId: 0,
       fitIntervalId: 0,
@@ -278,7 +280,7 @@ export default {
     },
   },
   mounted () {
-    this.datagraph = document.querySelector('#date-graph');
+    this.dategraph = document.querySelector('#date-graph');
     this.datesidegraph = document.querySelector('#date-side-graph');
     this.dategraphMobile = document.querySelector('#date-graph-mobile');
 
@@ -289,8 +291,8 @@ export default {
       this.mousex = (event.clientX || event.touches[0].clientX);
     };
 
-    this.datagraph.addEventListener('mousedown', dragStart);
-    this.datagraph.addEventListener('touchstart', dragStart);
+    this.dategraph.addEventListener('mousedown', dragStart);
+    this.dategraph.addEventListener('touchstart', dragStart);
 
     const dragMove = (event) => {
       if (this.isdragging == true) {
@@ -299,16 +301,16 @@ export default {
       }
     };
 
-    this.datagraph.addEventListener('mousemove', dragMove);
-    this.datagraph.addEventListener('touchmove', dragMove);
+    this.dategraph.addEventListener('mousemove', dragMove);
+    this.dategraph.addEventListener('touchmove', dragMove);
 
     const dragEnd = () => {
       this.isdragging = false;
     };
 
-    this.datagraph.addEventListener('mouseup', dragEnd);
-    this.datagraph.addEventListener('mouseleave', dragEnd);
-    this.datagraph.addEventListener('touchend', dragEnd);
+    this.dategraph.addEventListener('mouseup', dragEnd);
+    this.dategraph.addEventListener('mouseleave', dragEnd);
+    this.dategraph.addEventListener('touchend', dragEnd);
 
     /* mobile or desktop mode */
 
@@ -322,7 +324,7 @@ export default {
     /* fit interval calculation */
 
     const calGraphvp = () => { // graph viewport
-      this.graphvp = this.datagraph.getBoundingClientRect().width - graphx - margin;
+      this.graphvp = this.dategraph.getBoundingClientRect().width - graphx - margin;
     };
 
     calGraphvp();
@@ -357,8 +359,8 @@ export default {
     this.xaxisi = this.fitxaxisi;
 
     const intro = () => {
-      if (this.datagraph.getBoundingClientRect().top < window.innerHeight/2) {
-        this.datagraph.classList.remove('hide');
+      if (this.dategraph.getBoundingClientRect().top < window.innerHeight/2) {
+        this.dategraph.classList.remove('hide');
         this.datesidegraph.classList.remove('hide');
         window.setTimeout(this.expandGraph, 1000);
         window.removeEventListener('scroll', intro); 
@@ -454,7 +456,7 @@ export default {
         return this.dragRange = 0;
       }
 
-      return this.dragRange = this.graphw + this.graphx - this.datagraph.getBoundingClientRect().width + this.margin;
+      return this.dragRange = this.graphw + this.graphx - this.dategraph.getBoundingClientRect().width + this.margin;
     },
     expandGraph () {
       window.clearInterval(this.fitIntervalId);
@@ -597,6 +599,17 @@ export default {
   .expand-graph {
     fill: #8f8f8c;
     cursor: pointer;
+    transition: 0.2s fill ease-in-out;
+
+    &:hover {
+      fill: #262626;
+    }
+  }
+
+  .button-frame {
+    fill: none;
+    stroke: #dcddde;
+    opacity: 0.75;
   }
 
   .date-line.first {
