@@ -319,14 +319,18 @@ export default {
       });
     }
   },
+  watch: {
+    dates () {
+      this.calFitxaxisi();
+      this.calDragRange();
+      this.calOffsetx();
+      this.intro();
+    }
+  },
   mounted () {
     this.dategraph = document.querySelector('#date-graph');
     this.datesidegraph = document.querySelector('#date-side-graph');
     this.dategraphMobile = document.querySelector('#date-graph-mobile');
-
-    /* process cases */
-
-
 
     /* dragging */
 
@@ -378,31 +382,17 @@ export default {
     calGraphvp();
     window.addEventListener('resize', calGraphvp);
 
-    const calFitxaxisi = () => {
-      if (this.isMobile) {
-        return true;
-      }
+    /* fitxaxisi calculation */
 
-      this.fitxaxisi = this.graphvp / (this.datesx.length - 1);
-      
-      if (!this.isExpanded) {
-        this.xaxisi = this.fitxaxisi;
-      }
-    };
-
-    calFitxaxisi();
-    window.addEventListener('resize', calFitxaxisi);
+    window.addEventListener('resize', this.calFitxaxisi);
 
     /* dragging range calculation */
 
-    this.calDragRange();
     window.addEventListener('resize', this.calDragRange);
 
     /* offsetx calculation */
 
-    window.addEventListener('resize', () => {
-      this.offsetx = Math.min(this.dragRange, this.offsetx);
-    });
+    window.addEventListener('resize', this.calOffsetx);
 
     /* side graph position calulation */
 
@@ -418,18 +408,8 @@ export default {
     /* intro animation */
 
     this.xaxisi = this.fitxaxisi;
-
-    const intro = () => {
-      if (this.dategraph.getBoundingClientRect().top < window.innerHeight/2) {
-        this.dategraph.classList.remove('hide');
-        this.datesidegraph.classList.remove('hide');
-        window.setTimeout(this.expandGraph, 1000);
-        window.removeEventListener('scroll', intro); 
-      }
-    }
-
-    window.addEventListener('scroll', intro);
-    window.setTimeout(intro, 1000);
+    window.addEventListener('scroll', this.intro);
+    window.setTimeout(this.intro, 1000);
 
     /* mobile graph width */
 
@@ -450,6 +430,17 @@ export default {
     window.addEventListener('resize', setMobileSvgh);
   },
   methods: {
+    intro () {
+      if (
+        this.dategraph.getBoundingClientRect().top < window.innerHeight/2 &&
+        this.dates[0]
+      ) {
+        this.dategraph.classList.remove('hide');
+        this.datesidegraph.classList.remove('hide');
+        window.setTimeout(this.expandGraph, 1000);
+        window.removeEventListener('scroll', this.intro); 
+      }
+    },
     processCases (cases) {
       return cases.map(function(patient, i){
         return {
@@ -581,12 +572,30 @@ export default {
         'Z'
       );
     },
+    calOffsetx () {
+      this.offsetx = Math.min(this.dragRange, this.offsetx);
+    },
     calDragRange () {
       if (this.isMobile) {
         return this.dragRange = 0;
       }
 
       return this.dragRange = this.graphw + this.graphx - this.dategraph.getBoundingClientRect().width + this.margin;
+    },
+    calFitxaxisi () {
+      if (this.isMobile) {
+        return true;
+      }
+
+      if (!this.dates.length) {
+        return 0;
+      }
+
+      this.fitxaxisi = this.graphvp / (this.dates.length - 1);
+      
+      if (!this.isExpanded) {
+        this.xaxisi = this.fitxaxisi;
+      }
     },
     expandGraph () {
       window.clearInterval(this.fitIntervalId);
