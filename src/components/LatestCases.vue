@@ -4,7 +4,7 @@
     <p class="meta">
       <span>性別: {{ lastestCase[3] }}</span>
       <span>年齡: {{ lastestCase[4] }}</span>
-      <span>確診日期: {{ lastestCase[1] }}</span>
+      <span>發病日期: {{ lastestCase[1] }}</span>
     </p>
     <p>{{ lastestCase[5] }}</p>
     <p>{{ lastestCase[10] }}</p>
