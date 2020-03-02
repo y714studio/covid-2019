@@ -8,7 +8,7 @@
     </p>
     <p>{{ lastestCase[5] }}</p>
     <p>{{ lastestCase[10] }}</p>
-    <a href="#">資料來源</a>
+    <a target="_blank" :href="lastestCase[11]">資料來源</a>
   </div>
 </template>
 

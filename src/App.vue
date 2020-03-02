@@ -128,7 +128,9 @@ export default {
                 this.govInfoCases[i].push(sanityCase.locations? sanityCase.locations: '')
                 this.govInfoCases[i].push(sanityCase.lat)
                 this.govInfoCases[i].push(sanityCase.lng)
+                this.govInfoCases[i].push(sanityCase.source)
               } else {
+                this.govInfoCases[i].push('')
                 this.govInfoCases[i].push('')
                 this.govInfoCases[i].push('')
                 this.govInfoCases[i].push('')
